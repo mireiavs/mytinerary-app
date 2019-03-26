@@ -232,6 +232,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
   margin-bottom: 10px
 }
 
+.cities-filter {
+  margin: 20px
+}
+.cities-filter input {
+  text-align: center
+}
 
 /* LOADER */
 .loader {

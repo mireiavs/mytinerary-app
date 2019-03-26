@@ -53,6 +53,7 @@ class App extends Component {
             <Route path="/cities/all" component={Cities} />
             <Route component={Notfound} />
           </Switch>
+
         </div>
         <Footer className="container" />
       </div>
