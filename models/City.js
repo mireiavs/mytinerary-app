@@ -6,5 +6,4 @@ var citySchema = new Schema({
     country: String
 });
 
-
 module.exports = mongoose.model("City", citySchema);
