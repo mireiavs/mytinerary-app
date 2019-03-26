@@ -13,7 +13,7 @@ class Landing extends Component {
                 <div className="landing">
                     <p className="welcome-text2">Find your perfect trip, designed by insiders who know and love their cities</p>
                     <h2 className="start-title">Start browsing</h2>
-                    <div><Link to="/cities"><img src={arrowIcon} alt="arrow icon" className="arrow-icon"></img></Link>
+                    <div><Link to="/cities/all"><img src={arrowIcon} alt="arrow icon" className="arrow-icon"></img></Link>
                     </div>
                 </div>
             </div>

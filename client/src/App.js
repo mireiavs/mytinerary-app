@@ -44,32 +44,19 @@ class App extends Component {
       <div className="app">
         <Header />
         <div className="content">
-          <p>{this.state.response}</p>
-          <form onSubmit={this.handleSubmit}>
-            <p>
-              <strong>Post to Server:</strong>
-            </p>
-            <input
-              type="text"
-              value={this.state.post}
-              onChange={e => this.setState({ post: e.target.value })}
-            />
-            <button type="submit">Submit</button>
-          </form>
-          <p>{this.state.responseToPost}</p>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/1" component={Landing1} />
             <Route exact path="/2" component={Landing2} />
             <Route path="/login" component={Login} />
             <Route path="/createaccount" component={Createaccount} />
-            <Route path="/cities" component={Cities} />
+            <Route path="/cities/all" component={Cities} />
             <Route component={Notfound} />
           </Switch>
-
-          <Footer className="container" />
         </div>
+        <Footer className="container" />
       </div>
+
     );
   }
 }
