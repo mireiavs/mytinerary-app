@@ -6,6 +6,7 @@ import PropTypes from "prop-types"
 import Loader from "./Loader"
 import Cityfilter from "./Cityfilter";
 
+
 class Cities extends Component {
     constructor(props) {
         super(props);
@@ -68,8 +69,8 @@ class Cities extends Component {
 }
 
 Cities.propTypes = {
-    getCities: PropTypes.func.isRequired,
-    cities: PropTypes.object.isRequired,
+    getCities: PropTypes.func,
+    cities: PropTypes.object,
     loading: PropTypes.bool
 }
 

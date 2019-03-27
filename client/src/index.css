@@ -18,7 +18,7 @@ body {
   margin-top: 20px;
   font-size: 1.2em;
   text-align: center;
-  padding: 0 10px 0 10px
+  padding: 0 20px 0 20px
 }
 
 .popular {
@@ -40,6 +40,7 @@ body {
 
 .logo2 {
   width: 85vw;
+  margin-top: 20px
 }
 
 .app {
@@ -238,6 +239,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .cities-filter input {
   text-align: center
 }
+.city-list {
+  text-align: center
+}
 
 /* LOADER */
 .loader {
@@ -345,4 +349,23 @@ Note: Beware of modifying this element as it can break the animations - you shou
   50% {
     transform: scale(1.5);
   }
+}
+
+
+
+
+
+
+.toolbar-main {
+  display: flex;
+  justify-content: space-between;
+  height: 50px
+}
+
+.toolbar-main .Header-menuButton-3 {
+  margin-right: 0px
+}
+
+.home-link, .home-link:hover {
+  color: black
 }
