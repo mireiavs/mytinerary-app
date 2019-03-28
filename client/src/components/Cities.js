@@ -31,7 +31,6 @@ class Cities extends Component {
                 noResults: true
             })
         }
-
     }
     render() {
         const { cities } = this.props.cities
@@ -40,7 +39,7 @@ class Cities extends Component {
         if (this.state.filteredCities.length) {
             if (!this.state.noResults) {
                 cityList = this.state.filteredCities.map(city =>
-                    <Link to={`/cities/${city.name}`} key={city._id}><button type="button" className="btn btn-outline-dark btn-block">{city.name}</button>
+                    <Link to={`/cities/${city.name}`} key={city._id}><button type="button" className="btn btn-outline-dark btn-block city-link">{city.name}</button>
                     </Link>
                 )
             } else {

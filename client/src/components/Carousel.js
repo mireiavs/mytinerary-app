@@ -1,6 +1,4 @@
 import React, { Component } from "react"
-/* import Slider from 'react-animated-slider';
- */
 import Amsterdam from "../images/Amsterdam.jpg"
 import Barcelona from "../images/Barcelona.jpg"
 import Berlin from "../images/Berlin.jpg"

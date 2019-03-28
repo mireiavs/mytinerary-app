@@ -14,6 +14,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import LogInIcon from "@material-ui/icons/ExitToApp";
 import CreateAccIcon from "@material-ui/icons/PersonAdd";
@@ -64,20 +65,34 @@ class Header extends Component {
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    <ListItem button>
+                    <Link to="/">
+                        <ListItem button>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText>Home</ListItemText>
+                        </ListItem>
+                    </Link>
+
+                    <Link to="/cities/all">
+                        <ListItem button>
                         <ListItemIcon><CitiesIcon /></ListItemIcon>
                         <ListItemText>Cities</ListItemText>
-                    </ListItem>
+                        </ListItem>
+                    </Link>
 
-                    <ListItem button>
+                    <Link to="/login">
+                        <ListItem button>
                         <ListItemIcon><LogInIcon /></ListItemIcon>
                         <ListItemText>Log In</ListItemText>
-                    </ListItem>
+                        </ListItem>
+                    </Link>
 
-                    <ListItem button>
+
+                    <Link to="/createaccount">
+                        <ListItem button>
                         <ListItemIcon><CreateAccIcon /></ListItemIcon>
                         <ListItemText>Create account</ListItemText>
-                    </ListItem>
+                        </ListItem>
+                    </Link>
 
                 </List>
             </div>
