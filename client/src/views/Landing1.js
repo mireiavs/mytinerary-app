@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom"
 import logo from "../images/MYtineraryLogo.png"
 import arrowIcon from "../images/circled-right-2.png"
-import Footer from "./Footer"
+import Footer from "../components/Footer"
 
 class Landing1 extends Component {
     render() {

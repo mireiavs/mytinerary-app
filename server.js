@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var cities = require("./routes/api/cities")
+var itineraries = require("./routes/api/itineraries")
 var keys = require("./keys")
 var app = express();
 var port = process.env.PORT || 5000;
@@ -21,8 +22,9 @@ db.once('open', function () {
   console.log("connected to db");
 });
 
-
 app.use('/api/cities', cities);
+app.use('/api/itineraries', itineraries);
+
 
 app.listen(port);
 console.log('Magic happens on port ' + port);

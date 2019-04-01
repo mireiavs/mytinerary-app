@@ -3,17 +3,18 @@ const router = express.Router();
 const City = require("../../models/City")
 
 
-// GET /api/cities
-router.get("/", (req, res) => {
+// GET /api/cities/all
+router.get("/all", (req, res) => {
   City.find({}, (err, data) => {
     if (err)
       res.send(err);
     res.send(data);
-  })})
+  })
+})
 
 
-// POST /api/cities
-router.post("/", (req, res) => {
+// POST /api/cities/all
+router.post("/all", (req, res) => {
   const newCity = new City({
     name: req.body.name,
     country: req.body.country
@@ -21,12 +22,22 @@ router.post("/", (req, res) => {
   newCity.save().then(city => res.send(city))
 })
 
+// UPDATE /api/cities/:id
+router.put("/:id", (req, res) => {
+  const updatedCity = {
+    name: req.body.name,
+    country: req.body.country
+  }
+  City.findOneAndUpdate({ name: req.params.id }, updatedCity)
+  .then(city => res.json({ success: true }))
+  .catch(err => res.status(404).json({ success: false }))
+  }) 
 
 // DELETE /api/cities/:id
 router.delete("/:id", (req, res) => {
-  City.findById(req.params.id)
-  .then(city => city.remove().then(() => res.json({success: true})))
-  .catch(err => res.status(404).json({success: false}))
+  City.deleteOne({ name: req.params.id })
+    .then(city => res.json({ success: true }))
+    .catch(err => res.status(404).json({ success: false }))
 })
 
 module.exports = router

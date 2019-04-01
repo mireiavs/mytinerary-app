@@ -19,7 +19,6 @@ class Cityfilter extends Component {
         })
         // Debounced function
         this.updateFilter()
-
     }
     updateFilter() {
         this.props.onChange(this.state.cityFilter)
@@ -27,6 +26,7 @@ class Cityfilter extends Component {
     render() {
         return (
             <div className="cities-filter">
+                <p>Filter our current cities:</p>
                 <input type="text" placeholder="Search by city name" className="form-control" value={this.state.cityFilter} onChange={this.handleChange} />
             </div>
         )

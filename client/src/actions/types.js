@@ -1,3 +1,9 @@
 export const GET_CITIES = "GET_CITIES"
-export const ADD_CITIES = "ADD_CITIES"
+export const ADD_CITY = "ADD_CITY"
+export const DELETE_CITY = "DELETE_CITY"
+export const ADD_SUCCESS = "ADD_SUCCESS"
 export const CITIES_LOADING = "CITIES_LOADING"
+export const GET_ITINERARIES = "GET_ITINERARIES"
+export const ITINERARIES_LOADING = "ITINERARIES_LOADING"
+
+

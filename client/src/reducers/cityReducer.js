@@ -1,11 +1,12 @@
-import { GET_CITIES, ADD_CITY, CITIES_LOADING } from "../actions/types"
+import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY } from "../actions/types"
 
 const initialState = {
     cities: [],
-    loading: false
+    loading: false,
+    addsuccess: false
 }
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
     switch (action.type) {
         case GET_CITIES:
             return {
@@ -21,11 +22,21 @@ export default function(state = initialState, action) {
         case ADD_CITY:
             return {
                 ...state,
-                cities: [action.payload, ...state.cities]
+                cities: [action.payload, ...state.cities],
+                addsuccess: true
+            }
+        case DELETE_CITY:
+            return {
+                ...state,
+                cities: state.cities.filter(city => city.name !== action.payload)
+            }
+        case ADD_SUCCESS:
+            return {
+                ...state,
+                addsuccess: false
             }
         default:
             return state
-
     }
 }
 

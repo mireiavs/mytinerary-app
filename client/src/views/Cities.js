@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { getCities } from "../actions/citiesActions"
 import PropTypes from "prop-types"
-import Loader from "./Loader"
-import Cityfilter from "./Cityfilter";
+import Loader from "../components/Loader"
+import Cityfilter from "../components/Cityfilter";
 
 
 class Cities extends Component {
@@ -51,7 +51,6 @@ class Cities extends Component {
                 </Link>
             )
         }
-
         const isLoading = this.props.cities.loading
         return (
             <div className="cities">
