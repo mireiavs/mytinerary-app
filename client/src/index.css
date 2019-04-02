@@ -202,6 +202,7 @@ body {
   margin-right: 10px;
   word-wrap: break-word;
 }
+
 .profile-pic-container p {
   margin-bottom: 0;
   font-size: 0.9rem;
@@ -257,6 +258,27 @@ body {
   height: 100px;
   width: 100px
 }
+
+.activity-img {
+  height: 100px;
+  width: 100px;
+  position: relative
+}
+
+.activity-caption {
+  position: absolute;
+  width: 100px;
+  top: 35%;
+  color: white;
+  background-color: #8080807d;
+  text-align: center
+}
+
+.activity-caption p {
+  margin-bottom: 0;
+}
+
+
 
 
 
@@ -367,4 +389,12 @@ body {
   50% {
     transform: scale(1.5);
   }
+}
+
+
+/* EDIT CITY */
+.edit-city {
+  display: flex;
+  flex-direction: column;
+  align-items: center
 }

@@ -12,6 +12,7 @@ import Footer from "./components/Footer"
 import Addcity from "./views/Addcity"
 import Editcity from "./views/Editcity"
 import City from "./views/City"
+import Additinerary from "./views/Additinerary"
 
 class App extends Component {
   render() {
@@ -26,9 +27,10 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/createaccount" component={Createaccount} />
             <Route path="/cities/all" component={Cities} />
-            <Route path="/cities/:id" component={City} />
+            <Route exact path="/cities/:id" component={City} />
             <Route path="/addcity" component={Addcity} />
             <Route path="/editcity" component={Editcity} />
+            <Route path="/cities/:id/additinerary" component={Additinerary} />
             <Route component={Notfound} />
           </Switch>
         </div>

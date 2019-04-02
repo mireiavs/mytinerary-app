@@ -1,4 +1,4 @@
-import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY } from "./types"
+import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY, UPDATE_CITY } from "./types"
 import axios from "axios"
 
 export const getCities = () => dispatch => {
@@ -47,4 +47,15 @@ export const deleteCity = id => dispatch => {
             type: DELETE_CITY,
             payload: id
         }))
+}
+
+export const updateCity = (city, id) => dispatch => {
+    axios
+        .put(`api/cities/${id}`, city)
+        .then(() =>
+            dispatch({
+                type: UPDATE_CITY,
+                payload: city
+            })
+        )
 }

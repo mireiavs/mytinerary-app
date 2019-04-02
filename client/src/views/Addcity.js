@@ -39,7 +39,6 @@ class Addcity extends Component {
         name: "",
         country: ""
     };
-
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -51,7 +50,6 @@ class Addcity extends Component {
             name: this.state.name,
             country: this.state.country
         }
-
         this.props.addCity(newCity)
     }
     onClickAfterAdd = () => {
@@ -63,7 +61,6 @@ class Addcity extends Component {
         return (
             <div className="add-city">
                 <h1>Add a city</h1>
-
 
                 {!addSuccess ? (<form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
                     <TextField

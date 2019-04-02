@@ -9,6 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Activity from "./Activity"
 import Comments from "./Comments"
+import { connect } from "react-redux"
+import { getActivities } from "../actions/activityActions"
+
 
 const styles = theme => ({
   card: {
@@ -37,6 +40,10 @@ class Itinerary extends Component {
     this.state = { expanded: false };
   }
   handleExpandClick = () => {
+    if(!this.state.expanded) {
+      const itineraryId = this.props.itinerary._id
+      this.props.getActivities(itineraryId)
+    }
     this.setState(state => ({ expanded: !state.expanded }));
   };
   render() {
@@ -68,9 +75,8 @@ class Itinerary extends Component {
           </CardContent>
           <Collapse in={this.state.expanded} timeout="auto" mountOnEnter unmountOnExit>
             <CardContent>
-              
-              <Activity />
 
+              <Activity activities={this.props.activities} />
               <Comments />
 
             </CardContent>
@@ -82,7 +88,7 @@ class Itinerary extends Component {
               aria-expanded={this.state.expanded}
               aria-label="Show more"
             >
-             { this.state.expanded ? <p> Close </p> : <p> View all </p> } 
+              {this.state.expanded ? <p> Close </p> : <p> View all </p>}
             </IconButton>
           </CardActions>
 
@@ -94,7 +100,16 @@ class Itinerary extends Component {
 
 Itinerary.propTypes = {
   classes: PropTypes.object.isRequired,
-  itinerary: PropTypes.object
+  itinerary: PropTypes.object,
+  loading: PropTypes.bool,
+  getActivities: PropTypes.func,
+  activities: PropTypes.object
 };
 
-export default withStyles(styles)(Itinerary);
+const mapStateToProps = (state) => ({
+  activities: state.activities,
+  loading: state.loading
+})
+
+
+export default connect(mapStateToProps, { getActivities })(withStyles(styles)(Itinerary))

@@ -1,4 +1,4 @@
-import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY } from "../actions/types"
+import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY, UPDATE_CITY } from "../actions/types"
 
 const initialState = {
     cities: [],
@@ -34,6 +34,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 addsuccess: false
+            }
+        case UPDATE_CITY:
+            return {
+                ...state,
+                cities: state.cities.map(city => city.name === action.payload.name ? action.payload : city),
+                addsuccess: true
             }
         default:
             return state

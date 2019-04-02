@@ -22,7 +22,7 @@ var itinerarySchema = new Schema({
     },
     cityName: {
         type: String
-    },
+    }
 });
 
 module.exports = Itinerary = mongoose.model("Itinerary", itinerarySchema);

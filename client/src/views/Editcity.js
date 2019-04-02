@@ -2,13 +2,13 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { deleteCity, getCities } from "../actions/citiesActions"
+import { deleteCity, getCities, updateCity, addSuccess } from "../actions/citiesActions"
 import { connect } from "react-redux"
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     container: {
@@ -31,6 +31,12 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
     },
+    buttondel: {
+        margin: theme.spacing.unit,
+        marginTop: 50,
+        backgroundColor: "#ff5252",
+        color: "white"
+    },
     input: {
         display: 'none',
         color: "black"
@@ -51,11 +57,31 @@ const styles = theme => ({
 class Editcity extends Component {
     state = {
         name: "",
+        country: ""
     };
     handleChangeSelect = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+        const { cities } = this.props.cities
+        const city = cities.find(city => city.name === event.target.value)
+        this.setState({ name: event.target.value, country: city.country });
 
+    };
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    onSubmit = e => {
+        e.preventDefault();
+        const updatedCity = {
+            name: this.state.name,
+            country: this.state.country
+        }
+
+        this.props.updateCity(updatedCity, this.state.name)
+    }
+    onClickAfterAdd = () => {
+        this.props.addSuccess()
+    }
     onDeleteClick = id => {
         this.props.deleteCity(id)
     }
@@ -65,7 +91,9 @@ class Editcity extends Component {
     render() {
         const { classes } = this.props;
         const { cities } = this.props.cities
-        const cityList = cities.map(city => <MenuItem value={city.name} key={city._id}>{city.name}</MenuItem>)
+        const cityList = cities.map(city => <MenuItem value={city.name} key={city._id}>{city.name}, {city.country}</MenuItem>)
+        const addSuccess = this.props.cities.addsuccess
+
         return (
             <div className="edit-city">
                 <h1>Edit city</h1>
@@ -85,7 +113,43 @@ class Editcity extends Component {
                         </Select>
                     </FormControl>
                 </form>
-                <Button variant="contained" className={classes.button} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
+
+
+                {!addSuccess ? (<form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
+                    <TextField
+                        name="name"
+                        id="name"
+                        label="Name"
+                        className={classes.textField}
+                        value={this.state.name}
+                        onChange={this.onChange}
+                        margin="normal"
+                        color="primary"
+                    />
+                    <TextField
+                        name="country"
+                        id="country"
+                        label="Country"
+                        className={classes.textField}
+                        value={this.state.country}
+                        onChange={this.onChange}
+                        margin="normal"
+                    />
+                    <div className="add-city-btn">
+                        <Button variant="contained" className={classes.button} size="medium" type="submit" form="city-form">
+                            Submit</Button>
+                    </div>
+                </form>) : (<div className="success">
+                    <p>City updated successfully!</p>
+                    <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Update another city</Button>
+                </div>)}
+
+
+
+
+
+
+                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
             </div>
         );
     }
@@ -96,10 +160,12 @@ Editcity.propTypes = {
     classes: PropTypes.object,
     cities: PropTypes.object,
     getCities: PropTypes.func,
+    updateCity: PropTypes.func,
+    addSuccess: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
     cities: state.cities
 })
 
-export default connect(mapStateToProps, { deleteCity, getCities })(withStyles(styles)(Editcity));
+export default connect(mapStateToProps, { deleteCity, getCities, updateCity, addSuccess })(withStyles(styles)(Editcity));

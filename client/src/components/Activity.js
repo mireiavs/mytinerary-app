@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import PropTypes from "prop-types"
 
 class Activity extends Component {
   render() {
@@ -10,39 +11,23 @@ class Activity extends Component {
       slidesToShow: 3,
       slidesToScroll: 3
     };
+    const activities = this.props.activities.activities
+    const activityList = activities.map((activity, index) => <div className="slider-image" key={index}>
+      <img className="activity-img" src={require("../images/" + activity.img + ".jpg")} alt="activity" />
+      <div className="activity-caption"><p>{activity.caption}</p></div></div>)
     return (
       <div className="slider">
         <h4> Activities </h4>
         <Slider {...settings}>
-
-          <div className="slider-image">
-            <h3>1</h3>
-          </div>
-          
-          <div className="slider-image">
-            <h3>2</h3>
-          </div>
-
-          <div className="slider-image">
-            <h3>3</h3>
-          </div>
-
-          <div className="slider-image">
-            <h3>4</h3>
-          </div>
-          
-          <div className="slider-image">
-            <h3>5</h3>
-          </div>
-
-          <div className="slider-image">
-            <h3>6</h3>
-          </div>
-
+           {activityList}
         </Slider>
       </div>
     );
   }
+}
+
+Activity.propTypes = {
+  activities: PropTypes.object
 }
 
 export default Activity

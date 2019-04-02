@@ -12,8 +12,7 @@ class City extends Component {
     }
     render() {
         const { itineraries } = this.props.itineraries
-/*         const itineraryList = itineraries.map(itinerary => <p key={itinerary._id}>{itinerary.title}</p>)
- */      const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} />)
+        const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} />)
         const isLoading = this.props.itineraries.loading
 
         return (
