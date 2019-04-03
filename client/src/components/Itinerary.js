@@ -35,17 +35,20 @@ const styles = theme => ({
 });
 
 class Itinerary extends Component {
-  constructor(props) {
+/*   constructor(props) {
     super(props);
-    this.state = { expanded: false };
-  }
+/*     this.state = { expanded: false };
+ */  
   handleExpandClick = () => {
-    if(!this.state.expanded) {
+    this.props.toggle(this.props.itinerary._id);
+    if(!this.props.isOpen) {
       const itineraryId = this.props.itinerary._id
       this.props.getActivities(itineraryId)
     }
-    this.setState(state => ({ expanded: !state.expanded }));
+/*     this.setState(state => ({ expanded: !state.expanded }));
+ */    
   };
+
   render() {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
@@ -73,7 +76,7 @@ class Itinerary extends Component {
 
 
           </CardContent>
-          <Collapse in={this.state.expanded} timeout="auto" mountOnEnter unmountOnExit>
+          <Collapse in={this.props.isOpen} timeout="auto" mountOnEnter unmountOnExit>
             <CardContent>
 
               <Activity activities={this.props.activities} />
@@ -85,10 +88,10 @@ class Itinerary extends Component {
 
             <IconButton
               onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
+              aria-expanded={this.props.isOpen}
               aria-label="Show more"
             >
-              {this.state.expanded ? <p> Close </p> : <p> View all </p>}
+              {this.props.isOpen ? <p> Close </p> : <p> View all </p>}
             </IconButton>
           </CardActions>
 
@@ -103,7 +106,10 @@ Itinerary.propTypes = {
   itinerary: PropTypes.object,
   loading: PropTypes.bool,
   getActivities: PropTypes.func,
-  activities: PropTypes.object
+  activities: PropTypes.object,
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func
+  
 };
 
 const mapStateToProps = (state) => ({

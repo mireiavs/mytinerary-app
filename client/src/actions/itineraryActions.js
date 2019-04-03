@@ -3,7 +3,7 @@ import { GET_ITINERARIES, ITINERARIES_LOADING, ADD_ITINERARY, ADD_IT_SUCCESS } f
 import axios from "axios"
 
 export const getItineraries = (id) => dispatch => {
-    dispatch(setItinerariesLoading()); 
+    dispatch(setItinerariesLoading());
     axios
         .get(`/api/itineraries/${id}`)
         .then(res =>

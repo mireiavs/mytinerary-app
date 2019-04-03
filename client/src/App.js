@@ -13,6 +13,7 @@ import Addcity from "./views/Addcity"
 import Editcity from "./views/Editcity"
 import City from "./views/City"
 import Additinerary from "./views/Additinerary"
+import Addactivity from "./views/Addactivity"
 
 class App extends Component {
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
             <Route path="/addcity" component={Addcity} />
             <Route path="/editcity" component={Editcity} />
             <Route path="/cities/:id/additinerary" component={Additinerary} />
+            <Route path="/cities/:cityId/:itineraryId/addactivity" component={Addactivity} />
             <Route component={Notfound} />
           </Switch>
         </div>

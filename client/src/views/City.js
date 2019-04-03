@@ -7,19 +7,28 @@ import Itinerary from "../components/Itinerary"
 import Loader from "../components/Loader"
 
 class City extends Component {
+    constructor(props) {
+        super(props);
+        this.toggle = this.toggle.bind(this);
+        this.state = {};
+    }
+
+    toggle(id) {
+        this.setState({ collapse: this.state.collapse === id ? null : id });
+    }
+
     componentDidMount() {
         this.props.getItineraries(this.props.match.params.id)
     }
     render() {
         const { itineraries } = this.props.itineraries
-        const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} />)
+        const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} isOpen={this.state.collapse === itinerary._id} toggle={this.toggle} />)
         const isLoading = this.props.itineraries.loading
 
         return (
             <div className="city-info">
                 <h1 className="city-title">{this.props.match.params.id}</h1>
                 <h4>Available MYtineraries:</h4>
-
 
                 {isLoading ?
                     (<Loader />) :

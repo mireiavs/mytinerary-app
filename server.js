@@ -8,6 +8,7 @@ var app = express();
 var port = process.env.PORT || 5000;
 const bodyParser = require("body-parser")
 
+app.use("/cities/uploads", express.static("uploads"))
 app.use(bodyParser.json())
 
 

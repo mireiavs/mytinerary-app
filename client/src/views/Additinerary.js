@@ -58,8 +58,7 @@ class AddItinerary extends Component {
             hashtag: this.state.hashtag,
             cityName: this.props.match.params.id
         }
-
-        this.props.addItinerary(newItinerary)
+        this.props.addItinerary(newItinerary, this.props.match.params.id)
     }
     onClickAfterAdd = () => {
         this.props.addItSuccess()
