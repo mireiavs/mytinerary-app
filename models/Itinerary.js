@@ -5,7 +5,7 @@ var itinerarySchema = new Schema({
     title: {
         type: String
     },
-    profilePic: {
+    user: {
         type: String
     },
     rating: {

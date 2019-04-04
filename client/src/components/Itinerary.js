@@ -11,6 +11,7 @@ import Activity from "./Activity"
 import Comments from "./Comments"
 import { connect } from "react-redux"
 import { getActivities } from "../actions/activityActions"
+import { getComments, addComment, deleteComment } from "../actions/commentActions"
 
 
 const styles = theme => ({
@@ -35,15 +36,13 @@ const styles = theme => ({
 });
 
 class Itinerary extends Component {
-/*   constructor(props) {
-    super(props);
-/*     this.state = { expanded: false };
- */  
+ 
   handleExpandClick = () => {
     this.props.toggle(this.props.itinerary._id);
     if(!this.props.isOpen) {
       const itineraryId = this.props.itinerary._id
-      this.props.getActivities(itineraryId)
+      this.props.getActivities(itineraryId);
+      this.props.getComments(itineraryId)
     }
 /*     this.setState(state => ({ expanded: !state.expanded }));
  */    
@@ -80,7 +79,7 @@ class Itinerary extends Component {
             <CardContent>
 
               <Activity activities={this.props.activities} />
-              <Comments />
+              <Comments comments={this.props.comments} addComment={this.props.addComment} itinerary={this.props.itinerary} deleteComment={this.props.deleteComment} />
 
             </CardContent>
           </Collapse>
@@ -108,14 +107,17 @@ Itinerary.propTypes = {
   getActivities: PropTypes.func,
   activities: PropTypes.object,
   isOpen: PropTypes.bool,
-  toggle: PropTypes.func
-  
+  toggle: PropTypes.func,
+  getComments: PropTypes.func,
+  comments: PropTypes.object,
+  addComment: PropTypes.func,
+  deleteComment: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   activities: state.activities,
-  loading: state.loading
+  comments: state.comments
 })
 
 
-export default connect(mapStateToProps, { getActivities })(withStyles(styles)(Itinerary))
+export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment })(withStyles(styles)(Itinerary))

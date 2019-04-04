@@ -5,6 +5,19 @@ import { getCities } from "../actions/citiesActions"
 import PropTypes from "prop-types"
 import Loader from "../components/Loader"
 import Cityfilter from "../components/Cityfilter";
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+    margin: {
+        margin: theme.spacing.unit,
+        display: "block",
+        textTransform: "none",
+        fontFamily: "inherit",
+        fontSize: 20
+    }
+});
 
 
 class Cities extends Component {
@@ -33,22 +46,23 @@ class Cities extends Component {
         }
     }
     render() {
+        const { classes } = this.props;
         const { cities } = this.props.cities
         var cityList = "";
 
         if (this.state.filteredCities.length) {
             if (!this.state.noResults) {
                 cityList = this.state.filteredCities.map(city =>
-                    <Link to={`/cities/${city.name}`} key={city._id}><button type="button" className="btn btn-outline-dark btn-block city-link">{city.name}</button>
-                    </Link>
+                    <Button component={Link} size="large" variant="outlined" className={classes.margin} to={`/cities/${city.name}`} key={city._id}>{city.name}</Button>
+
                 )
             } else {
                 cityList = "No cities found"
             }
         } else {
             cityList = cities.map(city =>
-                <Link to={`/cities/${city.name}`} key={city._id}><button type="button" className="btn btn-outline-dark btn-block">{city.name}</button>
-                </Link>
+                <Button component={Link}  size="large" variant="outlined" className={classes.margin} to={`/cities/${city.name}`} key={city._id}>{city.name}</Button>
+
             )
         }
         const isLoading = this.props.cities.loading
@@ -69,7 +83,8 @@ class Cities extends Component {
 Cities.propTypes = {
     getCities: PropTypes.func,
     cities: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -77,4 +92,8 @@ const mapStateToProps = (state) => ({
     loading: state.loading
 })
 
-export default connect(mapStateToProps, { getCities })(Cities)
+export default connect(mapStateToProps, { getCities })(
+    withStyles(styles)(Cities)
+)
+
+

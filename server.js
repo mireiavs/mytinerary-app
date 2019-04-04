@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var cities = require("./routes/api/cities")
 var itineraries = require("./routes/api/itineraries")
 var activities = require("./routes/api/activities")
+var comments = require("./routes/api/comments")
 var keys = require("./keys")
 var app = express();
 var port = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ db.once('open', function () {
 app.use('/api/cities', cities);
 app.use('/api/itineraries', itineraries);
 app.use('/api/activities', activities);
+app.use('/api/comments', comments)
 
 
 app.listen(port);

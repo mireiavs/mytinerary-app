@@ -1,4 +1,4 @@
-import { GET_ITINERARIES, ITINERARIES_LOADING, ADD_ITINERARY, ADD_IT_SUCCESS } from "../actions/types"
+import { GET_ITINERARIES, ITINERARIES_LOADING, ADD_ITINERARY, ADD_IT_SUCCESS, DELETE_ITINERARY, UPDATE_ITINERARY } from "../actions/types"
 
 const initialState = {
     itineraries: [],
@@ -29,6 +29,17 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 additsuccess: false
+            }
+        case DELETE_ITINERARY:
+            return {
+                ...state,
+                itineraries: state.itineraries.filter(itinerary => itinerary._id !== action.payload)
+            }
+        case UPDATE_ITINERARY:
+            return {
+                ...state,
+                itineraries: state.itineraries.map(itinerary => itinerary._id === action.payload._id ? action.payload : itinerary),
+                additsuccess: true
             }
         default:
             return state

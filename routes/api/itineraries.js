@@ -22,13 +22,12 @@ router.post("/:cityId", (req, res) => {
     price: req.body.price,
     hashtag: req.body.hashtag,
     cityName: req.body.cityName,
-    activities: req.body.activities,
   });
   newItinerary.save().then(itinerary => res.send(itinerary))
 })
 
-// UPDATE /api/itineraries/:cityid/:itineraryId
-router.put("/:cityId/:itineraryId", (req, res) => {
+// UPDATE /api/itineraries/:itineraryId
+router.put("/:itineraryId", (req, res) => {
   const updatedItinerary = {
     title: req.body.title,
     user: req.body.user,
@@ -43,8 +42,8 @@ router.put("/:cityId/:itineraryId", (req, res) => {
     .catch(() => res.status(404).json({ success: false }))
 })
 
-// DELETE /api/itineraries/:cityid/:itineraryId
-router.delete("/:cityId/:itineraryId", (req, res) => {
+// DELETE /api/itineraries/:itineraryId
+router.delete("/:itineraryId", (req, res) => {
   Itinerary.deleteOne({ _id: req.params.itineraryId })
     .then(itinerary => res.json({ success: true }))
     .catch(err => res.status(404).json({ success: false }))

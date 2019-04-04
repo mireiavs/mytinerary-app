@@ -1,15 +1,126 @@
-
 import React, { Component } from "react"
+import PropTypes from "prop-types"
+import Loader from "./Loader"
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: "center",
+        flexDirection: "column"
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    dense: {
+        marginTop: 19,
+    },
+    menu: {
+        width: 200,
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        display: 'none',
+        color: "black"
+    },
+
+    card: {
+        maxWidth: 400,
+    },
+
+});
+
+
 
 class Comments extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: "",
+            message: ""
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+
+    onSubmit = e => {
+        e.preventDefault();
+        const date = new Date()
+        const newComment = {
+            itineraryId: this.props.itinerary._id,
+            user: this.state.user,
+            message: this.state.message,
+            timestamp: date
+        }
+        this.props.addComment(newComment, this.props.itinerary._id)
+        this.setState({
+            message: ""
+        })
+    }
+
+    onDeleteClick = id => {
+        this.props.deleteComment(id)
+    }
+
     render() {
+        const { classes } = this.props;
+        const comments = this.props.comments.comments
+        const isLoading = this.props.comments.loading
+
+        const commentList = comments.map(comment =>
+            <div key={comment._id}>
+                <Card className="comment-card">
+                    <CardContent>
+                        <div className="comment-header">
+                            <p className="comment-user">{comment.user}</p>
+                            <IconButton aria-label="Delete" className="comment-delete" onClick={this.onDeleteClick.bind(this, comment._id)}>
+                                <DeleteIcon fontSize="small" />
+                            </IconButton>
+                        </div>
+                        <p>{comment.message}</p>
+                    </CardContent>
+                </Card>
+            </div>)
+
+
         return (
             <div>
                 <h4>Comments</h4>
-                <input type="text" placeholder="Your comment"></input>
+                <form onSubmit={this.onSubmit} id="comment-form">
+                    <input type="text" name="user" value={this.state.user} onChange={this.onChange} placeholder="Username"></input>
+                    <input type="text" name="message" value={this.state.message} onChange={this.onChange} placeholder="Your comment"></input>
+                    <Button variant="contained" className={classes.button} size="medium" type="submit" form="comment-form">
+                        Submit</Button>
+                </form>
+                <div>{isLoading ? (<Loader />) : (<div>{comments.length === 0 ? (<p>No comments yet.</p>) : (<div>{commentList}</div>)}</div>)
+                }</div>
             </div>
         )
     }
 }
 
-export default Comments
+Comments.propTypes = {
+    comments: PropTypes.object,
+    classes: PropTypes.object,
+    addComment: PropTypes.func,
+    match: PropTypes.object,
+    itinerary: PropTypes.object,
+    deleteComment: PropTypes.func
+}
+
+
+export default withStyles(styles)(Comments)

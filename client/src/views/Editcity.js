@@ -144,12 +144,8 @@ class Editcity extends Component {
                     <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Update another city</Button>
                 </div>)}
 
-
-
-
-
-
                 <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
+                
             </div>
         );
     }

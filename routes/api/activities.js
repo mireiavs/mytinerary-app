@@ -48,23 +48,23 @@ router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
 })
 
 
-// UPDATE /api/activities/:itineraryId/:activityId
-router.put("/:itineraryId/:activityId", (req, res) => {
+// UPDATE /api/activities/:activityId
+router.put("/:activityId", upload.single("activityImage"), (req, res) => {
   const updatedActivity = {
     itineraryId: req.body.itineraryId,
-    activityImage: req.body.activityImage,
+    img: req.file.path,
     caption: req.body.caption
   }
   Activity.findOneAndUpdate({ _id: req.params.activityId }, updatedActivity)
-    .then(activity => res.json({ success: true }))
+    .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))
 })
 
-// DELETE /api/itineraries/:cityid/:itineraryId
-router.delete("/:itineraryId/:activityId", (req, res) => {
+// DELETE /api/activities/:activityId
+router.delete("/:activityId", (req, res) => {
   Activity.deleteOne({ _id: req.params.activityId })
-    .then(activity => res.json({ success: true }))
-    .catch(err => res.status(404).json({ success: false }))
+    .then(() => res.json({ success: true }))
+    .catch(() => res.status(404).json({ success: false }))
 })
 
 

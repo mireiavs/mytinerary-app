@@ -14,6 +14,7 @@ import Editcity from "./views/Editcity"
 import City from "./views/City"
 import Additinerary from "./views/Additinerary"
 import Addactivity from "./views/Addactivity"
+import Edititinerary from "./views/Edititinerary"
 
 class App extends Component {
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
             <Route exact path="/cities/:id" component={City} />
             <Route path="/addcity" component={Addcity} />
             <Route path="/editcity" component={Editcity} />
+            <Route path="/edititinerary" component={Edititinerary} />
             <Route path="/cities/:id/additinerary" component={Additinerary} />
             <Route path="/cities/:cityId/:itineraryId/addactivity" component={Addactivity} />
             <Route component={Notfound} />

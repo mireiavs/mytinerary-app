@@ -39,6 +39,12 @@ const styles = {
     },
 };
 
+
+
+
+
+
+
 class Header extends Component {
     state = {
         right: false,
@@ -58,45 +64,42 @@ class Header extends Component {
         this.setState({ anchorEl: null });
     };
 
+
     render() {
         const { classes } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
+        const homeLink = props => <Link to="/" {...props} />
+        const citiesLink = props => <Link to="/cities/all" {...props} />
+        const logInLink = props => <Link to="/login" {...props} />
+        const createAccLink = props => <Link to="/createaccount" {...props} />
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    <Link to="/">
-                        <ListItem button>
+                    <ListItem button component={homeLink}>
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText>Home</ListItemText>
+                    </ListItem>
+                        <ListItem button component={citiesLink}>
+                            <ListItemIcon><CitiesIcon /></ListItemIcon>
+                            <ListItemText>Cities</ListItemText>
                         </ListItem>
-                    </Link>
 
-                    <Link to="/cities/all">
-                        <ListItem button>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Cities</ListItemText>
+                        <ListItem button component={logInLink}>
+                            <ListItemIcon><LogInIcon /></ListItemIcon>
+                            <ListItemText>Log In</ListItemText>
                         </ListItem>
-                    </Link>
 
-                    <Link to="/login">
-                        <ListItem button>
-                        <ListItemIcon><LogInIcon /></ListItemIcon>
-                        <ListItemText>Log In</ListItemText>
+                        <ListItem button component={createAccLink}>
+                            <ListItemIcon><CreateAccIcon /></ListItemIcon>
+                            <ListItemText>Create account</ListItemText>
                         </ListItem>
-                    </Link>
-
-
-                    <Link to="/createaccount">
-                        <ListItem button>
-                        <ListItemIcon><CreateAccIcon /></ListItemIcon>
-                        <ListItemText>Create account</ListItemText>
-                        </ListItem>
-                    </Link>
+               
 
                 </List>
             </div>
         );
+
         return (
             <div className={classes.root}>
                 <AppBar position="fixed" color="default">
@@ -125,8 +128,8 @@ class Header extends Component {
                                 open={open}
                                 onClose={this.handleClose}
                             >
-                                <Link to="/login"> <MenuItem onClick={this.handleClose}>Log In</MenuItem></Link>
-                                <Link to="/createaccount"><MenuItem onClick={this.handleClose}>Create account</MenuItem></Link>
+                                <MenuItem component={logInLink} onClick={this.handleClose}>Log In</MenuItem>
+                                <MenuItem component={createAccLink} onClick={this.handleClose}>Create account</MenuItem>
                             </Menu>
                         </div>
 
