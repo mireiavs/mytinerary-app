@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import Input from '@material-ui/core/Input';
 
 const styles = theme => ({
     container: {
@@ -29,19 +29,25 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-    },
-    input: {
-        display: 'none',
-        color: "black"
-    },
 
+    },
     card: {
         maxWidth: 400,
     },
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        fontFamily: "inherit",
+        margin: 10
+    },
+    cssFocused: {},
+    cssUnderline: {
+        '&:after': {
+            borderBottomColor: "#7A7A7A",
+        },
+    },
 
 });
-
-
 
 class Comments extends Component {
     constructor(props) {
@@ -50,6 +56,8 @@ class Comments extends Component {
             user: "",
             message: ""
         }
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     onChange = (e) => {
@@ -101,10 +109,29 @@ class Comments extends Component {
             <div>
                 <h4>Comments</h4>
                 <form onSubmit={this.onSubmit} id="comment-form">
-                    <input type="text" name="user" value={this.state.user} onChange={this.onChange} placeholder="Username"></input>
-                    <input type="text" name="message" value={this.state.message} onChange={this.onChange} placeholder="Your comment"></input>
-                    <Button variant="contained" className={classes.button} size="medium" type="submit" form="comment-form">
-                        Submit</Button>
+                    <Input
+                        placeholder="Username"
+                        classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                        }}
+                        value={this.state.user}
+                        name="user"
+                        onChange={this.onChange}
+                    />
+                    <Input
+                        placeholder="Your Comment"
+                        classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                        }}
+                        value={this.state.message}
+                        name="message"
+                        onChange={this.onChange}
+                    />
+                    <Button variant="contained" className={classes.button} size="small" type="submit" form="comment-form">
+                        Send
+                    </Button>
                 </form>
                 <div>{isLoading ? (<Loader />) : (<div>{comments.length === 0 ? (<p>No comments yet.</p>) : (<div>{commentList}</div>)}</div>)
                 }</div>

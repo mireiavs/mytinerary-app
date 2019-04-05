@@ -45,6 +45,7 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
+        flexDirection: "column"
     },
     formControl: {
         margin: theme.spacing.unit,
@@ -56,29 +57,40 @@ const styles = theme => ({
 });
 
 class Edititinerary extends Component {
-    state = {
-        name: "",
-        country: "",
-        title: "",
-        user: "",
-        rating: "",
-        duration: "",
-        price: "",
-        hashtag: "",
-        cityName: "",
-        itineraryId: "",
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            country: "",
+            title: "",
+            user: "",
+            rating: "",
+            duration: "",
+            price: "",
+            hashtag: "",
+            cityName: "",
+            itineraryId: "",
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
+        this.handleChangeSelectCity = this.handleChangeSelectCity.bind(this);
+        this.handleChangeSelectItinerary = this.handleChangeSelectItinerary.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+    }
+
     handleChangeSelectCity = event => {
         const { cities } = this.props.cities
         const city = cities.find(city => city.name === event.target.value)
         this.setState({ name: event.target.value, country: city.country });
         this.props.getItineraries(city.name)
     };
+
     handleChangeSelectItinerary = event => {
         const { itineraries } = this.props.itineraries
         const itinerary = itineraries.find(itinerary => itinerary.title === event.target.value)
-        this.setState({ 
-            title: event.target.value, 
+        this.setState({
+            title: event.target.value,
             user: itinerary.user,
             rating: itinerary.rating,
             duration: itinerary.duration,
@@ -87,17 +99,18 @@ class Edititinerary extends Component {
             cityName: itinerary.cityName,
             itineraryId: itinerary._id
         });
-        
-    };
+    }
+
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+
     onSubmit = e => {
         e.preventDefault();
         const updatedItinerary = {
-            title: this.state.title, 
+            title: this.state.title,
             user: this.state.user,
             rating: this.state.rating,
             duration: this.state.duration,
@@ -107,15 +120,46 @@ class Edititinerary extends Component {
         }
         this.props.updateItinerary(updatedItinerary, this.state.itineraryId)
     }
+
     onClickAfterAdd = () => {
         this.props.addItSuccess()
     }
+
     onDeleteClick = id => {
         this.props.deleteItinerary(id)
     }
+
     componentDidMount() {
         this.props.getCities()
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.cities.cities !== this.props.cities.cities) {
+            if (this.props.match.params.cityId) {
+                const cities = this.props.cities.cities
+                const city = cities.find(city => city.name === this.props.match.params.cityId)
+                this.setState({ name: city.name, country: city.country });
+                this.props.getItineraries(city.name)
+            }
+        }
+        if (prevProps.itineraries.itineraries !== this.props.itineraries.itineraries) {
+            if (this.props.match.params.itineraryId) {
+                const itineraries = this.props.itineraries.itineraries
+                const itinerary = itineraries.find(itinerary => itinerary._id === this.props.match.params.itineraryId)
+                this.setState({
+                    itineraryId: itinerary._id,
+                    title: itinerary.title,
+                    user: itinerary.user,
+                    rating: itinerary.rating,
+                    duration: itinerary.duration,
+                    price: itinerary.price,
+                    hashtag: itinerary.hashtag,
+                    cityName: itinerary.cityName,
+                });
+            }
+        }
+    }
+    
     render() {
         const { classes } = this.props;
         const { cities } = this.props.cities
@@ -127,105 +171,109 @@ class Edititinerary extends Component {
         return (
             <div className="edit-city">
                 <h1>Edit itinerary</h1>
-                <p>Select city:</p>
-                <form className={classes.root} autoComplete="off">
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="name">City</InputLabel>
-                        <Select
-                            value={this.state.name}
-                            onChange={this.handleChangeSelectCity}
-                            inputProps={{
-                                name: 'name',
-                                id: 'name',
-                            }}
-                        >
-                            {cityList}
-                        </Select>
-                    </FormControl>
+                {!addItSuccess ? (
+                    <div>
+                        <div className="select">
+                            <p>Select city:</p>
+                            <form className={classes.root} autoComplete="off">
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="name">City</InputLabel>
+                                    <Select
+                                        value={this.state.name}
+                                        onChange={this.handleChangeSelectCity}
+                                        inputProps={{
+                                            name: 'name',
+                                            id: 'name',
+                                        }}
+                                    >
+                                        {cityList}
+                                    </Select>
+                                </FormControl>
 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="title">Itinerary</InputLabel>
-                        <Select
-                            value={this.state.title}
-                            onChange={this.handleChangeSelectItinerary}
-                            inputProps={{
-                                name: 'title',
-                                id: 'title',
-                            }}
-                        >
-                            {itineraryList}
-                        </Select>
-                    </FormControl>
-                </form>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="title">Itinerary</InputLabel>
+                                    <Select
+                                        value={this.state.title}
+                                        onChange={this.handleChangeSelectItinerary}
+                                        inputProps={{
+                                            name: 'title',
+                                            id: 'title',
+                                        }}
+                                    >
+                                        {itineraryList}
+                                    </Select>
+                                </FormControl>
+                            </form>
+                        </div>
+                        <form id="itinerary-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
+                            <TextField
+                                name="title"
+                                id="title"
+                                label="Title"
+                                className={classes.textField}
+                                value={this.state.title}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="user"
+                                id="user"
+                                label="User"
+                                className={classes.textField}
+                                value={this.state.user}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="rating"
+                                id="rating"
+                                label="Rating"
+                                className={classes.textField}
+                                value={this.state.rating}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="duration"
+                                id="duration"
+                                label="Duration"
+                                className={classes.textField}
+                                value={this.state.duration}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="price"
+                                id="price"
+                                label="Price"
+                                className={classes.textField}
+                                value={this.state.price}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="hashtag"
+                                id="hashtag"
+                                label="Hashtags"
+                                className={classes.textField}
+                                value={this.state.hashtag}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
 
-
-                {!addItSuccess ? (<form id="itinerary-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
-                    <TextField
-                        name="title"
-                        id="title"
-                        label="Title"
-                        className={classes.textField}
-                        value={this.state.title}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="user"
-                        id="user"
-                        label="User"
-                        className={classes.textField}
-                        value={this.state.user}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="rating"
-                        id="rating"
-                        label="Rating"
-                        className={classes.textField}
-                        value={this.state.rating}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="duration"
-                        id="duration"
-                        label="Duration"
-                        className={classes.textField}
-                        value={this.state.duration}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="price"
-                        id="price"
-                        label="Price"
-                        className={classes.textField}
-                        value={this.state.price}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="hashtag"
-                        id="hashtag"
-                        label="Hashtags"
-                        className={classes.textField}
-                        value={this.state.hashtag}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-
-                            <div className="add-city-btn">
-                        <Button variant="contained" className={classes.button} size="medium" type="submit" form="itinerary-form">
-                            Submit</Button>
+                            <div className="add-form-btn">
+                                <Button variant="contained" className={classes.button} size="medium" type="submit" form="itinerary-form">
+                                    Submit</Button>
+                            </div>
+                        </form>
                     </div>
-                </form>) : (<div className="success">
+                ) : (<div className="success">
                     <p>Itinerary updated successfully!</p>
                     <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another itinerary</Button>
                 </div>)}
@@ -245,7 +293,8 @@ Edititinerary.propTypes = {
     getCities: PropTypes.func,
     getItineraries: PropTypes.func,
     updateItinerary: PropTypes.func,
-    addItSuccess: PropTypes.func
+    addItSuccess: PropTypes.func,
+    match: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

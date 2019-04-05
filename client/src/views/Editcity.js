@@ -55,10 +55,18 @@ const styles = theme => ({
 });
 
 class Editcity extends Component {
-    state = {
-        name: "",
-        country: ""
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            country: ""
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
+        this.handleChangeSelect = this.handleChangeSelect.bind(this);
+    }
+
     handleChangeSelect = event => {
         const { cities } = this.props.cities
         const city = cities.find(city => city.name === event.target.value)
@@ -87,10 +95,20 @@ class Editcity extends Component {
     }
     componentDidMount() {
         this.props.getCities()
+
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.cities.cities !== this.props.cities.cities) {
+            if (this.props.match.params.cityId) {
+                const cities = this.props.cities.cities
+                const city = cities.find(city => city.name === this.props.match.params.cityId)
+                this.setState({ name: city.name, country: city.country });
+            }
+        }
     }
     render() {
         const { classes } = this.props;
-        const { cities } = this.props.cities
+        const { cities } = this.props.cities;
         const cityList = cities.map(city => <MenuItem value={city.name} key={city._id}>{city.name}, {city.country}</MenuItem>)
         const addSuccess = this.props.cities.addsuccess
 
@@ -135,17 +153,17 @@ class Editcity extends Component {
                         onChange={this.onChange}
                         margin="normal"
                     />
-                    <div className="add-city-btn">
+                    <div className="add-form-btn">
                         <Button variant="contained" className={classes.button} size="medium" type="submit" form="city-form">
                             Submit</Button>
                     </div>
                 </form>) : (<div className="success">
                     <p>City updated successfully!</p>
-                    <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Update another city</Button>
+                    <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another city</Button>
                 </div>)}
 
                 <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
-                
+
             </div>
         );
     }
@@ -157,7 +175,8 @@ Editcity.propTypes = {
     cities: PropTypes.object,
     getCities: PropTypes.func,
     updateCity: PropTypes.func,
-    addSuccess: PropTypes.func
+    addSuccess: PropTypes.func,
+    match: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

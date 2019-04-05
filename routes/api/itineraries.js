@@ -17,7 +17,7 @@ router.post("/:cityId", (req, res) => {
   const newItinerary = new Itinerary({
     title: req.body.title,
     user: req.body.user,
-    rating: 0,
+    rating: req.body.rating,
     duration: req.body.duration,
     price: req.body.price,
     hashtag: req.body.hashtag,

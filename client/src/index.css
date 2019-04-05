@@ -134,6 +134,10 @@ body {
   margin-bottom: 20px
 }
 
+.cities {
+  text-align: center
+}
+
 .cities button {
   font-size: 1.3em;
   margin-bottom: 10px;
@@ -141,11 +145,17 @@ body {
 }
 
 .cities-filter {
-  margin: 20px
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center
 }
 
 .cities-filter input {
-  text-align: center
+  text-align: center;
+  font-size: 20px;
+  font-family: inherit;
+
 }
 
 .cities-filter p {
@@ -162,19 +172,35 @@ body {
   text-decoration: none
 }
 
-.add-city h1 {
+.add-form h1 {
   text-align: center
 }
 
-.add-city-btn {
+.add-form-btn {
   display: block;
   margin-top: 20px
+}
+
+.add-activity {
+  display: flex;
+  flex-direction: column;
 }
 
 .success {
   display: flex;
   flex-direction: column;
   align-items: center
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.select p {
+  font-size: 18px;
+  margin-bottom: 0
 }
 
 /* CITY PAGE */
@@ -222,7 +248,9 @@ body {
 
 .back-link {
   display: flex;
-  justify-content: center
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center
 }
 
 .card-actions {
@@ -255,9 +283,6 @@ body {
   flex-grow: 3
 }
 
-.slider {
-  margin-bottom: 40px
-}
 
 .slider-image {
   height: 100px;
@@ -429,3 +454,6 @@ button.comment-delete {
   justify-content: flex-end
 }
 
+.slider {
+  padding: 10px 10px 30px 10px
+}

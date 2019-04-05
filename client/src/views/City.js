@@ -40,7 +40,9 @@ class City extends Component {
                     )
                 }
                 <div className="back-link">
-                    <Link to="/cities/all">Choose another city</Link>
+                    <Link to={`/cities/${this.props.match.params.id}/additinerary`}>Add another itinerary</Link>
+                    <Link to={`/cities/${this.props.match.params.id}/editcity`}>Edit city</Link>
+                    <Link to="/cities/all">Choose a different city</Link>
                 </div>
             </div>
         )

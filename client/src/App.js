@@ -23,19 +23,33 @@ class App extends Component {
         <Header />
         <div className="content">
           <Switch>
+            
             <Route exact path="/" component={Landing} />
             <Route exact path="/1" component={Landing1} />
             <Route exact path="/2" component={Landing2} />
+
             <Route path="/login" component={Login} />
             <Route path="/createaccount" component={Createaccount} />
-            <Route path="/cities/all" component={Cities} />
+
+            <Route exact path="/cities/all" component={Cities} />
             <Route exact path="/cities/:id" component={City} />
-            <Route path="/addcity" component={Addcity} />
+
+            <Route exact path="/cities/all/addcity" component={Addcity} />
+          
             <Route path="/editcity" component={Editcity} />
+            <Route path="/cities/:cityId/editcity" component={Editcity} />
+                     
             <Route path="/edititinerary" component={Edititinerary} />
-            <Route path="/cities/:id/additinerary" component={Additinerary} />
+            <Route path="/cities/:cityId/:itineraryId/edititinerary" component={Edititinerary} />
+
+            <Route path="/additinerary" component={Additinerary} />
+            <Route path="/cities/:cityId/additinerary" component={Additinerary} />
+
+            <Route path="/addactivity" component={Addactivity} />
             <Route path="/cities/:cityId/:itineraryId/addactivity" component={Addactivity} />
+
             <Route component={Notfound} />
+
           </Switch>
         </div>
         <Footer className="container" />

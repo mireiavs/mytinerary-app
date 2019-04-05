@@ -47,7 +47,7 @@ export const deleteItinerary = itineraryId => dispatch => {
 
 export const updateItinerary = (itinerary, itineraryId) => dispatch => {
     axios
-        .put(`api/itineraries/${itineraryId}`, itinerary)
+        .put(`/api/itineraries/${itineraryId}`, itinerary)
         .then(() =>
             dispatch({
                 type: UPDATE_ITINERARY,

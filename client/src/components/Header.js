@@ -73,6 +73,13 @@ class Header extends Component {
         const citiesLink = props => <Link to="/cities/all" {...props} />
         const logInLink = props => <Link to="/login" {...props} />
         const createAccLink = props => <Link to="/createaccount" {...props} />
+        const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
+        const editCityLink = props => <Link to="/editcity" {...props} />
+        const addItinLink = props => <Link to="/additinerary" {...props} />
+        const editItinink = props => <Link to="/edititinerary" {...props} />
+        const addActLink = props => <Link to="/addactivity" {...props} />
+        
+
         const sideList = (
             <div className={classes.list}>
                 <List>
@@ -80,21 +87,46 @@ class Header extends Component {
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText>Home</ListItemText>
                     </ListItem>
-                        <ListItem button component={citiesLink}>
-                            <ListItemIcon><CitiesIcon /></ListItemIcon>
-                            <ListItemText>Cities</ListItemText>
-                        </ListItem>
+                    <ListItem button component={citiesLink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Cities</ListItemText>
+                    </ListItem>
 
-                        <ListItem button component={logInLink}>
-                            <ListItemIcon><LogInIcon /></ListItemIcon>
-                            <ListItemText>Log In</ListItemText>
-                        </ListItem>
+                    <ListItem button component={addCityLink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Add a city</ListItemText>
+                    </ListItem>
 
-                        <ListItem button component={createAccLink}>
-                            <ListItemIcon><CreateAccIcon /></ListItemIcon>
-                            <ListItemText>Create account</ListItemText>
-                        </ListItem>
-               
+                    <ListItem button component={editCityLink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Edit a city</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={addItinLink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Add an itinerary</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={editItinink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Edit an itinerary</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={addActLink}>
+                        <ListItemIcon><CitiesIcon /></ListItemIcon>
+                        <ListItemText>Add an activity</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={logInLink}>
+                        <ListItemIcon><LogInIcon /></ListItemIcon>
+                        <ListItemText>Log In</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={createAccLink}>
+                        <ListItemIcon><CreateAccIcon /></ListItemIcon>
+                        <ListItemText>Create account</ListItemText>
+                    </ListItem>
+
 
                 </List>
             </div>

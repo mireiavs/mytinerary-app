@@ -12,7 +12,7 @@ import Comments from "./Comments"
 import { connect } from "react-redux"
 import { getActivities } from "../actions/activityActions"
 import { getComments, addComment, deleteComment } from "../actions/commentActions"
-
+import { Link } from "react-router-dom"
 
 const styles = theme => ({
   card: {
@@ -36,22 +36,20 @@ const styles = theme => ({
 });
 
 class Itinerary extends Component {
- 
+
   handleExpandClick = () => {
     this.props.toggle(this.props.itinerary._id);
-    if(!this.props.isOpen) {
+    if (!this.props.isOpen) {
       const itineraryId = this.props.itinerary._id
       this.props.getActivities(itineraryId);
       this.props.getComments(itineraryId)
     }
-/*     this.setState(state => ({ expanded: !state.expanded }));
- */    
   };
 
   render() {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
-    const hashtags = itinerary.hashtag.map((hashtag, index) => <span key={index}>&#35;{hashtag} </span>)
+    
     return (
       <div className="itinerary-card">
         <Card className={classes.card}>
@@ -66,20 +64,27 @@ class Itinerary extends Component {
             <div className="itinerary-title-details">
               <h4>{itinerary.title}</h4>
               <div className="itinerary-detail-preview">
-                <span>Likes: {itinerary.rating} </span>
+                <span>Rating: {itinerary.rating} </span>
                 <span>{itinerary.duration} hours</span>
                 <span>{itinerary.price}</span>
-                <p>{hashtags}</p>
+                <p>{itinerary.hashtag}</p>
               </div>
             </div>
-
 
           </CardContent>
           <Collapse in={this.props.isOpen} timeout="auto" mountOnEnter unmountOnExit>
             <CardContent>
 
               <Activity activities={this.props.activities} />
+              <div className="back-link">
+                <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/addactivity`}>Add an activity</Link>
+              </div>
+
               <Comments comments={this.props.comments} addComment={this.props.addComment} itinerary={this.props.itinerary} deleteComment={this.props.deleteComment} />
+
+              <div className="back-link">
+                <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/edititinerary`}>Edit itinerary</Link>
+              </div>
 
             </CardContent>
           </Collapse>

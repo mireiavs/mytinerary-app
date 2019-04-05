@@ -26,19 +26,21 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-    },
-    input: {
-        display: 'none',
-        color: "black"
-    },
+    }
 });
 
 
 class Addcity extends Component {
-    state = {
-        name: "",
-        country: ""
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            country: ""
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
+    }
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -59,7 +61,7 @@ class Addcity extends Component {
         const { classes } = this.props;
         const addSuccess = this.props.cities.addsuccess
         return (
-            <div className="add-city">
+            <div className="add-form">
                 <h1>Add a city</h1>
 
                 {!addSuccess ? (<form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
@@ -67,8 +69,10 @@ class Addcity extends Component {
                         name="name"
                         id="name"
                         label="Name"
-                        className={classes.textField}
-                        value={this.state.name}
+                        classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                        }} value={this.state.name}
                         onChange={this.onChange}
                         margin="normal"
                         color="primary"
@@ -82,7 +86,7 @@ class Addcity extends Component {
                         onChange={this.onChange}
                         margin="normal"
                     />
-                    <div className="add-city-btn">
+                    <div className="add-form-btn">
                         <Button variant="contained" className={classes.button} size="medium" type="submit" form="city-form">
                             Submit</Button>
                     </div>

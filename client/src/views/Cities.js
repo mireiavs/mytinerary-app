@@ -57,7 +57,7 @@ class Cities extends Component {
 
                 )
             } else {
-                cityList = "No cities found"
+                cityList = "We don't have that city yet."
             }
         } else {
             cityList = cities.map(city =>
@@ -73,6 +73,7 @@ class Cities extends Component {
                     <div>
                         <Cityfilter onChange={this.filterCities} />
                         <div className="city-list">{cityList}</div>
+                        <Link to="/cities/all/addcity">Add a city</Link>
                     </div>
                 )}
             </div>
