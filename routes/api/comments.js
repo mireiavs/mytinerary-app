@@ -3,7 +3,7 @@ const router = express.Router();
 const Comment = require("../../models/Comment")
 
 
-// GET /api/comments/:itineraryId
+// GET /api/comments/:itineraryId - gets comments sorted in reverse chronological order (using timestamp)
 router.get("/:itineraryId", (req, res) => {
   Comment.find({ itineraryId: req.params.itineraryId }, (err, data) => {
     if (err)
@@ -24,8 +24,8 @@ router.post("/:itineraryId", (req, res) => {
   newComment.save().then(comment => res.send(comment))
 })
 
-// UPDATE /api/activities/:activityId
-router.put("/:commentId", (req, res) => {
+// UPDATE /api/comments/:commentId - not tested yet, check if necessary
+/* router.put("/:commentId", (req, res) => {
   const updatedComment ={ 
     itineraryId: req.body.itineraryId,
     user: req.body.user,
@@ -35,9 +35,9 @@ router.put("/:commentId", (req, res) => {
   Comment.findOneAndUpdate({ _id: req.params.commentId }, updatedComment)
     .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))
-})
+}) */
 
-// DELETE /api/comments/:itineraryId/:commentId
+// DELETE /api/comments/:commentId
 router.delete("/:commentId", (req, res) => {
   Comment.deleteOne({ _id: req.params.commentId })
     .then(() => res.json({ success: true }))

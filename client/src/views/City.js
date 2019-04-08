@@ -13,11 +13,13 @@ class City extends Component {
         this.state = {};
     }
 
+    // function to collapse all other cards when a specific one is open
     toggle(id) {
         this.setState({ collapse: this.state.collapse === id ? null : id });
     }
 
     componentDidMount() {
+        // get itineraries for this city, city ID is taken from the route
         this.props.getItineraries(this.props.match.params.id)
     }
     render() {

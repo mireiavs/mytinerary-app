@@ -37,6 +37,7 @@ const styles = theme => ({
 
 class Itinerary extends Component {
 
+  /* Function to handle collapse of itinerary cards. isOpen variable is passed from parent component as it has a function to close all other cards when one is open */
   handleExpandClick = () => {
     this.props.toggle(this.props.itinerary._id);
     if (!this.props.isOpen) {
@@ -58,7 +59,6 @@ class Itinerary extends Component {
             <div className="profile-pic-container">
               <Avatar alt="User logo" src={require("../images/" + itinerary.user + ".png")} className={classes.bigAvatar} />
               <p>{itinerary.user}</p>
-
             </div>
 
             <div className="itinerary-title-details">

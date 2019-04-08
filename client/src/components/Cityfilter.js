@@ -22,8 +22,6 @@ const styles = theme => ({
     },
 });
 
-
-
 class Cityfilter extends Component {
     constructor(props) {
         super(props);
@@ -35,6 +33,7 @@ class Cityfilter extends Component {
         // Debounce
         this.updateFilter = debounce(this.updateFilter, 500);
     }
+
     handleChange = (e) => {
         this.setState({
             cityFilter: e.target.value
@@ -42,12 +41,15 @@ class Cityfilter extends Component {
         // Debounced function
         this.updateFilter()
     }
+
+    // Function to update the city filter (on parent component)
     updateFilter() {
         this.props.onChange(this.state.cityFilter)
     }
+    
     render() {
         const { classes } = this.props;
-
+        
         return (
             <div className="cities-filter">
                 <p>Filter our current cities:</p>

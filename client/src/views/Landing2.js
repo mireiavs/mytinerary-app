@@ -13,15 +13,15 @@ class Landing extends Component {
                 <Header />
 
                 <div>
-                    <img src={logo} alt="MYtinerary logo" className="logo2" />
+                    <img src={logo} alt="MYtinerary logo" className="logo" />
                 </div>
 
                 <div className="landing">
-                    <p className="welcome-text2">Find your perfect trip, designed by insiders who know and love their cities</p>
+                    <p className="welcome-text">Find your perfect trip, designed by insiders who know and love their cities</p>
                     
                     <div><Link to="/cities"><img src={arrowIcon} alt="arrow icon" className="arrow-icon2"></img></Link>
                     </div>
-                    <p className="welcome-text2 popular">Popular MYtineraries</p>
+                    <p className="welcome-text popular">Popular MYtineraries</p>
  
                 </div>
 

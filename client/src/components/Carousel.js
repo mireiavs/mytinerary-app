@@ -28,7 +28,6 @@ class Carousel extends Component {
         };
         return (
             <div>
-
                 <Slider {...settings} className="container">
                     <div className="container landing-slider">
                         <div className="row">
@@ -46,7 +45,6 @@ class Carousel extends Component {
                             <div className="col">
                                 <img className="landing-pic" src={Chicago} alt="Chicago" />
                             </div>
-
                         </div>
                     </div>
                     <div className="container  landing-slider">
@@ -61,12 +59,10 @@ class Carousel extends Component {
                         <div className="row">
                             <div className="col">
                                 <img className="landing-pic" src={Lisbon} alt="Lisbon" />
-
                             </div>
                             <div className="col">
                                 <img className="landing-pic" src={London} alt="London" />
                             </div>
-
                         </div>
                     </div>
                     <div>
@@ -74,7 +70,6 @@ class Carousel extends Component {
                             <div className="row">
                                 <div className="col">
                                     <img className="landing-pic" src={Losangeles} alt="Losangeles" />
-
                                 </div>
                                 <div className="col">
                                     <img className="landing-pic" src={Paris} alt="Paris" />
@@ -83,7 +78,6 @@ class Carousel extends Component {
                             <div className="row">
                                 <div className="col">
                                     <img className="landing-pic" src={Rome} alt="Rome" />
-
                                 </div>
                                 <div className="col">
                                     <img className="landing-pic" src={Vienna} alt="Vienna" />                                </div>

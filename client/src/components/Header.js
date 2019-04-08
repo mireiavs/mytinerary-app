@@ -19,7 +19,6 @@ import CitiesIcon from "@material-ui/icons/LocationCity";
 import LogInIcon from "@material-ui/icons/ExitToApp";
 import CreateAccIcon from "@material-ui/icons/PersonAdd";
 
-
 const styles = {
     root: {
         flexGrow: 1,
@@ -39,32 +38,26 @@ const styles = {
     },
 };
 
-
-
-
-
-
-
 class Header extends Component {
     state = {
         right: false,
         anchorEl: null,
     };
+
+    // Material UI functions for drawer menu
     toggleDrawer = (side, open) => () => {
         this.setState({
             [side]: open,
         });
     };
-
     handleMenu = event => {
         this.setState({ anchorEl: event.currentTarget });
     };
-
     handleClose = () => {
         this.setState({ anchorEl: null });
     };
 
-
+    /* For now, links to add and edit cities and itineraries have been added to the menu. This will change once authentication is implemented */
     render() {
         const { classes } = this.props;
         const { anchorEl } = this.state;
@@ -78,7 +71,7 @@ class Header extends Component {
         const addItinLink = props => <Link to="/additinerary" {...props} />
         const editItinink = props => <Link to="/edititinerary" {...props} />
         const addActLink = props => <Link to="/addactivity" {...props} />
-        
+
 
         const sideList = (
             <div className={classes.list}>
@@ -126,8 +119,6 @@ class Header extends Component {
                         <ListItemIcon><CreateAccIcon /></ListItemIcon>
                         <ListItemText>Create account</ListItemText>
                     </ListItem>
-
-
                 </List>
             </div>
         );
@@ -142,7 +133,6 @@ class Header extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
                                 color="inherit"
-
                             >
                                 <AccountCircle fontSize="large" />
                             </IconButton>
@@ -185,9 +175,6 @@ class Header extends Component {
                                 {sideList}
                             </div>
                         </SwipeableDrawer>
-
-
-
                     </Toolbar>
                 </AppBar>
             </div>

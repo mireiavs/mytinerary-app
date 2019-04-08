@@ -79,6 +79,10 @@ class Edititinerary extends Component {
         this.onDeleteClick = this.onDeleteClick.bind(this);
     }
 
+    /* When a city (handleChangeSelectCity) and an itinerary 
+    (handleChangeSelectItinerary) are selected in the dropdown
+    menus, the input fields are automatically populated
+    so they can be edited */
     handleChangeSelectCity = event => {
         const { cities } = this.props.cities
         const city = cities.find(city => city.name === event.target.value)
@@ -133,6 +137,11 @@ class Edititinerary extends Component {
         this.props.getCities()
     }
 
+    /* If page is accessed from a specific itinerary, it will get the info
+    from city and itinerary automatically, if not, it will get it from the 
+    dropdown menus. Below we check if props have been updated (so the function 
+    is only called when the props have been received)  and if there is a city ID 
+    and an itinerary ID it sets the state with that info */
     componentDidUpdate(prevProps) {
         if (prevProps.cities.cities !== this.props.cities.cities) {
             if (this.props.match.params.cityId) {
@@ -159,7 +168,7 @@ class Edititinerary extends Component {
             }
         }
     }
-    
+
     render() {
         const { classes } = this.props;
         const { cities } = this.props.cities

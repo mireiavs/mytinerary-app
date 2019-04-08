@@ -8,7 +8,6 @@ import Cityfilter from "../components/Cityfilter";
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
@@ -19,7 +18,6 @@ const styles = theme => ({
     }
 });
 
-
 class Cities extends Component {
     constructor(props) {
         super(props);
@@ -28,9 +26,12 @@ class Cities extends Component {
             noResults: false
         }
     }
+
     componentDidMount() {
         this.props.getCities()
     }
+
+    /* Filter the list of cities according to the text entered in the cityFilter component, also update noResults variable in case of no results */
     filterCities = (cityFilter) => {
         let filteredCities = this.props.cities.cities.filter(city => city.name.toLowerCase().includes(cityFilter.toLowerCase()) || cityFilter === "")
 
@@ -45,6 +46,7 @@ class Cities extends Component {
             })
         }
     }
+    
     render() {
         const { classes } = this.props;
         const { cities } = this.props.cities
@@ -54,17 +56,16 @@ class Cities extends Component {
             if (!this.state.noResults) {
                 cityList = this.state.filteredCities.map(city =>
                     <Button component={Link} size="large" variant="outlined" className={classes.margin} to={`/cities/${city.name}`} key={city._id}>{city.name}</Button>
-
                 )
             } else {
                 cityList = "We don't have that city yet."
             }
         } else {
             cityList = cities.map(city =>
-                <Button component={Link}  size="large" variant="outlined" className={classes.margin} to={`/cities/${city.name}`} key={city._id}>{city.name}</Button>
-
+                <Button component={Link} size="large" variant="outlined" className={classes.margin} to={`/cities/${city.name}`} key={city._id}>{city.name}</Button>
             )
         }
+
         const isLoading = this.props.cities.loading
         return (
             <div className="cities">

@@ -60,11 +60,12 @@ class Comments extends Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
+    // As user writes username and comment, the state is updated
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-
+    // When comment is submitted, a newComment object is sent to be posted and the message field is reset.
     onSubmit = e => {
         e.preventDefault();
         const date = new Date()
@@ -80,6 +81,7 @@ class Comments extends Component {
         })
     }
 
+    // Function to delete the message when the corresponding icon is clicked
     onDeleteClick = id => {
         this.props.deleteComment(id)
     }

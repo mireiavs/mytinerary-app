@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// placeholder component, not functional yet
 
 class Login extends Component {
     render() {

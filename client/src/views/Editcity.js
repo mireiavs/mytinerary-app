@@ -67,6 +67,8 @@ class Editcity extends Component {
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
     }
 
+    /* When a city is selected in the dropdown menu, the input fields
+    are automatically populated so they can be edited */
     handleChangeSelect = event => {
         const { cities } = this.props.cities
         const city = cities.find(city => city.name === event.target.value)
@@ -97,6 +99,12 @@ class Editcity extends Component {
         this.props.getCities()
 
     }
+
+    /* If page is accessed from a specific city, it will get the info from 
+    the city automatically, if not, it will get it from the dropdown menu. 
+    Below we check if props have been updated (so the function is only called
+    when the props have been received) and if there is a city ID it sets the 
+    state with that info */
     componentDidUpdate(prevProps) {
         if (prevProps.cities.cities !== this.props.cities.cities) {
             if (this.props.match.params.cityId) {
@@ -131,7 +139,6 @@ class Editcity extends Component {
                         </Select>
                     </FormControl>
                 </form>
-
 
                 {!addSuccess ? (<form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
                     <TextField

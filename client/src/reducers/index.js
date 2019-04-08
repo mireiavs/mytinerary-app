@@ -4,7 +4,6 @@ import itineraryReducer from "./itineraryReducer"
 import activityReducer from "./activityReducer"
 import commentReducer from "./commentReducer"
 
-
 export default combineReducers({
     cities: cityReducer,
     itineraries: itineraryReducer,

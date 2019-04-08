@@ -30,7 +30,6 @@ class Activity extends Component {
         </div>)
         }
       </div>
-
     )
   }
 }

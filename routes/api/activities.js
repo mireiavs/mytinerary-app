@@ -26,7 +26,6 @@ const upload = multer({
   fileFilter: fileFilter
 })
 
-
 // GET /api/activities/:itineraryId
 router.get("/:itineraryId", (req, res) => {
   Activity.find({ itineraryId: req.params.itineraryId }, (err, data) => {
@@ -36,8 +35,7 @@ router.get("/:itineraryId", (req, res) => {
   })
 })
 
-
-// POST /api/activities/:itineraryId
+// POST /api/activities/:itineraryId - uses multer to upload image
 router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
   const newActivity = new Activity({
     itineraryId: req.body.itineraryId,
@@ -46,7 +44,6 @@ router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
   });
   newActivity.save().then(activity => res.send(activity))
 })
-
 
 // UPDATE /api/activities/:activityId
 router.put("/:activityId", upload.single("activityImage"), (req, res) => {
@@ -66,8 +63,6 @@ router.delete("/:activityId", (req, res) => {
     .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))
 })
-
-
 
 module.exports = router
 

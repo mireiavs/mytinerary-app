@@ -30,7 +30,6 @@ export const addComment = (comment, itineraryId) => dispatch => {
         )
 }
 
-
 export const deleteComment = id => dispatch => {
     axios.delete(`/api/comments/${id}`)
         .then(() => dispatch({

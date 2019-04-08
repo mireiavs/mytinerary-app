@@ -55,7 +55,7 @@ class AddItinerary extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
-        this.handleChangeSelect = this.handleChangeSelect.bind(this);    
+        this.handleChangeSelect = this.handleChangeSelect.bind(this);
     }
 
     handleChangeSelect = event => {
@@ -85,8 +85,13 @@ class AddItinerary extends Component {
     }
     componentDidMount() {
         this.props.getCities()
-
     }
+
+    /* If page is accessed from a specific city, it will get the info from 
+    the city automatically, if not, it will get it from the dropdown menu.
+    Below we check if props have been updated (so the function is only called
+    when the props have been received) and if there is a city ID it sets 
+    the state with that info */
     componentDidUpdate(prevProps) {
         if (prevProps.cities.cities !== this.props.cities.cities) {
             if (this.props.match.params.cityId) {
@@ -104,9 +109,6 @@ class AddItinerary extends Component {
         return (
             <div className="add-form">
                 <h1>Add an itinerary</h1>
-
-
-
 
                 {!addItSuccess ? (
                     <div>
