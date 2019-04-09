@@ -15,15 +15,21 @@ import City from "./views/City"
 import Additinerary from "./views/Additinerary"
 import Addactivity from "./views/Addactivity"
 import Edititinerary from "./views/Edititinerary"
+import store from "./store"
+import { loadUser } from "./actions/authActions"
+
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser())
+  }
   render() {
     return (
       <div className="app">
         <Header />
         <div className="content">
           <Switch>
-            
+
             <Route exact path="/" component={Landing} />
             <Route exact path="/1" component={Landing1} />
             <Route exact path="/2" component={Landing2} />
@@ -35,10 +41,10 @@ class App extends Component {
             <Route exact path="/cities/:id" component={City} />
 
             <Route exact path="/cities/all/addcity" component={Addcity} />
-          
+
             <Route path="/editcity" component={Editcity} />
             <Route path="/cities/:cityId/editcity" component={Editcity} />
-                     
+
             <Route path="/edititinerary" component={Edititinerary} />
             <Route path="/cities/:cityId/:itineraryId/edititinerary" component={Edititinerary} />
 

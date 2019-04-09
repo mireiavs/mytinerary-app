@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const City = require("../../models/City")
-
+const auth = require("../../middleware/auth")
 
 // GET /api/cities/all
 router.get("/all", (req, res) => {
@@ -12,9 +12,8 @@ router.get("/all", (req, res) => {
   })
 })
 
-
 // POST /api/cities/all
-router.post("/all", (req, res) => {
+router.post("/all", auth, (req, res) => {
   const newCity = new City({
     name: req.body.name,
     country: req.body.country
@@ -23,7 +22,7 @@ router.post("/all", (req, res) => {
 })
 
 // UPDATE /api/cities/:id
-router.put("/:id", (req, res) => {
+router.put("/:id", auth, (req, res) => {
   const updatedCity = {
     name: req.body.name,
     country: req.body.country
@@ -34,7 +33,7 @@ router.put("/:id", (req, res) => {
   }) 
 
 // DELETE /api/cities/:id
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth, (req, res) => {
   City.deleteOne({ name: req.params.id })
     .then(city => res.json({ success: true }))
     .catch(err => res.status(404).json({ success: false }))

@@ -1,5 +1,8 @@
-import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY, UPDATE_CITY } from "./types"
 import axios from "axios"
+import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY, UPDATE_CITY } from "./types"
+import { tokenConfig } from "./authActions"
+import { returnErrors } from "./errorActions"
+
 
 export const getCities = () => dispatch => {
     dispatch(setCitiesLoading());
@@ -10,6 +13,7 @@ export const getCities = () => dispatch => {
                 type: GET_CITIES,
                 payload: res.data
             }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const setCitiesLoading = () => {
@@ -18,15 +22,16 @@ export const setCitiesLoading = () => {
     }
 }
 
-export const addCity = city => dispatch => {
+export const addCity = city => (dispatch, getState) => {
     axios
-        .post("api/cities/all", city)
+        .post("/api/cities/all", city, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: ADD_CITY,
                 payload: res.data
             })
         )
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const addSuccess = () => {
@@ -41,21 +46,23 @@ export const deleteSuccess = () => {
     }
 }
 
-export const deleteCity = id => dispatch => {
-    axios.delete(`/api/cities/${id}`)
+export const deleteCity = id => (dispatch, getState) => {
+    axios.delete(`/api/cities/${id}`, tokenConfig(getState))
         .then(() => dispatch({
             type: DELETE_CITY,
             payload: id
         }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-export const updateCity = (city, id) => dispatch => {
+export const updateCity = (city, id) => (dispatch, getState) => {
     axios
-        .put(`api/cities/${id}`, city)
+        .put(`/api/cities/${id}`, city, tokenConfig(getState))
         .then(() =>
             dispatch({
                 type: UPDATE_CITY,
                 payload: city
             })
         )
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }

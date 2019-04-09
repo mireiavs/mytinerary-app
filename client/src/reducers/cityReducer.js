@@ -28,7 +28,8 @@ export default function (state = initialState, action) {
         case DELETE_CITY:
             return {
                 ...state,
-                cities: state.cities.filter(city => city.name !== action.payload)
+                cities: state.cities.filter(city => city.name !== action.payload),
+                addsuccess: true
             }
         case ADD_SUCCESS:
             return {

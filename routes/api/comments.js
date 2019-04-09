@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Comment = require("../../models/Comment")
+const auth = require("../../middleware/auth")
 
 
 // GET /api/comments/:itineraryId - gets comments sorted in reverse chronological order (using timestamp)
@@ -14,7 +15,7 @@ router.get("/:itineraryId", (req, res) => {
 
 
 // POST /api/comments/:itineraryId
-router.post("/:itineraryId", (req, res) => {
+router.post("/:itineraryId", auth, (req, res) => {
   const newComment = new Comment({
     itineraryId: req.body.itineraryId,
     user: req.body.user,
@@ -38,7 +39,7 @@ router.post("/:itineraryId", (req, res) => {
 }) */
 
 // DELETE /api/comments/:commentId
-router.delete("/:commentId", (req, res) => {
+router.delete("/:commentId", auth, (req, res) => {
   Comment.deleteOne({ _id: req.params.commentId })
     .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))

@@ -59,7 +59,8 @@ class Editcity extends Component {
         super(props);
         this.state = {
             name: "",
-            country: ""
+            country: "",
+            updatedName: "",
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -72,32 +73,41 @@ class Editcity extends Component {
     handleChangeSelect = event => {
         const { cities } = this.props.cities
         const city = cities.find(city => city.name === event.target.value)
-        this.setState({ name: event.target.value, country: city.country });
-
+        this.setState({
+            name: event.target.value,
+            updatedName: event.target.value,
+            country: city.country
+        });
     };
+
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+
     onSubmit = e => {
         e.preventDefault();
         const updatedCity = {
-            name: this.state.name,
+            name: this.state.updatedName,
             country: this.state.country
         }
-
         this.props.updateCity(updatedCity, this.state.name)
     }
+
     onClickAfterAdd = () => {
         this.props.addSuccess()
     }
+
     onDeleteClick = id => {
         this.props.deleteCity(id)
     }
-    componentDidMount() {
-        this.props.getCities()
 
+    componentDidMount() {
+        this.props.getCities();
+        if (this.props.cities.addsuccess) {
+            this.props.addSuccess()
+        }
     }
 
     /* If page is accessed from a specific city, it will get the info from 
@@ -110,7 +120,15 @@ class Editcity extends Component {
             if (this.props.match.params.cityId) {
                 const cities = this.props.cities.cities
                 const city = cities.find(city => city.name === this.props.match.params.cityId)
-                this.setState({ name: city.name, country: city.country });
+
+                // Check if city exists (for coming back to the form once the city being deleted)
+                if (city) {
+                    this.setState({
+                        name: city.name,
+                        updatedName: city.name,
+                        country: city.country
+                    });
+                }
             }
         }
     }
@@ -123,51 +141,56 @@ class Editcity extends Component {
         return (
             <div className="edit-city">
                 <h1>Edit city</h1>
-                <p>Select city:</p>
-                <form className={classes.root} autoComplete="off">
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="name">City</InputLabel>
-                        <Select
-                            value={this.state.name}
-                            onChange={this.handleChangeSelect}
-                            inputProps={{
-                                name: 'name',
-                                id: 'name',
-                            }}
-                        >
-                            {cityList}
-                        </Select>
-                    </FormControl>
-                </form>
 
-                {!addSuccess ? (<form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
-                    <TextField
-                        name="name"
-                        id="name"
-                        label="Name"
-                        className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.onChange}
-                        margin="normal"
-                        color="primary"
-                    />
-                    <TextField
-                        name="country"
-                        id="country"
-                        label="Country"
-                        className={classes.textField}
-                        value={this.state.country}
-                        onChange={this.onChange}
-                        margin="normal"
-                    />
-                    <div className="add-form-btn">
-                        <Button variant="contained" className={classes.button} size="medium" type="submit" form="city-form">
-                            Submit</Button>
-                    </div>
-                </form>) : (<div className="success">
-                    <p>City updated successfully!</p>
-                    <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another city</Button>
-                </div>)}
+                {!addSuccess ? (
+                    <div className="form">
+
+                        <form className={classes.root} autoComplete="off">
+                            <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="name">Select city</InputLabel>
+
+                                <Select
+                                    value={this.state.name}
+                                    onChange={this.handleChangeSelect}
+                                    inputProps={{
+                                        name: 'name',
+                                        id: 'name',
+                                    }}
+                                >
+                                    {cityList}
+                                </Select>
+                            </FormControl>
+                        </form>
+
+                        <form id="city-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
+                            <TextField
+                                name="updatedName"
+                                id="updatedName"
+                                label="Name"
+                                className={classes.textField}
+                                value={this.state.updatedName}
+                                onChange={this.onChange}
+                                margin="normal"
+                                color="primary"
+                            />
+                            <TextField
+                                name="country"
+                                id="country"
+                                label="Country"
+                                className={classes.textField}
+                                value={this.state.country}
+                                onChange={this.onChange}
+                                margin="normal"
+                            />
+                            <div className="add-form-btn">
+                                <Button variant="contained" className={classes.button} size="medium" type="submit" form="city-form">
+                                    Submit</Button>
+                            </div>
+                        </form>
+                    </div>) : (<div className="success">
+                        <p>City updated successfully!</p>
+                        <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another city</Button>
+                    </div>)}
 
                 <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
 

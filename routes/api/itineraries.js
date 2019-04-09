@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Itinerary = require("../../models/Itinerary")
+const auth = require("../../middleware/auth")
 
 
 // GET /api/itineraries/:cityId
@@ -13,7 +14,7 @@ router.get("/:cityId", (req, res) => {
 })
 
 // POST /api/itineraries/:cityId
-router.post("/:cityId", (req, res) => {
+router.post("/:cityId", auth, (req, res) => {
   const newItinerary = new Itinerary({
     title: req.body.title,
     user: req.body.user,
@@ -27,7 +28,7 @@ router.post("/:cityId", (req, res) => {
 })
 
 // UPDATE /api/itineraries/:itineraryId
-router.put("/:itineraryId", (req, res) => {
+router.put("/:itineraryId", auth, (req, res) => {
   const updatedItinerary = {
     title: req.body.title,
     user: req.body.user,
@@ -43,7 +44,7 @@ router.put("/:itineraryId", (req, res) => {
 })
 
 // DELETE /api/itineraries/:itineraryId
-router.delete("/:itineraryId", (req, res) => {
+router.delete("/:itineraryId", auth, (req, res) => {
   Itinerary.deleteOne({ _id: req.params.itineraryId })
     .then(itinerary => res.json({ success: true }))
     .catch(err => res.status(404).json({ success: false }))

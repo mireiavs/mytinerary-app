@@ -18,6 +18,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import LogInIcon from "@material-ui/icons/ExitToApp";
 import CreateAccIcon from "@material-ui/icons/PersonAdd";
+import { logout } from "../actions/authActions"
+import { connect } from "react-redux"
 
 const styles = {
     root: {
@@ -62,6 +64,7 @@ class Header extends Component {
         const { classes } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
+
         const homeLink = props => <Link to="/" {...props} />
         const citiesLink = props => <Link to="/cities/all" {...props} />
         const logInLink = props => <Link to="/login" {...props} />
@@ -71,7 +74,6 @@ class Header extends Component {
         const addItinLink = props => <Link to="/additinerary" {...props} />
         const editItinink = props => <Link to="/edititinerary" {...props} />
         const addActLink = props => <Link to="/addactivity" {...props} />
-
 
         const sideList = (
             <div className={classes.list}>
@@ -150,8 +152,14 @@ class Header extends Component {
                                 open={open}
                                 onClose={this.handleClose}
                             >
-                                <MenuItem component={logInLink} onClick={this.handleClose}>Log In</MenuItem>
-                                <MenuItem component={createAccLink} onClick={this.handleClose}>Create account</MenuItem>
+
+                                {this.props.isAuthenticated ? <MenuItem onClick={this.props.logout}>Log Out</MenuItem> : <div><MenuItem component={logInLink} onClick={this.handleClose}>Log In</MenuItem>
+                                    <MenuItem component={createAccLink} onClick={this.handleClose}>Create account</MenuItem></div>
+
+                                }
+
+
+
                             </Menu>
                         </div>
 
@@ -184,6 +192,12 @@ class Header extends Component {
 
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+})
+
+export default connect(mapStateToProps, { logout })(withStyles(styles)(Header))

@@ -33,7 +33,8 @@ export default function (state = initialState, action) {
         case DELETE_ITINERARY:
             return {
                 ...state,
-                itineraries: state.itineraries.filter(itinerary => itinerary._id !== action.payload)
+                itineraries: state.itineraries.filter(itinerary => itinerary._id !== action.payload),
+                additsuccess: true
             }
         case UPDATE_ITINERARY:
             return {

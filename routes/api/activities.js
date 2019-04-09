@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Activity = require("../../models/Activity")
+const auth = require("../../middleware/auth")
 
 const multer = require('multer');
 
@@ -36,7 +37,7 @@ router.get("/:itineraryId", (req, res) => {
 })
 
 // POST /api/activities/:itineraryId - uses multer to upload image
-router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
+router.post("/:itineraryId", upload.single("activityImage"), auth, (req, res) => {
   const newActivity = new Activity({
     itineraryId: req.body.itineraryId,
     img: req.file.path,
@@ -46,7 +47,7 @@ router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
 })
 
 // UPDATE /api/activities/:activityId
-router.put("/:activityId", upload.single("activityImage"), (req, res) => {
+router.put("/:activityId", upload.single("activityImage"), auth, (req, res) => {
   const updatedActivity = {
     itineraryId: req.body.itineraryId,
     img: req.file.path,
@@ -58,7 +59,7 @@ router.put("/:activityId", upload.single("activityImage"), (req, res) => {
 })
 
 // DELETE /api/activities/:activityId
-router.delete("/:activityId", (req, res) => {
+router.delete("/:activityId", auth, (req, res) => {
   Activity.deleteOne({ _id: req.params.activityId })
     .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))

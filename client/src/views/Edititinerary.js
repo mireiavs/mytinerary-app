@@ -95,6 +95,7 @@ class Edititinerary extends Component {
         const itinerary = itineraries.find(itinerary => itinerary.title === event.target.value)
         this.setState({
             title: event.target.value,
+            updatedTitle: event.target.value,
             user: itinerary.user,
             rating: itinerary.rating,
             duration: itinerary.duration,
@@ -114,7 +115,7 @@ class Edititinerary extends Component {
     onSubmit = e => {
         e.preventDefault();
         const updatedItinerary = {
-            title: this.state.title,
+            title: this.state.updatedTitle,
             user: this.state.user,
             rating: this.state.rating,
             duration: this.state.duration,
@@ -155,16 +156,20 @@ class Edititinerary extends Component {
             if (this.props.match.params.itineraryId) {
                 const itineraries = this.props.itineraries.itineraries
                 const itinerary = itineraries.find(itinerary => itinerary._id === this.props.match.params.itineraryId)
-                this.setState({
-                    itineraryId: itinerary._id,
-                    title: itinerary.title,
-                    user: itinerary.user,
-                    rating: itinerary.rating,
-                    duration: itinerary.duration,
-                    price: itinerary.price,
-                    hashtag: itinerary.hashtag,
-                    cityName: itinerary.cityName,
-                });
+                // Check if itinerary exists (for coming back to the form once the itinerary being deleted)
+                if (itinerary) {
+                    this.setState({
+                        itineraryId: itinerary._id,
+                        title: itinerary.title,
+                        updatedTitle: itinerary.title,
+                        user: itinerary.user,
+                        rating: itinerary.rating,
+                        duration: itinerary.duration,
+                        price: itinerary.price,
+                        hashtag: itinerary.hashtag,
+                        cityName: itinerary.cityName,
+                    });
+                }
             }
         }
     }
@@ -216,11 +221,11 @@ class Edititinerary extends Component {
                         </div>
                         <form id="itinerary-form" className={classes.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
                             <TextField
-                                name="title"
-                                id="title"
+                                name="updatedTitle"
+                                id="updatedTitle"
                                 label="Title"
                                 className={classes.textField}
-                                value={this.state.title}
+                                value={this.state.updatedTitle}
                                 onChange={this.onChange}
                                 margin="normal"
                                 color="primary"
