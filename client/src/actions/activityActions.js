@@ -21,14 +21,9 @@ export const setActivitiesLoading = () => {
     }
 }
 
-export const addActivity = (activity, itineraryId) => dispatch => {
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    }
+export const addActivity = (activity, itineraryId) => (dispatch, getState) => {
     axios
-        .post(`/api/activities/${itineraryId}`, activity, config)
+        .post(`/api/activities/${itineraryId}`, activity, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: ADD_ACTIVITY,
@@ -42,4 +37,23 @@ export const addAcSuccess = () => {
     return {
         type: ADD_AC_SUCCESS
     }
+}
+
+const tokenConfig = getState => {
+    // Get token from local storage
+    const token = getState().auth.token;
+
+    // Headers
+    const config = {
+        headers: {
+            "Content-type": "multipart/form-data"
+        }
+    }
+
+    // If token, add to headers
+    if (token) {
+        config.headers["x-auth-token"] = token;
+    }
+
+    return config
 }

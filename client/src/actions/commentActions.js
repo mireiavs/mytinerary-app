@@ -13,7 +13,6 @@ export const getComments = (itineraryId) => dispatch => {
                 payload: res.data
             }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
-
 }
 
 export const setCommentsLoading = () => {

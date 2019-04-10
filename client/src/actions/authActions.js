@@ -29,17 +29,17 @@ export const loadUser = () => (dispatch, getState) => {
         })
 }
 
-export const register = ({ username, email, password, first_name, last_name, country }) => dispatch => {
+export const register = user => dispatch => {
     const config = {
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "multipart/form-data"
         }
     }
 
     // Request body
-    const body = JSON.stringify({ username, email, password, first_name, last_name, country });
-
-    axios.post("/api/users", body, config)
+    /*     const body = JSON.stringify({ username, email, password, first_name, last_name, country });
+     */
+    axios.post("/api/users", user, config)
         .then(res => dispatch({
             type: REGISTRATION_SUCCESS,
             payload: res.data

@@ -53,8 +53,8 @@ class Comments extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: "",
-            message: ""
+            message: "",
+            error: ""
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this)
@@ -69,16 +69,25 @@ class Comments extends Component {
     onSubmit = e => {
         e.preventDefault();
         const date = new Date()
-        const newComment = {
-            itineraryId: this.props.itinerary._id,
-            user: this.state.user,
-            message: this.state.message,
-            timestamp: date
+
+        if (this.props.user) {
+            const newComment = {
+                itineraryId: this.props.itinerary._id,
+                user: this.props.user.username,
+                message: this.state.message,
+                timestamp: date
+            }
+            this.props.addComment(newComment, this.props.itinerary._id)
+            this.setState({
+                message: ""
+            })
+
+        } else {
+            this.setState({
+                error: "Please log in to post comments."
+            })
         }
-        this.props.addComment(newComment, this.props.itinerary._id)
-        this.setState({
-            message: ""
-        })
+
     }
 
     // Function to delete the message when the corresponding icon is clicked
@@ -111,16 +120,7 @@ class Comments extends Component {
             <div>
                 <h4>Comments</h4>
                 <form onSubmit={this.onSubmit} id="comment-form">
-                    <Input
-                        placeholder="Username"
-                        classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                        }}
-                        value={this.state.user}
-                        name="user"
-                        onChange={this.onChange}
-                    />
+
                     <Input
                         placeholder="Your Comment"
                         classes={{
@@ -133,7 +133,7 @@ class Comments extends Component {
                     />
                     <Button variant="contained" className={classes.button} size="small" type="submit" form="comment-form">
                         Send
-                    </Button>
+                    </Button> <p>{this.state.error}</p>
                 </form>
                 <div>{isLoading ? (<Loader />) : (<div>{comments.length === 0 ? (<p>No comments yet.</p>) : (<div>{commentList}</div>)}</div>)
                 }</div>
@@ -148,8 +148,8 @@ Comments.propTypes = {
     addComment: PropTypes.func,
     match: PropTypes.object,
     itinerary: PropTypes.object,
-    deleteComment: PropTypes.func
+    deleteComment: PropTypes.func,
+    user: PropTypes.object
 }
-
 
 export default withStyles(styles)(Comments)

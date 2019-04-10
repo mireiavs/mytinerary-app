@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { register } from "../actions/authActions";
+import { clearErrors } from "../actions/errorActions"
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { connect } from "react-redux"
 import Button from '@material-ui/core/Button';
-import { register } from "../actions/authActions"
 import Snackbar from '@material-ui/core/Snackbar';
 import ErrorIcon from '@material-ui/icons/Error';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
-import { clearErrors } from "../actions/errorActions"
+import Modal from '@material-ui/core/Modal';
+
 
 const styles = theme => ({
     container: {
@@ -42,7 +44,21 @@ const styles = theme => ({
     close: {
         padding: theme.spacing.unit / 2,
     },
+    paper: {
+        position: 'absolute',
+        top: "10%",
+        left: "10%",
+        right: "10%",
+        bottom: "10%",
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4,
+        outline: 'none',
+        overflow: "scroll",
+    },
 });
+
+
 
 class Createaccount extends Component {
     state = {
@@ -56,7 +72,10 @@ class Createaccount extends Component {
         msg: null,
         alert: false,
         checked: false,
-        regSuccess: false
+        regSuccess: false,
+        userImage: null,
+        open: false,
+        imgPreview: null
     }
 
     componentDidMount() {
@@ -81,7 +100,15 @@ class Createaccount extends Component {
         }
 
     }
-    handleClose = () => {
+
+    handleOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    handleCloseModal = () => {
+        this.setState({ open: false });
+    };
+    handleCloseAlert = () => {
         this.setState({ alert: false });
     };
 
@@ -92,28 +119,51 @@ class Createaccount extends Component {
     }
 
     onChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        switch (e.target.name) {
+            case 'userImage':
+                if (e.target.files[0]) {
+                    this.setState({
+                        userImage: e.target.files[0],
+                        imgPreview: URL.createObjectURL(e.target.files[0])
+                    });
+                } else {
+                    this.setState({
+                        userImage: null,
+                        imgPreview: null
+                    })
+
+                }
+
+                break;
+            default:
+                this.setState({ [e.target.name]: e.target.value });
+        }
     };
+
+    clearImg = () => {
+        this.setState({
+            imgPreview: null
+        })
+    }
+
 
     onSubmit = (e) => {
         e.preventDefault()
 
-        const { username, password, email, first_name, last_name, country } = this.state
+        const { username, password, email, first_name, last_name, country, userImage } = this.state
 
-        // Create user object
-        const newUser = {
-            username,
-            password,
-            email,
-            first_name,
-            last_name,
-            country
-        }
+        let formData = new FormData();
+
+        formData.append('username', username);
+        formData.append('password', password);
+        formData.append('email', email);
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('country', country);
+        formData.append('userImage', userImage);
 
         // Attempt to register
-        this.props.register(newUser)
+        this.props.register(formData)
     }
 
     render() {
@@ -127,7 +177,7 @@ class Createaccount extends Component {
 
                 {!this.state.regSuccess ? <div><Snackbar
                     open={alert}
-                    onClose={this.handleClose}
+                    onClose={this.handleCloseAlert}
                     ContentProps={{
                         'aria-describedby': 'message-id',
                     }}
@@ -143,18 +193,23 @@ class Createaccount extends Component {
                             aria-label="Close"
                             color="inherit"
                             className={classes.close}
-                            onClick={this.handleClose}
+                            onClick={this.handleCloseAlert}
                         >
                             <CloseIcon />
                         </IconButton>,
                     ]}
                 />
 
-
                     <form className={classes.container} noValidate autoComplete="off" id="register-form" onSubmit={this.onSubmit}>
 
-                        <div className="upload-userpic">
-                            {/* TODO: Include option to upload own image*/}
+                        <div>
+
+                            {!this.state.imgPreview ? (<div className="upload-userpic"><label htmlFor="userpic">Select picture:</label>
+                                <input type="file" name="userImage" onChange={this.onChange} id="userpic" /></div>) : (<div className="upload-userpic"><img src={this.state.imgPreview}></img>
+                                    <a href="#" onClick={this.clearImg} className="clear-img">X</a>
+                                </div>)
+                            }
+
                         </div>
 
                         <div>
@@ -238,15 +293,25 @@ class Createaccount extends Component {
 
 
                         {/* TODO: Include validation of checkbox - server side?*/}
-                        {/* TODO: Include modal with T&C */}
                         <div className="terms">
                             <Checkbox
                                 checked={this.state.checked}
                                 onChange={this.handleChecked}
                                 value="checked"
-                            /> <p>I agree to MYtinerary&apos;s Terms & Conditions</p>
+                            /> <p>I agree to MYtinerary&apos;s <a href="#" onClick={this.handleOpenModal} >Terms & Conditions</a></p>
                         </div>
-
+                        <Modal
+                            open={this.state.open}
+                            onClose={this.handleCloseModal}
+                        >
+                            <div className={classes.paper} >
+                                <h3>MYtinerary terms and conditions</h3>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
+                                <a href="#" onClick={this.handleCloseModal}>Close</a>
+                            </div>
+                        </Modal>
 
                         <Button variant="contained" className={classes.button} size="medium" type="submit" form="register-form">
                             Create Account</Button>

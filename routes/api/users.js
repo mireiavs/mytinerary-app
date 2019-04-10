@@ -5,8 +5,34 @@ const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken")
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads/")
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname)
+    }
+})
+const fileFilter = (req, file, cb) => {
+    // reject a file
+    if (file.mimetype === "image/jpeg" || file.mimetype === "png") {
+        cb(null, true)
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+})
+
+
+
 // POST /api/users - Register new user
-router.post("/", (req, res) => {
+router.post("/", upload.single("userImage"), (req, res) => {
     const { username, email, password, first_name, last_name, country } = req.body;
 
     //Simple validation
@@ -14,6 +40,7 @@ router.post("/", (req, res) => {
         return res.status(400).json({ msg: "Please enter all fields." });
     }
 
+    const userImage = req.file.path
     //Check for existing user
     User.findOne({ email })
         .then(user => {
@@ -22,10 +49,11 @@ router.post("/", (req, res) => {
             const newUser = new User({
                 username,
                 email,
-                password, 
-                first_name, 
-                last_name, 
-                country
+                password,
+                first_name,
+                last_name,
+                country,
+                userImage
             });
 
             // Create salt and hash

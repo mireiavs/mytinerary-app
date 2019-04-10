@@ -6,16 +6,11 @@ var activities = require("./routes/api/activities")
 var comments = require("./routes/api/comments")
 var users = require("./routes/api/users")
 var auth = require("./routes/api/auth")
-/* var keys = require("./keys")
- */
 var config = require("config")
 var app = express();
 var port = process.env.PORT || 5000;
-/* const bodyParser = require("body-parser")
- */
+
 app.use("/cities/uploads", express.static("uploads"))
-/* app.use(bodyParser.json())
- */
 
 app.use(express.json())
 

@@ -50,7 +50,7 @@ class Itinerary extends Component {
   render() {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
-    
+
     return (
       <div className="itinerary-card">
         <Card className={classes.card}>
@@ -80,7 +80,7 @@ class Itinerary extends Component {
                 <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/addactivity`}>Add an activity</Link>
               </div>
 
-              <Comments comments={this.props.comments} addComment={this.props.addComment} itinerary={this.props.itinerary} deleteComment={this.props.deleteComment} />
+              <Comments comments={this.props.comments} addComment={this.props.addComment} itinerary={this.props.itinerary} deleteComment={this.props.deleteComment} user={this.props.user} />
 
               <div className="back-link">
                 <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/edititinerary`}>Edit itinerary</Link>
@@ -116,12 +116,14 @@ Itinerary.propTypes = {
   getComments: PropTypes.func,
   comments: PropTypes.object,
   addComment: PropTypes.func,
-  deleteComment: PropTypes.func
+  deleteComment: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   activities: state.activities,
-  comments: state.comments
+  comments: state.comments,
+  user: state.auth.user
 })
 
 

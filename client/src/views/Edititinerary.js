@@ -10,6 +10,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
 const styles = theme => ({
     container: {
@@ -70,6 +73,7 @@ class Edititinerary extends Component {
             hashtag: "",
             cityName: "",
             itineraryId: "",
+            openDeleteConfirmation: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -77,6 +81,8 @@ class Edititinerary extends Component {
         this.handleChangeSelectCity = this.handleChangeSelectCity.bind(this);
         this.handleChangeSelectItinerary = this.handleChangeSelectItinerary.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.handleClickOpenDel = this.handleClickOpenDel.bind(this);
+        this.handleCloseDel = this.handleCloseDel.bind(this);
     }
 
     /* When a city (handleChangeSelectCity) and an itinerary 
@@ -95,8 +101,8 @@ class Edititinerary extends Component {
         const itinerary = itineraries.find(itinerary => itinerary.title === event.target.value)
         this.setState({
             title: event.target.value,
-            updatedTitle: event.target.value,
-            user: itinerary.user,
+/*          updatedTitle: event.target.value,
+ */         user: itinerary.user,
             rating: itinerary.rating,
             duration: itinerary.duration,
             price: itinerary.price,
@@ -132,7 +138,27 @@ class Edititinerary extends Component {
 
     onDeleteClick = id => {
         this.props.deleteItinerary(id)
+        this.setState({
+            title: "",
+            updatedTitle: "",
+            user: "",
+            rating: "",
+            duration: "",
+            price: "",
+            hashtag: "",
+            cityName: "",
+            itineraryId: "",
+            openDeleteConfirmation: false
+        })
     }
+
+    handleClickOpenDel = () => {
+        this.setState({ openDeleteConfirmation: true });
+    };
+
+    handleCloseDel = () => {
+        this.setState({ openDeleteConfirmation: false });
+    };
 
     componentDidMount() {
         this.props.getCities()
@@ -176,11 +202,11 @@ class Edititinerary extends Component {
 
     render() {
         const { classes } = this.props;
-        const { cities } = this.props.cities
-        const { itineraries } = this.props.itineraries
+        const { cities } = this.props.cities;
+        const { itineraries } = this.props.itineraries;
         const cityList = cities.map(city => <MenuItem value={city.name} key={city._id}>{city.name}, {city.country}</MenuItem>)
-        const itineraryList = itineraries.map(itinerary => <MenuItem value={itinerary.title} key={itinerary._id}>{itinerary.title}</MenuItem>)
-        const addItSuccess = this.props.itineraries.additsuccess
+        const itineraryList = itineraries.map(itinerary => <MenuItem value={itinerary.title} key={itinerary._id}>{itinerary.title}</MenuItem>);
+        const addItSuccess = this.props.itineraries.additsuccess;
 
         return (
             <div className="edit-city">
@@ -292,7 +318,28 @@ class Edititinerary extends Component {
                     <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another itinerary</Button>
                 </div>)}
 
-                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.itineraryId)}>Delete itinerary</Button>
+                {/*<Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.itineraryId)}>Delete itinerary</Button> */}
+
+                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.handleClickOpenDel}>Delete city</Button>
+
+                <Dialog
+                    open={this.state.openDeleteConfirmation}
+                    onClose={this.handleCloseDel}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogContent>
+                        <p>Are you sure you want to delete {this.state.title}? </p>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => this.onDeleteClick(this.state.itineraryId)} color="primary">
+                            Yes, delete
+                        </Button>
+                        <Button onClick={this.handleCloseDel} color="primary" autoFocus>
+                            No, go back
+                    </Button>
+                    </DialogActions>
+                </Dialog>
 
             </div>
         );

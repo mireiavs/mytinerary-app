@@ -9,6 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
 const styles = theme => ({
     container: {
@@ -61,11 +64,15 @@ class Editcity extends Component {
             name: "",
             country: "",
             updatedName: "",
+            openDeleteConfirmation: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.handleClickOpenDel = this.handleClickOpenDel.bind(this);
+        this.handleCloseDel = this.handleCloseDel.bind(this);
     }
 
     /* When a city is selected in the dropdown menu, the input fields
@@ -101,7 +108,22 @@ class Editcity extends Component {
 
     onDeleteClick = id => {
         this.props.deleteCity(id)
+        this.setState({
+            name: "",
+            updatedName: "",
+            country: "",
+            openDeleteConfirmation: false
+        })
     }
+
+    handleClickOpenDel = () => {
+        this.setState({ openDeleteConfirmation: true });
+    };
+
+    handleCloseDel = () => {
+        this.setState({ openDeleteConfirmation: false });
+    };
+
 
     componentDidMount() {
         this.props.getCities();
@@ -192,7 +214,31 @@ class Editcity extends Component {
                         <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another city</Button>
                     </div>)}
 
-                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button>
+
+                {/* <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button> */}
+
+                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.handleClickOpenDel}>Delete city</Button>
+
+
+                <Dialog
+                    open={this.state.openDeleteConfirmation}
+                    onClose={this.handleCloseDel}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogContent>
+                        <p>Are you sure you want to delete {this.state.name}? </p>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => this.onDeleteClick(this.state.name)} color="primary">
+                            Yes, delete
+                        </Button>
+                        <Button onClick={this.handleCloseDel} color="primary" autoFocus>
+                            No, go back
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
 
             </div>
         );

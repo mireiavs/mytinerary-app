@@ -16,8 +16,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
-import LogInIcon from "@material-ui/icons/ExitToApp";
-import CreateAccIcon from "@material-ui/icons/PersonAdd";
 import { logout } from "../actions/authActions"
 import { connect } from "react-redux"
 
@@ -87,6 +85,24 @@ class Header extends Component {
                         <ListItemText>Cities</ListItemText>
                     </ListItem>
 
+
+
+                    {/* <ListItem button component={logInLink}>
+                        <ListItemIcon><LogInIcon /></ListItemIcon>
+                        <ListItemText>Log In</ListItemText>
+                    </ListItem>
+
+                    <ListItem button component={createAccLink}>
+                        <ListItemIcon><CreateAccIcon /></ListItemIcon>
+                        <ListItemText>Create account</ListItemText>
+                    </ListItem> */}
+                </List>
+            </div>
+        );
+
+        const sideListAuth = (
+            <div className={classes.list}>
+                <List>
                     <ListItem button component={addCityLink}>
                         <ListItemIcon><CitiesIcon /></ListItemIcon>
                         <ListItemText>Add a city</ListItemText>
@@ -111,19 +127,20 @@ class Header extends Component {
                         <ListItemIcon><CitiesIcon /></ListItemIcon>
                         <ListItemText>Add an activity</ListItemText>
                     </ListItem>
-
-                    <ListItem button component={logInLink}>
-                        <ListItemIcon><LogInIcon /></ListItemIcon>
-                        <ListItemText>Log In</ListItemText>
-                    </ListItem>
-
-                    <ListItem button component={createAccLink}>
-                        <ListItemIcon><CreateAccIcon /></ListItemIcon>
-                        <ListItemText>Create account</ListItemText>
-                    </ListItem>
                 </List>
             </div>
-        );
+
+        )
+
+
+
+
+
+
+
+
+
+
 
         return (
             <div className={classes.root}>
@@ -181,6 +198,7 @@ class Header extends Component {
                                 onKeyDown={this.toggleDrawer('right', false)}
                             >
                                 {sideList}
+                                {this.props.isAuthenticated ? <div>{sideListAuth}</div> : null}
                             </div>
                         </SwipeableDrawer>
                     </Toolbar>
