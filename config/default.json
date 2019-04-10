@@ -1,5 +1,0 @@
-{
-    "mongoURL": "mongodb+srv://user_1:J0XAEHJvusRjrkQU@mytinerary-w3byp.mongodb.net/mytinerary?retryWrites=true",
-    "jwtSecret": "myItin_myJwtSecret"
-
-}
