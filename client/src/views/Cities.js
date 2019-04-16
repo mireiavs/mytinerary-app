@@ -46,7 +46,7 @@ class Cities extends Component {
             })
         }
     }
-    
+
     render() {
         const { classes } = this.props;
         const { cities } = this.props.cities
@@ -74,7 +74,9 @@ class Cities extends Component {
                     <div>
                         <Cityfilter onChange={this.filterCities} />
                         <div className="city-list">{cityList}</div>
-                        <Link to="/cities/all/addcity">Add a city</Link>
+
+                        {this.props.auth.isAuthenticated ? <Link to="/cities/all/addcity">Add a city</Link> : null}
+
                     </div>
                 )}
             </div>
@@ -87,11 +89,13 @@ Cities.propTypes = {
     cities: PropTypes.object,
     loading: PropTypes.bool,
     classes: PropTypes.object.isRequired,
+    auth: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
     cities: state.cities,
-    loading: state.loading
+    loading: state.loading,
+    auth: state.auth
 })
 
 export default connect(mapStateToProps, { getCities })(

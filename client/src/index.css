@@ -114,10 +114,17 @@ body {
 
 
 /* BOTTOM NAV */
-.home-link,
-.home-link:hover {
+.footer-link,
+.footer-link:hover {
   color: black;
 }
+
+.footer-icon {
+  width: 33vh;
+  display: flex;
+  justify-content: center
+}
+
 
 /* CITIES PAGE */
 
@@ -519,4 +526,22 @@ button.comment-delete {
   50% {
     transform: scale(1.5);
   }
+}
+
+.google-btn {
+  display: flex;
+  justify-content: center
+}
+
+.remember {
+  margin-top: 0
+}
+
+.result {
+  text-align: center;
+  margin-top: 30px
+}
+
+.title-fav {
+  display: flex
 }

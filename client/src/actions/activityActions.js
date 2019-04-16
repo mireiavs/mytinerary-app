@@ -1,6 +1,5 @@
 import { GET_ACTIVITIES, ACTIVITIES_LOADING, ADD_ACTIVITY, ADD_AC_SUCCESS } from "./types"
-/* import { tokenConfig } from "./authActions"
- */import { returnErrors } from "./errorActions"
+
 import axios from "axios"
 
 export const getActivities = (itineraryId) => dispatch => {
@@ -12,7 +11,6 @@ export const getActivities = (itineraryId) => dispatch => {
                 type: GET_ACTIVITIES,
                 payload: res.data
             }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const setActivitiesLoading = () => {
@@ -30,7 +28,6 @@ export const addActivity = (activity, itineraryId) => (dispatch, getState) => {
                 payload: res.data
             })
         )
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const addAcSuccess = () => {

@@ -1,7 +1,6 @@
 import axios from "axios"
 import { GET_CITIES, ADD_CITY, CITIES_LOADING, ADD_SUCCESS, DELETE_CITY, UPDATE_CITY } from "./types"
 import { tokenConfig } from "./authActions"
-import { returnErrors } from "./errorActions"
 
 
 export const getCities = () => dispatch => {
@@ -13,7 +12,6 @@ export const getCities = () => dispatch => {
                 type: GET_CITIES,
                 payload: res.data
             }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const setCitiesLoading = () => {
@@ -31,7 +29,6 @@ export const addCity = city => (dispatch, getState) => {
                 payload: res.data
             })
         )
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const addSuccess = () => {
@@ -52,7 +49,6 @@ export const deleteCity = id => (dispatch, getState) => {
             type: DELETE_CITY,
             payload: id
         }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const updateCity = (city, id) => (dispatch, getState) => {
@@ -64,5 +60,4 @@ export const updateCity = (city, id) => (dispatch, getState) => {
                 payload: city
             })
         )
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }

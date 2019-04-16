@@ -39,6 +39,7 @@ const styles = {
 };
 
 class Header extends Component {
+
     state = {
         right: false,
         anchorEl: null,
@@ -131,16 +132,6 @@ class Header extends Component {
             </div>
 
         )
-
-
-
-
-
-
-
-
-
-
 
         return (
             <div className={classes.root}>

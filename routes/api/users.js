@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
-const config = require("config");
 const jwt = require("jsonwebtoken")
-
+require('dotenv').config()
+const auth = require("../../middleware/auth")
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -41,7 +41,9 @@ router.post("/", upload.single("userImage"), (req, res) => {
     }
 
     const userImage = req.file.path
+
     //Check for existing user
+
     User.findOne({ email })
         .then(user => {
             if (user) return res.status(400).json({ msg: "User already exists." });
@@ -65,7 +67,7 @@ router.post("/", upload.single("userImage"), (req, res) => {
                         .then(user => {
                             jwt.sign(
                                 { id: user.id },
-                                config.get("jwtSecret"),
+                                process.env.JWT_SECRET,
                                 { expiresIn: 3600 },
                                 (err, token) => {
                                     if (err) throw err;
@@ -86,6 +88,21 @@ router.post("/", upload.single("userImage"), (req, res) => {
                 })
             })
         })
+})
+
+
+// UPDATE USER /api/users/:userId
+router.put("/:userId", (req, res) => {
+    const updatedUser = {
+        username: req.body.username,
+        email: req.body.email,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        country: req.body.country,
+    }
+    User.findOneAndUpdate({ _id: req.params.userId }, updatedUser)
+        .then(user => res.json({ success: true }))
+        .catch(() => res.status(404).json({ success: false }))
 })
 
 module.exports = router

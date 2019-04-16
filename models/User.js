@@ -8,24 +8,23 @@ var userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
         unique: true
     },
     password: {
         type: String,
-        required: true
+
     },
     first_name: {
         type: String,
-        required: true
+
     },
     last_name: {
         type: String,
-        required: true
+
     },
     country: {
         type: String,
-        required: true
+
     },
     register_date: {
         type: Date,

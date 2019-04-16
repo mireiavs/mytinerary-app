@@ -6,16 +6,18 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTRATION_SUCCESS,
-    REGISTRATION_FAIL
+    REGISTRATION_FAIL,
+    UPDATE_USER,
+    UPDATE_USER_SUCCESS
 } from "../actions/types"
 
 const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
     isLoading: false,
-    user: null
+    user: null,
+    updateSuccess: false
 }
-
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -51,6 +53,17 @@ export default function (state = initialState, action) {
                 user: null,
                 isAuthenticated: false,
                 isLoading: false
+            }
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: action.payload,
+                updateSuccess: true
+            }
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                updateSuccess: false
             }
         default:
             return state

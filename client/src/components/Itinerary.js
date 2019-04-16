@@ -12,7 +12,11 @@ import Comments from "./Comments"
 import { connect } from "react-redux"
 import { getActivities } from "../actions/activityActions"
 import { getComments, addComment, deleteComment } from "../actions/commentActions"
+import { addFavourite, deleteFavourite } from "../actions/favouriteActions"
 import { Link } from "react-router-dom"
+import FavouriteIcon from '@material-ui/icons/Favorite';
+import FavouriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
   card: {
@@ -33,9 +37,22 @@ const styles = theme => ({
     width: 60,
     height: 60,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  icon: {
+    color: red[800]
+  }
 });
 
 class Itinerary extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleExpandClick = this.handleExpandClick.bind(this)
+    this.onClickAdd = this.onClickAdd.bind(this)
+    this.onClickDelete = this.onClickDelete.bind(this)
+  }
 
   /* Function to handle collapse of itinerary cards. isOpen variable is passed from parent component as it has a function to close all other cards when one is open */
   handleExpandClick = () => {
@@ -47,9 +64,24 @@ class Itinerary extends Component {
     }
   };
 
+  onClickAdd() {
+    const newFavourite = {
+      itineraryId: this.props.itinerary._id,
+      userId: this.props.user._id
+    }
+    this.props.addFavourite(newFavourite, this.props.user._id)
+  }
+
+  onClickDelete() {
+    const favourite = this.props.favourites.favourites.find(favourite => favourite.itineraryId === this.props.itinerary._id)
+    this.props.deleteFavourite(favourite._id, this.props.user._id)
+  }
+
   render() {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
+    const favourites = this.props.favourites.favourites
+    const isFavourite = favourites.find(favourite => favourite.itineraryId === itinerary._id)
 
     return (
       <div className="itinerary-card">
@@ -62,7 +94,23 @@ class Itinerary extends Component {
             </div>
 
             <div className="itinerary-title-details">
-              <h4>{itinerary.title}</h4>
+              <div className="title-fav"><h4>{itinerary.title}</h4>
+                <div>
+                  {this.props.auth.isAuthenticated ? (<div>{
+                    isFavourite ? (
+                      <IconButton className={classes.button} aria-label="Favourite" onClick={this.onClickDelete}>
+                        <FavouriteIcon className={classes.icon} />
+                      </IconButton>
+                    ) : (
+                        <IconButton className={classes.button} aria-label="Favourite" onClick={this.onClickAdd}>
+                          <FavouriteBorderIcon />
+                        </IconButton>
+                      )
+                  }</div>) : null
+                  }
+                </div>
+              </div>
+
               <div className="itinerary-detail-preview">
                 <span>Rating: {itinerary.rating} </span>
                 <span>{itinerary.duration} hours</span>
@@ -71,19 +119,20 @@ class Itinerary extends Component {
               </div>
             </div>
 
+
           </CardContent>
           <Collapse in={this.props.isOpen} timeout="auto" mountOnEnter unmountOnExit>
             <CardContent>
 
               <Activity activities={this.props.activities} />
               <div className="back-link">
-                <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/addactivity`}>Add an activity</Link>
+                {this.props.auth.isAuthenticated ? <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/addactivity`}>Add an activity</Link> : null}
               </div>
 
               <Comments comments={this.props.comments} addComment={this.props.addComment} itinerary={this.props.itinerary} deleteComment={this.props.deleteComment} user={this.props.user} />
 
               <div className="back-link">
-                <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/edititinerary`}>Edit itinerary</Link>
+                {this.props.auth.isAuthenticated ? <Link to={`/cities/${this.props.itinerary.cityName}/${this.props.itinerary._id}/edititinerary`}>Edit itinerary</Link> : null}
               </div>
 
             </CardContent>
@@ -100,7 +149,7 @@ class Itinerary extends Component {
           </CardActions>
 
         </Card>
-      </div>
+      </div >
     );
   }
 }
@@ -117,14 +166,21 @@ Itinerary.propTypes = {
   comments: PropTypes.object,
   addComment: PropTypes.func,
   deleteComment: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  getFavourites: PropTypes.func,
+  favourites: PropTypes.object,
+  addFavourite: PropTypes.func,
+  deleteFavourite: PropTypes.func,
+  auth: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   activities: state.activities,
   comments: state.comments,
-  user: state.auth.user
+  auth: state.auth,
+  user: state.auth.user,
+  favourites: state.favourites
 })
 
 
-export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment })(withStyles(styles)(Itinerary))
+export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment, addFavourite, deleteFavourite })(withStyles(styles)(Itinerary))

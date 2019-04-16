@@ -8,7 +8,9 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTRATION_SUCCESS,
-    REGISTRATION_FAIL
+    REGISTRATION_FAIL,
+    UPDATE_USER,
+    UPDATE_USER_SUCCESS
 } from "./types"
 
 
@@ -30,16 +32,11 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 export const register = user => dispatch => {
-    const config = {
+    axios.post("/api/users", user, {
         headers: {
             "Content-type": "multipart/form-data"
         }
-    }
-
-    // Request body
-    /*     const body = JSON.stringify({ username, email, password, first_name, last_name, country });
-     */
-    axios.post("/api/users", user, config)
+    })
         .then(res => dispatch({
             type: REGISTRATION_SUCCESS,
             payload: res.data
@@ -51,7 +48,6 @@ export const register = user => dispatch => {
             })
         })
 }
-
 
 export const login = ({ username, password }) => dispatch => {
     const config = {
@@ -83,7 +79,23 @@ export const logout = () => {
     }
 }
 
+export const updateUserDetails = (user, userId) => (dispatch, getState) => {
+    axios
+        .put(`/api/users/${userId}`, user, tokenConfig(getState))
+        .then(() =>
+            dispatch({
+                type: UPDATE_USER,
+                payload: user
+            })
+        )
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
 
+export const updateUserSuccess = () => {
+    return {
+        type: UPDATE_USER_SUCCESS
+    }
+}
 
 
 
@@ -108,3 +120,17 @@ export const tokenConfig = getState => {
     return config
 }
 
+
+export const socialLogin = (user) => dispatch => {
+    axios.post("/api/auth/social", user)
+        .then(res => dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, "REGISTRATION_FAIL"));
+            dispatch({
+                type: LOGIN_FAIL
+            })
+        })
+}

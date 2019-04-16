@@ -16,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import Modal from '@material-ui/core/Modal';
 
-
 const styles = theme => ({
     container: {
         display: 'flex',
@@ -61,21 +60,31 @@ const styles = theme => ({
 
 
 class Createaccount extends Component {
-    state = {
-        countries: ["England", "France", "Germany", "Holland", "Ireland", "Spain", "United States"],
-        username: "",
-        password: "",
-        email: "",
-        first_name: "",
-        last_name: "",
-        country: "",
-        msg: null,
-        alert: false,
-        checked: false,
-        regSuccess: false,
-        userImage: null,
-        open: false,
-        imgPreview: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            countries: ["England", "France", "Germany", "Holland", "Ireland", "Spain", "United States"],
+            username: "",
+            password: "",
+            email: "",
+            first_name: "",
+            last_name: "",
+            country: "",
+            msg: null,
+            alert: false,
+            checked: false,
+            regSuccess: false,
+            userImage: null,
+            open: false,
+            imgPreview: null
+        };
+        this.handleOpenModal = this.handleOpenModal.bind(this)
+        this.handleCloseModal = this.handleCloseModal.bind(this)
+        this.handleCloseAlert = this.handleCloseAlert.bind(this)
+        this.handleChecked = this.handleChecked.bind(this)
+        this.onChange = this.onChange.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+        this.clearImg = this.clearImg.bind(this)
     }
 
     componentDidMount() {
@@ -98,7 +107,6 @@ class Createaccount extends Component {
                 regSuccess: true
             })
         }
-
     }
 
     handleOpenModal = () => {
@@ -108,6 +116,7 @@ class Createaccount extends Component {
     handleCloseModal = () => {
         this.setState({ open: false });
     };
+
     handleCloseAlert = () => {
         this.setState({ alert: false });
     };
@@ -126,14 +135,7 @@ class Createaccount extends Component {
                         userImage: e.target.files[0],
                         imgPreview: URL.createObjectURL(e.target.files[0])
                     });
-                } else {
-                    this.setState({
-                        userImage: null,
-                        imgPreview: null
-                    })
-
                 }
-
                 break;
             default:
                 this.setState({ [e.target.name]: e.target.value });
@@ -142,28 +144,36 @@ class Createaccount extends Component {
 
     clearImg = () => {
         this.setState({
+            userImage: null,
             imgPreview: null
         })
     }
 
-
     onSubmit = (e) => {
         e.preventDefault()
 
-        const { username, password, email, first_name, last_name, country, userImage } = this.state
+        if (this.state.checked) {
+            const { username, password, email, first_name, last_name, country, userImage } = this.state
 
-        let formData = new FormData();
+            let formData = new FormData();
 
-        formData.append('username', username);
-        formData.append('password', password);
-        formData.append('email', email);
-        formData.append('first_name', first_name);
-        formData.append('last_name', last_name);
-        formData.append('country', country);
-        formData.append('userImage', userImage);
+            formData.append('username', username);
+            formData.append('password', password);
+            formData.append('email', email);
+            formData.append('first_name', first_name);
+            formData.append('last_name', last_name);
+            formData.append('country', country);
+            formData.append('userImage', userImage);
 
-        // Attempt to register
-        this.props.register(formData)
+            // Attempt to register
+            this.props.register(formData)
+        } else {
+            this.setState({
+                msg: "You have to agree to MYtinerary's terms and conditions to be able to create account.",
+                alert: true
+            })
+        }
+
     }
 
     render() {
@@ -200,12 +210,15 @@ class Createaccount extends Component {
                     ]}
                 />
 
-                    <form className={classes.container} noValidate autoComplete="off" id="register-form" onSubmit={this.onSubmit}>
+                    <form encType="multipart/form-data" className={classes.container} noValidate autoComplete="off" id="register-form" onSubmit={this.onSubmit}>
 
                         <div>
 
-                            {!this.state.imgPreview ? (<div className="upload-userpic"><label htmlFor="userpic">Select picture:</label>
-                                <input type="file" name="userImage" onChange={this.onChange} id="userpic" /></div>) : (<div className="upload-userpic"><img src={this.state.imgPreview}></img>
+                            {!this.state.imgPreview ?
+                                (<div className="upload-userpic"><label htmlFor="userpic">Select picture:</label>
+                                    <input type="file" name="userImage" onChange={this.onChange} id="userpic" /></div>) :
+                                (<div className="upload-userpic">
+                                    <img src={this.state.imgPreview}></img>
                                     <a href="#" onClick={this.clearImg} className="clear-img">X</a>
                                 </div>)
                             }
@@ -291,8 +304,6 @@ class Createaccount extends Component {
                             </Select>
                         </div>
 
-
-                        {/* TODO: Include validation of checkbox - server side?*/}
                         <div className="terms">
                             <Checkbox
                                 checked={this.state.checked}
@@ -334,6 +345,5 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.errors
 })
-
 
 export default connect(mapStateToProps, { register, clearErrors })(withStyles(styles)(Createaccount))

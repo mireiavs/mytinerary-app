@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { getItineraries } from "../actions/itineraryActions"
+import { getFavourites } from "../actions/favouriteActions"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import Itinerary from "../components/Itinerary"
@@ -20,11 +21,22 @@ class City extends Component {
 
     componentDidMount() {
         // get itineraries for this city, city ID is taken from the route
-        this.props.getItineraries(this.props.match.params.id)
+        this.props.getItineraries(this.props.match.params.id);
+
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.user !== this.props.user) {
+            if (this.props.user) {
+                this.props.getFavourites(this.props.user._id)
+            }
+        }
+    }
+
     render() {
         const { itineraries } = this.props.itineraries
         const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} isOpen={this.state.collapse === itinerary._id} toggle={this.toggle} />)
+
         const isLoading = this.props.itineraries.loading
 
         return (
@@ -42,8 +54,10 @@ class City extends Component {
                     )
                 }
                 <div className="back-link">
-                    <Link to={`/cities/${this.props.match.params.id}/additinerary`}>Add another itinerary</Link>
-                    <Link to={`/cities/${this.props.match.params.id}/editcity`}>Edit city</Link>
+
+                    {this.props.auth.isAuthenticated ? (<div className="back-link"><Link to={`/cities/${this.props.match.params.id}/additinerary`}>Add another itinerary</Link>
+                        <Link to={`/cities/${this.props.match.params.id}/editcity`}>Edit city</Link></div>) : null}
+
                     <Link to="/cities/all">Choose a different city</Link>
                 </div>
             </div>
@@ -55,13 +69,19 @@ City.propTypes = {
     match: PropTypes.object,
     loading: PropTypes.bool,
     getItineraries: PropTypes.func,
-    itineraries: PropTypes.object
+    itineraries: PropTypes.object,
+    favourites: PropTypes.object,
+    user: PropTypes.object,
+    getFavourites: PropTypes.func,
+    auth: PropTypes.object
 }
-
 
 const mapStateToProps = (state) => ({
     itineraries: state.itineraries,
-    loading: state.loading
+    loading: state.loading,
+    auth: state.auth,
+    user: state.auth.user,
+    favourites: state.favourites
 })
 
-export default connect(mapStateToProps, { getItineraries })(City)
+export default connect(mapStateToProps, { getItineraries, getFavourites })(City)

@@ -1,6 +1,5 @@
 import { GET_COMMENTS, COMMENTS_LOADING, ADD_COMMENT, DELETE_COMMENT } from "./types"
 import { tokenConfig } from "./authActions"
-import { returnErrors } from "./errorActions"
 import axios from "axios"
 
 export const getComments = (itineraryId) => dispatch => {
@@ -12,7 +11,6 @@ export const getComments = (itineraryId) => dispatch => {
                 type: GET_COMMENTS,
                 payload: res.data
             }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const setCommentsLoading = () => {
@@ -30,7 +28,6 @@ export const addComment = (comment, itineraryId) => (dispatch, getState) => {
                 payload: res.data
             })
         )
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const deleteComment = id => (dispatch, getState) => {
@@ -40,5 +37,4 @@ export const deleteComment = id => (dispatch, getState) => {
             type: DELETE_COMMENT,
             payload: id
         }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }

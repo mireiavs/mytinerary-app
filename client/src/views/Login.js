@@ -5,7 +5,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import { connect } from "react-redux"
 import Button from '@material-ui/core/Button';
-import { login } from "../actions/authActions"
+import { login, socialLogin } from "../actions/authActions"
 import Snackbar from '@material-ui/core/Snackbar';
 import ErrorIcon from '@material-ui/icons/Error';
 import CloseIcon from '@material-ui/icons/Close';
@@ -13,6 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import { clearErrors } from "../actions/errorActions"
 import { Link } from "react-router-dom"
+import { GoogleLogin } from 'react-google-login';
+
+
 
 const styles = theme => ({
     container: {
@@ -34,7 +37,8 @@ const styles = theme => ({
         width: 195
     },
     button: {
-        margin: 30,
+        marginBottom: 30,
+        marginTop: 10,
         marginLeft: "auto",
         marginRight: "auto",
     },
@@ -99,6 +103,23 @@ class Login extends Component {
         this.props.login(user)
     }
 
+
+    responseGoogle = (response) => {
+        console.log(response);
+        const user = {
+            username: response.profileObj.name,
+            email: response.profileObj.email,
+            first_name: response.profileObj.givenName,
+            last_name: response.profileObj.familyName,
+            googleId: response.profileObj.googleId,
+        }
+        this.props.socialLogin(user)
+    }
+
+    onFailure = (error) => {
+        console.log(error)
+    }
+
     render() {
         const { classes } = this.props;
         const { alert } = this.state
@@ -158,7 +179,7 @@ class Login extends Component {
                             />
                         </div>
 
-                        <div className="terms">
+                        <div className="terms remember">
                             <Checkbox
                                 checked={this.state.checked}
                                 onChange={this.handleChecked}
@@ -170,14 +191,20 @@ class Login extends Component {
                             Login</Button>
                     </form>
 
-                    <div>Google Login placeholder</div>
-                    <div>Facebook Login placeholder</div>
-
+                    <div className="google-btn">
+                        <GoogleLogin
+                            clientId="1007359330691-dekauisk8c2vg88g59tqprpsdatt9lv9.apps.googleusercontent.com"
+                            buttonText="Login with Google"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.onFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                    </div>
                     <div className="login-text">
                         <p>Don&apos;t have a MYtinerary account yet? You should create one! It&apos;s totally free and only takes a minute.</p>
                         <Link to="/createaccount" className="login-link">Create Account</Link></div>
 
-                </div> : <p>Login successful!</p>
+                </div> : <p className="result">Login successful!</p>
                 }
             </div>
         )
@@ -189,7 +216,8 @@ Login.propTypes = {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func
+    clearErrors: PropTypes.func,
+    socialLogin: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -198,4 +226,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { login, clearErrors })(withStyles(styles)(Login))
+export default connect(mapStateToProps, { login, clearErrors, socialLogin })(withStyles(styles)(Login))

@@ -1,14 +1,16 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var cities = require("./routes/api/cities")
-var itineraries = require("./routes/api/itineraries")
-var activities = require("./routes/api/activities")
-var comments = require("./routes/api/comments")
-var users = require("./routes/api/users")
-var auth = require("./routes/api/auth")
-var config = require("config")
-var app = express();
-var port = process.env.PORT || 5000;
+const express = require('express');
+const mongoose = require('mongoose');
+const cities = require("./routes/api/cities")
+const itineraries = require("./routes/api/itineraries")
+const activities = require("./routes/api/activities")
+const comments = require("./routes/api/comments")
+const users = require("./routes/api/users")
+const auth = require("./routes/api/auth")
+const favourites = require("./routes/api/favourites")
+const app = express();
+const port = process.env.PORT || 5000;
+require('dotenv').config()
+
 
 app.use("/cities/uploads", express.static("uploads"))
 
@@ -18,7 +20,8 @@ const options = {
   useNewUrlParser: true,
   useCreateIndex: true
 };
-mongoose.connect(config.get("mongoURL"), options);
+
+mongoose.connect(process.env.MONGO_URL, options);
 
 var db = mongoose.connection;
 
@@ -33,6 +36,7 @@ app.use('/api/activities', activities);
 app.use('/api/comments', comments)
 app.use('/api/users', users)
 app.use('/api/auth', auth)
+app.use('/api/favourites', favourites)
 
 
 app.listen(port);
