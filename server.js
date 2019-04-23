@@ -42,7 +42,7 @@ app.use('/api/users', users)
 app.use('/api/auth', auth)
 
 // Serve static assets if in production
-if (proces.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
   // Static folder
   app.use(express.static("client/build"));
 
