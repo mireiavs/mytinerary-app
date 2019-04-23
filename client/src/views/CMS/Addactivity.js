@@ -2,9 +2,9 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { addActivity, addAcSuccess, getActivities } from "../actions/activityActions"
-import { getCities } from "../actions/citiesActions"
-import { getItineraries } from "../actions/itineraryActions"
+import { addActivity, addAcSuccess, getActivities } from "../../actions/activityActions"
+import { getCities } from "../../actions/citiesActions"
+import { getItineraries } from "../../actions/itineraryActions"
 import { connect } from "react-redux"
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';

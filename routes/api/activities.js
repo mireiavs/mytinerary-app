@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 })
 const fileFilter = (req, file, cb) => {
   // reject a file
-  if (file.mimetype === "image/jpeg" || file.mimetype === "png") {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true)
   } else {
     cb(null, false);
@@ -37,7 +37,7 @@ router.get("/:itineraryId", (req, res) => {
 })
 
 // POST /api/activities/:itineraryId - uses multer to upload image
-router.post("/:itineraryId", upload.single("activityImage"), auth, (req, res) => {
+router.post("/:itineraryId", upload.single("activityImage"), (req, res) => {
   const newActivity = new Activity({
     itineraryId: req.body.itineraryId,
     img: req.file.path,

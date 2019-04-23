@@ -34,11 +34,12 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 export const register = user => dispatch => {
-    axios.post("/api/users", user, {
-        headers: {
-            "Content-type": "multipart/form-data"
-        }
-    })
+    axios
+        .post("/api/users", user, {
+            headers: {
+                "Content-type": "multipart/form-data"
+            }
+        })
         .then(res => dispatch({
             type: REGISTRATION_SUCCESS,
             payload: res.data

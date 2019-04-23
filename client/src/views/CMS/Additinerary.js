@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { addItinerary, addItSuccess } from "../actions/itineraryActions"
-import { getCities } from "../actions/citiesActions"
+import { addItinerary, addItSuccess } from "../../actions/itineraryActions"
+import { getCities } from "../../actions/citiesActions"
 import { connect } from "react-redux"
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -67,15 +67,19 @@ class AddItinerary extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+
     }
     onSubmit = e => {
         e.preventDefault();
+
+        const hashtags = this.state.hashtag.replace("#", "").split(", ")
+
         const newItinerary = {
             title: this.state.title,
             user: this.state.user,
             duration: this.state.duration,
             price: this.state.price,
-            hashtag: this.state.hashtag,
+            hashtag: hashtags,
             cityName: this.state.name
         }
         this.props.addItinerary(newItinerary, this.props.match.params.cityId)
@@ -164,20 +168,27 @@ class AddItinerary extends Component {
                                 margin="normal"
                             />
 
-                            <TextField
-                                name="price"
-                                id="price"
-                                label="Price"
-                                className={classes.textField}
-                                value={this.state.price}
-                                onChange={this.onChange}
-                                margin="normal"
-                            />
+                            <div className="price-form">
+                                <InputLabel htmlFor="price" className="price-label">Price</InputLabel>
+                                <Select
+                                    value={this.state.price}
+                                    className="price-select"
+                                    onChange={this.onChange}
+                                    inputProps={{
+                                        name: 'price',
+                                        id: 'price',
+                                    }}
+                                >
+                                    <MenuItem value="$">$</MenuItem>
+                                    <MenuItem value="$$">$$</MenuItem>
+                                    <MenuItem value="$$$">$$$</MenuItem>
+                                </Select>
+                            </div>
 
                             <TextField
                                 name="hashtag"
                                 id="hashtag"
-                                label="Hashtags"
+                                label="Hashtags (e.g. Art, History)"
                                 className={classes.textField}
                                 value={this.state.hashtag}
                                 onChange={this.onChange}

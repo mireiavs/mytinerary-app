@@ -15,9 +15,10 @@ const storage = multer.diskStorage({
         cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname)
     }
 })
+
 const fileFilter = (req, file, cb) => {
     // reject a file
-    if (file.mimetype === "image/jpeg" || file.mimetype === "png") {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
         cb(null, true)
     } else {
         cb(null, false);
@@ -29,8 +30,6 @@ const upload = multer({
     fileFilter: fileFilter
 })
 
-
-
 // POST /api/users - Register new user
 router.post("/", upload.single("userImage"), (req, res) => {
     const { username, email, password, first_name, last_name, country } = req.body;
@@ -40,7 +39,15 @@ router.post("/", upload.single("userImage"), (req, res) => {
         return res.status(400).json({ msg: "Please enter all fields." });
     }
 
-    const userImage = req.file.path
+    const newUser = new User({
+        username,
+        email,
+        password,
+        first_name,
+        last_name,
+        country,
+        userImage: req.file.path
+    })
 
     //Check for existing user
 
@@ -48,15 +55,6 @@ router.post("/", upload.single("userImage"), (req, res) => {
         .then(user => {
             if (user) return res.status(400).json({ msg: "User already exists." });
 
-            const newUser = new User({
-                username,
-                email,
-                password,
-                first_name,
-                last_name,
-                country,
-                userImage
-            });
 
             // Create salt and hash
             bcrypt.genSalt(10, (err, salt) => {

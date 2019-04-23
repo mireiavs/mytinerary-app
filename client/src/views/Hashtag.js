@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { getItineraries } from "../actions/itineraryActions"
+import { getAllItineraries } from "../actions/itineraryActions"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import Itinerary from "../components/Itinerary"
 import Loader from "../components/Loader"
 
-class City extends Component {
+class Hashtag extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -20,20 +20,24 @@ class City extends Component {
 
     componentDidMount() {
         // get itineraries for this city, city ID is taken from the route
-        this.props.getItineraries(this.props.match.params.id);
+        this.props.getAllItineraries();
 
     }
 
     render() {
         const { itineraries } = this.props.itineraries
-        const itineraryList = itineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} isOpen={this.state.collapse === itinerary._id} toggle={this.toggle} />)
+        const currentHashtag = this.props.match.params.hashtag
+
+        const filteredItineraries = itineraries.filter(itinerary => itinerary.hashtag.includes(currentHashtag))
+
+        const itineraryList = filteredItineraries.map((itinerary, index) => <Itinerary itinerary={itinerary} key={index} isOpen={this.state.collapse === itinerary._id} toggle={this.toggle} />)
 
         const isLoading = this.props.itineraries.loading
 
         return (
             <div className="city-info">
                 <h1 className="city-title">{this.props.match.params.id}</h1>
-                <h4>Available MYtineraries:</h4>
+                <h4>MYtineraries with the hashtag {currentHashtag}:</h4>
 
                 {isLoading ?
                     (<Loader />) :
@@ -56,10 +60,10 @@ class City extends Component {
     }
 }
 
-City.propTypes = {
+Hashtag.propTypes = {
     match: PropTypes.object,
     loading: PropTypes.bool,
-    getItineraries: PropTypes.func,
+    getAllItineraries: PropTypes.func,
     itineraries: PropTypes.object,
     favourites: PropTypes.object,
     user: PropTypes.object,
@@ -74,4 +78,4 @@ const mapStateToProps = (state) => ({
     favourites: state.favourites
 })
 
-export default connect(mapStateToProps, { getItineraries })(City)
+export default connect(mapStateToProps, { getAllItineraries })(Hashtag)

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { addCity, addSuccess } from "../actions/citiesActions"
+import { addCity, addSuccess } from "../../actions/citiesActions"
 import { connect } from "react-redux"
 
 const styles = theme => ({

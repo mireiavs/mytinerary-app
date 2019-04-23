@@ -107,6 +107,7 @@ class Createaccount extends Component {
             this.setState({
                 regSuccess: true
             })
+            this.props.history.push("/dashboard");
         }
     }
 
@@ -169,7 +170,6 @@ class Createaccount extends Component {
             formData.append('last_name', last_name);
             formData.append('country', country);
             formData.append('userImage', userImage);
-
             // Attempt to register
             this.props.register(formData)
         } else {
@@ -178,19 +178,16 @@ class Createaccount extends Component {
                 alert: true
             })
         }
-
     }
 
     render() {
         const { classes } = this.props;
         const { alert } = this.state
-        /* const countryList = this.state.countries.map((country, index) => <MenuItem key={index} value={country} className="select-option">{country}</MenuItem>
-        ) */
         return (
             <div>
                 <h3 className="title">Create account</h3>
 
-                {!this.state.regSuccess ? <div><Snackbar
+                <div><Snackbar
                     open={alert}
                     onClose={this.handleCloseAlert}
                     ContentProps={{
@@ -337,8 +334,8 @@ class Createaccount extends Component {
 
                         <Button variant="contained" className={classes.button} size="medium" type="submit" form="register-form">
                             Create Account</Button>
-                    </form></div> : <p>Registration successful!</p>
-                }
+                    </form></div>
+
             </div>
         )
     }
@@ -349,7 +346,8 @@ Createaccount.propTypes = {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func
+    clearErrors: PropTypes.func,
+    history: PropTypes.object
 }
 
 const mapStateToProps = state => ({

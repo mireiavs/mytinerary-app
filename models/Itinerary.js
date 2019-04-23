@@ -21,7 +21,7 @@ var itinerarySchema = new Schema({
         type: String
     },
     hashtag: {
-        type: String
+        type: Array
     },
     cityName: {
         type: String

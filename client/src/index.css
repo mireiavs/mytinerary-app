@@ -364,7 +364,8 @@ li.select-option {
 
 .itinerary-detail-preview {
   display: flex;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  justify-content: space-around
 }
 
 .itinerary-detail-preview span {
@@ -567,4 +568,27 @@ button.comment-delete {
 
 .country-select {
   width: 190px
+}
+
+.hashtag-list {
+  display: flex;
+}
+
+.hashtag {
+  margin: 3px
+}
+
+.price-form {
+  display: flex;
+  width: 200px;
+  margin-top: 20px;
+  align-items: center
+}
+
+.price-label {
+  flex-grow: 2
+}
+
+.price-select {
+  flex-grow: 2
 }

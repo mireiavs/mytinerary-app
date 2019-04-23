@@ -13,7 +13,7 @@ import { connect } from "react-redux"
 import { getActivities } from "../actions/activityActions"
 import { getComments, addComment, deleteComment } from "../actions/commentActions"
 import { addFavourite, deleteFavourite } from "../actions/authActions"
-import { setItineraryRating } from "../actions/itineraryActions"
+import { setItineraryRating, setItineraryLikes } from "../actions/itineraryActions"
 import { Link } from "react-router-dom"
 import FavouriteIcon from '@material-ui/icons/Favorite';
 import FavouriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -77,12 +77,17 @@ class Itinerary extends Component {
       itineraryId: this.props.itinerary._id,
       timestamp: date
     }
+    const newLikes = this.props.itinerary.likes + 1
 
     this.props.addFavourite(newFavourite, this.props.user._id)
+    this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
   }
 
   onClickDelete() {
+    const newLikes = this.props.itinerary.likes - 1
+
     this.props.deleteFavourite(this.props.itinerary._id, this.props.user._id)
+    this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
   }
 
   changeRating(newRating) {
@@ -99,6 +104,7 @@ class Itinerary extends Component {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
     var isFavourite = false
+    const hashtagList = this.props.itinerary.hashtag.map((hashtag, index) => <div className="hashtag" key={index}><Link to={`/itineraries/${hashtag}`}>#{hashtag}</Link></div >)
 
     if (this.props.auth.favourites) {
       isFavourite = this.props.auth.favourites.find(favourite => favourite.itineraryId === itinerary._id)
@@ -133,10 +139,10 @@ class Itinerary extends Component {
               </div>
 
               <div className="itinerary-detail-preview">
-                {/* <span>Rating: {itinerary.rating} </span> */}
-                <span>Duration: {itinerary.duration} hours</span>
-                <span>Price: {itinerary.price}</span>
-                <p>{itinerary.hashtag}</p>
+                <div>Likes: {itinerary.likes}</div>
+                <div>Price: {itinerary.price}</div>
+                <div>Duration: {itinerary.duration} hrs</div>
+                <div className="hashtag-list">{hashtagList}</div>
               </div>
 
               <StarRatings
@@ -203,7 +209,8 @@ Itinerary.propTypes = {
   addFavourite: PropTypes.func,
   deleteFavourite: PropTypes.func,
   auth: PropTypes.object,
-  setItineraryRating: PropTypes.func
+  setItineraryRating: PropTypes.func,
+  setItineraryLikes: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -214,4 +221,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment, addFavourite, deleteFavourite, setItineraryRating })(withStyles(styles)(Itinerary))
+export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment, addFavourite, deleteFavourite, setItineraryRating, setItineraryLikes })(withStyles(styles)(Itinerary))

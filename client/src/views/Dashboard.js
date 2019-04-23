@@ -27,11 +27,12 @@ class Dashboard extends Component {
         const favourites = this.props.auth.favourites
         const msg = this.state.msg
         var itineraryList = ""
+
         if (favourites) {
-            itineraryList = itineraries.map((itinerary, index) => {
-                for (var i = 0; i < favourites.length; i++) {
-                    if (favourites[i].itineraryId === itinerary._id) {
-                        return <Itinerary itinerary={itinerary} key={index} isOpen={this.state.collapse === itinerary._id} toggle={this.toggle} />
+            itineraryList = favourites.map((favourite, index) => {
+                for (var i = 0; i < itineraries.length; i++) {
+                    if (favourite.itineraryId === itineraries[i]._id) {
+                        return <Itinerary itinerary={itineraries[i]} key={index} isOpen={this.state.collapse === itineraries[i]._id} toggle={this.toggle} />
                     }
                 }
             })

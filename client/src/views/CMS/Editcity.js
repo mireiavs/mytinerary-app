@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { deleteCity, getCities, updateCity, addSuccess } from "../actions/citiesActions"
+import { deleteCity, getCities, updateCity, addSuccess } from "../../actions/citiesActions"
 import { connect } from "react-redux"
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';

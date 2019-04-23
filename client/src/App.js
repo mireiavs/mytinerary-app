@@ -9,15 +9,16 @@ import Landing2 from "./views/Landing2"
 import Landing1 from "./views/Landing1"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-import Addcity from "./views/Addcity"
-import Editcity from "./views/Editcity"
+import Addcity from "./views/CMS/Addcity"
+import Editcity from "./views/CMS/Editcity"
 import City from "./views/City"
-import Additinerary from "./views/Additinerary"
-import Addactivity from "./views/Addactivity"
-import Edititinerary from "./views/Edititinerary"
+import Additinerary from "./views/CMS/Additinerary"
+import Addactivity from "./views/CMS/Addactivity"
+import Edititinerary from "./views/CMS/Edititinerary"
 import store from "./store"
 import { loadUser } from "./actions/authActions"
 import Dashboard from "./views/Dashboard"
+import Hashtag from "./views/Hashtag"
 import PrivateRoute from "./components/PrivateRoute"
 
 class App extends Component {
@@ -42,6 +43,9 @@ class App extends Component {
             <Route exact path="/cities/all" component={Cities} />
             <Route exact path="/cities/:id" component={City} />
 
+            <Route exact path="/itineraries/:hashtag" component={Hashtag} />
+
+            {/* CMS links */}
             <PrivateRoute exact path="/cities/all/addcity" component={Addcity} />
 
             <PrivateRoute path="/editcity" component={Editcity} />

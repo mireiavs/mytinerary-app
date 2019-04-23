@@ -55,9 +55,16 @@ router.put("/:itineraryId", auth, (req, res) => {
     .catch(() => res.status(404).json({ success: false }))
 })
 
-// Update rating only
+// Update rating
 router.put("/:itineraryId/rating", auth, (req, res) => {
   Itinerary.findOneAndUpdate({ _id: req.params.itineraryId }, { $set: { rating: req.body.rating } })
+    .then(() => res.json({ success: true }))
+    .catch(() => res.status(404).json({ success: false }))
+})
+
+// Update likes
+router.put("/:itineraryId/likes", auth, (req, res) => {
+  Itinerary.findOneAndUpdate({ _id: req.params.itineraryId }, { $set: { likes: req.body.likes } })
     .then(() => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))
 })

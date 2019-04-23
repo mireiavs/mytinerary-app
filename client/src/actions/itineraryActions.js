@@ -6,7 +6,8 @@ import {
     ADD_IT_SUCCESS,
     DELETE_ITINERARY,
     UPDATE_ITINERARY,
-    SET_ITINERARY_RATING
+    SET_ITINERARY_RATING,
+    SET_ITINERARY_LIKES
 } from "./types"
 import { tokenConfig } from "./authActions"
 import axios from "axios"
@@ -92,6 +93,22 @@ export const setItineraryRating = (rating, itineraryId) => (dispatch, getState) 
             dispatch({
                 type: SET_ITINERARY_RATING,
                 payload: newRating
+            })
+        )
+
+}
+
+export const setItineraryLikes = (likes, itineraryId) => (dispatch, getState) => {
+    const newLikes = {
+        itineraryId,
+        likes
+    }
+    axios
+        .put(`/api/itineraries/${itineraryId}/likes`, newLikes, tokenConfig(getState))
+        .then(() =>
+            dispatch({
+                type: SET_ITINERARY_LIKES,
+                payload: newLikes
             })
         )
 

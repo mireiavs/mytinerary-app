@@ -6,7 +6,8 @@ import {
     ADD_IT_SUCCESS,
     DELETE_ITINERARY,
     UPDATE_ITINERARY,
-    SET_ITINERARY_RATING
+    SET_ITINERARY_RATING,
+    SET_ITINERARY_LIKES
 } from "../actions/types"
 
 const initialState = {
@@ -63,6 +64,15 @@ export default function (state = initialState, action) {
                 itineraries: state.itineraries.map(itinerary => {
                     if (itinerary._id === action.payload.itineraryId) {
                         return Object.assign({}, itinerary, { rating: action.payload.rating })
+                    } else { return itinerary }
+                }),
+            }
+        case SET_ITINERARY_LIKES:
+            return {
+                ...state,
+                itineraries: state.itineraries.map(itinerary => {
+                    if (itinerary._id === action.payload.itineraryId) {
+                        return Object.assign({}, itinerary, { likes: action.payload.likes })
                     } else { return itinerary }
                 }),
             }

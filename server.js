@@ -18,7 +18,8 @@ app.use(express.json())
 
 const options = {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 };
 
 mongoose.connect(process.env.MONGO_URL, options);
