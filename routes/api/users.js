@@ -79,7 +79,8 @@ router.post("/", upload.single("userImage"), (req, res) => {
                                             email: user.email,
                                             first_name: user.first_name,
                                             last_name: user.last_name,
-                                            country: user.country
+                                            country: user.country,
+                                            favourites: user.favourites
                                         }
                                     })
                                 }
@@ -102,6 +103,24 @@ router.put("/:userId", (req, res) => {
     }
     User.findOneAndUpdate({ _id: req.params.userId }, updatedUser)
         .then(user => res.json({ success: true }))
+        .catch(() => res.status(404).json({ success: false }))
+})
+
+// Add favourite
+
+router.post("/:userId/favourites", (req, res) => {
+    const newFavourite = {
+        itineraryId: req.body.itineraryId,
+        timestamp: req.body.timestamp
+    }
+    User.findOneAndUpdate({ _id: req.params.userId }, { $push: { favourites: newFavourite } })
+        .then(user => res.send(newFavourite))
+        .catch(() => res.status(404).json({ success: false }))
+})
+
+router.delete("/:userId/favourites/:itineraryId", auth, (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { favourites: { itineraryId: req.params.itineraryId } } })
+        .then(() => res.json({ success: true }))
         .catch(() => res.status(404).json({ success: false }))
 })
 

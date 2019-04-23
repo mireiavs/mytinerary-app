@@ -8,7 +8,9 @@ import {
     REGISTRATION_SUCCESS,
     REGISTRATION_FAIL,
     UPDATE_USER,
-    UPDATE_USER_SUCCESS
+    UPDATE_USER_SUCCESS,
+    ADD_FAVOURITE,
+    DELETE_FAVOURITE
 } from "../actions/types"
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
     isAuthenticated: null,
     isLoading: false,
     user: null,
-    updateSuccess: false
+    updateSuccess: false.isAuthenticated,
+    favourites: []
 }
 
 export default function (state = initialState, action) {
@@ -31,7 +34,8 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                favourites: action.payload.favourites
             }
         case LOGIN_SUCCESS:
         case REGISTRATION_SUCCESS:
@@ -41,6 +45,7 @@ export default function (state = initialState, action) {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
+                favourites: action.payload.user.favourites
             }
         case LOGOUT_SUCCESS:
         case AUTH_ERROR:
@@ -64,6 +69,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 updateSuccess: false
+            }
+        case ADD_FAVOURITE:
+            return {
+                ...state,
+                favourites: [action.payload, ...state.favourites],
+            }
+        case DELETE_FAVOURITE:
+            return {
+                ...state,
+                favourites: state.favourites.filter(favourite => favourite.itineraryId !== action.payload),
             }
         default:
             return state

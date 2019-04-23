@@ -8,6 +8,9 @@ var itinerarySchema = new Schema({
     user: {
         type: String
     },
+    likes: {
+        type: Number
+    },
     rating: {
         type: Number
     },

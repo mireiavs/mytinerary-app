@@ -15,8 +15,6 @@ import { clearErrors } from "../actions/errorActions"
 import { Link } from "react-router-dom"
 import { GoogleLogin } from 'react-google-login';
 
-
-
 const styles = theme => ({
     container: {
         display: 'flex',
@@ -61,7 +59,7 @@ class Login extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
+        const { error } = this.props;
         if (error !== prevProps.error) {
             // Check for login error
             if (error.id === "LOGIN_FAIL") {
@@ -71,18 +69,17 @@ class Login extends Component {
             }
         }
 
-        if (prevProps.isAuthenticated === false && isAuthenticated === true) {
+        if (prevProps.user !== this.props.user) {
             this.setState({
                 loginSuccess: true
             })
+            this.props.history.push("/dashboard");
         }
-
     }
+
     handleClose = () => {
         this.setState({ alert: false });
     };
-
-
 
     onChange = (e) => {
         this.setState({
@@ -99,13 +96,10 @@ class Login extends Component {
             username,
             password
         }
-
         this.props.login(user)
     }
 
-
     responseGoogle = (response) => {
-        console.log(response);
         const user = {
             username: response.profileObj.name,
             email: response.profileObj.email,
@@ -128,7 +122,7 @@ class Login extends Component {
             <div>
                 <h3 className="title">Login</h3>
 
-                {!this.state.loginSuccess ? <div><Snackbar
+                <Snackbar
                     open={alert}
                     onClose={this.handleClose}
                     ContentProps={{
@@ -153,60 +147,61 @@ class Login extends Component {
                     ]}
                 />
 
-                    <form className={classes.container} noValidate autoComplete="off" id="register-form" onSubmit={this.onSubmit}>
+                <form className={classes.container} noValidate autoComplete="off" id="register-form" onSubmit={this.onSubmit}>
 
-                        <div>
-                            <InputLabel htmlFor="username" className="form-label">Username:</InputLabel>
-                            <Input
-                                id="username"
-                                name="username"
-                                value={this.state.username}
-                                onChange={this.onChange}
-                                className={classes.input}
-                            />
-                        </div>
-
-                        <div>
-                            <InputLabel htmlFor="password" className="form-label">Password:</InputLabel>
-                            <Input
-                                id="password"
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.onChange}
-                                className={classes.input}
-                                type="password"
-
-                            />
-                        </div>
-
-                        <div className="terms remember">
-                            <Checkbox
-                                checked={this.state.checked}
-                                onChange={this.handleChecked}
-                                value="checked"
-                            /> <p>Remember Me</p>
-                        </div>
-
-                        <Button variant="contained" className={classes.button} size="medium" type="submit" form="register-form">
-                            Login</Button>
-                    </form>
-
-                    <div className="google-btn">
-                        <GoogleLogin
-                            clientId="1007359330691-dekauisk8c2vg88g59tqprpsdatt9lv9.apps.googleusercontent.com"
-                            buttonText="Login with Google"
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.onFailure}
-                            cookiePolicy={'single_host_origin'}
+                    <div>
+                        <InputLabel htmlFor="username" className="form-label">Username:</InputLabel>
+                        <Input
+                            id="username"
+                            name="username"
+                            value={this.state.username}
+                            onChange={this.onChange}
+                            className={classes.input}
                         />
                     </div>
-                    <div className="login-text">
-                        <p>Don&apos;t have a MYtinerary account yet? You should create one! It&apos;s totally free and only takes a minute.</p>
-                        <Link to="/createaccount" className="login-link">Create Account</Link></div>
 
-                </div> : <p className="result">Login successful!</p>
-                }
+                    <div>
+                        <InputLabel htmlFor="password" className="form-label">Password:</InputLabel>
+                        <Input
+                            id="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.onChange}
+                            className={classes.input}
+                            type="password"
+                        />
+                    </div>
+
+                    <div className="terms remember">
+                        <Checkbox
+                            checked={this.state.checked}
+                            onChange={this.handleChecked}
+                            value="checked"
+                        /> <p>Remember Me</p>
+                    </div>
+
+                    <Button variant="contained" className={classes.button} size="medium" type="submit" form="register-form">
+                        Login</Button>
+                </form>
+
+                <div className="google-btn">
+                    <GoogleLogin
+                        clientId="1007359330691-dekauisk8c2vg88g59tqprpsdatt9lv9.apps.googleusercontent.com"
+                        buttonText="Login with Google"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.onFailure}
+                        cookiePolicy={'single_host_origin'}
+                    />
+
+
+                </div>
+                <div className="login-text">
+                    <p>Don&apos;t have a MYtinerary account yet? You should create one! It&apos;s totally free and only takes a minute.</p>
+                    <Link to="/createaccount" className="login-link">Create Account</Link>
+                </div>
+
             </div>
+
         )
     }
 }
@@ -217,13 +212,17 @@ Login.propTypes = {
     error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func,
-    socialLogin: PropTypes.func
+    socialLogin: PropTypes.func,
+    history: PropTypes.object,
+    auth: PropTypes.object,
+    user: PropTypes.object
 }
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.errors
+    error: state.errors,
+    auth: state.auth,
+    user: state.auth.user
 })
-
 
 export default connect(mapStateToProps, { login, clearErrors, socialLogin })(withStyles(styles)(Login))

@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { Link, withRouter } from "react-router-dom"
 import HomeIcon from '@material-ui/icons/Home';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
-import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
-
+/* import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
+ */
 const styles = () => ({
     appBar: {
         top: 'auto',

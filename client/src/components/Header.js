@@ -68,6 +68,7 @@ class Header extends Component {
         const citiesLink = props => <Link to="/cities/all" {...props} />
         const logInLink = props => <Link to="/login" {...props} />
         const createAccLink = props => <Link to="/createaccount" {...props} />
+        const dashboardLink = props => <Link to="/dashboard" {...props} />
         const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
         const editCityLink = props => <Link to="/editcity" {...props} />
         const addItinLink = props => <Link to="/additinerary" {...props} />
@@ -161,13 +162,16 @@ class Header extends Component {
                                 onClose={this.handleClose}
                             >
 
-                                {this.props.isAuthenticated ? <MenuItem onClick={this.props.logout}>Log Out</MenuItem> : <div><MenuItem component={logInLink} onClick={this.handleClose}>Log In</MenuItem>
-                                    <MenuItem component={createAccLink} onClick={this.handleClose}>Create account</MenuItem></div>
-
+                                {this.props.isAuthenticated ?
+                                    <div>
+                                        <MenuItem component={dashboardLink} onClick={this.handleClose}>Dashboard</MenuItem>
+                                        <MenuItem onClick={this.props.logout}>Log Out</MenuItem>
+                                    </div> :
+                                    <div>
+                                        <MenuItem component={logInLink} onClick={this.handleClose}>Log In</MenuItem>
+                                        <MenuItem component={createAccLink} onClick={this.handleClose}>Create account</MenuItem>
+                                    </div>
                                 }
-
-
-
                             </Menu>
                         </div>
 

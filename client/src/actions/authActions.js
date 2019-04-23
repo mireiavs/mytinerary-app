@@ -10,7 +10,9 @@ import {
     REGISTRATION_SUCCESS,
     REGISTRATION_FAIL,
     UPDATE_USER,
-    UPDATE_USER_SUCCESS
+    UPDATE_USER_SUCCESS,
+    ADD_FAVOURITE,
+    DELETE_FAVOURITE
 } from "./types"
 
 
@@ -133,4 +135,26 @@ export const socialLogin = (user) => dispatch => {
                 type: LOGIN_FAIL
             })
         })
+}
+
+// Favourites
+
+export const addFavourite = (favourite, userId) => (dispatch, getState) => {
+    axios
+        .post(`/api/users/${userId}/favourites`, favourite, tokenConfig(getState))
+        .then(res =>
+            dispatch({
+                type: ADD_FAVOURITE,
+                payload: res.data
+            })
+        )
+}
+
+export const deleteFavourite = (itineraryId, userId) => (dispatch, getState) => {
+    axios
+        .delete(`/api/users/${userId}/favourites/${itineraryId}`, tokenConfig(getState))
+        .then(() => dispatch({
+            type: DELETE_FAVOURITE,
+            payload: itineraryId
+        }))
 }

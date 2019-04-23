@@ -273,6 +273,15 @@ li.select-option {
   margin-bottom: 0
 }
 
+.terms-link {
+  color: #007bff
+}
+
+.error {
+  display: flex;
+  justify-content: space-around
+}
+
 .title {
   text-align: center;
 
@@ -543,5 +552,19 @@ button.comment-delete {
 }
 
 .title-fav {
-  display: flex
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.itinerary-title-details h4 {
+  font-size: 1.2rem
+}
+
+.dashboard h1 {
+  text-align: center
+}
+
+.country-select {
+  width: 190px
 }

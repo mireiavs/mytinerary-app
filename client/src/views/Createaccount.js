@@ -6,8 +6,6 @@ import { register } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions"
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -15,6 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import Modal from '@material-ui/core/Modal';
+import { CountryDropdown } from 'react-country-region-selector';
 
 const styles = theme => ({
     container: {
@@ -24,7 +23,7 @@ const styles = theme => ({
         alignItems: "center"
     },
     input: {
-        margin: theme.spacing.unit,
+        margin: theme.spacing.unitn,
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -85,6 +84,8 @@ class Createaccount extends Component {
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.clearImg = this.clearImg.bind(this)
+        this.clearImg = this.clearImg.bind(this)
+        this.selectCountry = this.selectCountry.bind(this)
     }
 
     componentDidMount() {
@@ -107,6 +108,10 @@ class Createaccount extends Component {
                 regSuccess: true
             })
         }
+    }
+
+    selectCountry(val) {
+        this.setState({ country: val });
     }
 
     handleOpenModal = () => {
@@ -179,8 +184,8 @@ class Createaccount extends Component {
     render() {
         const { classes } = this.props;
         const { alert } = this.state
-        const countryList = this.state.countries.map((country, index) => <MenuItem key={index} value={country} className="select-option">{country}</MenuItem>
-        )
+        /* const countryList = this.state.countries.map((country, index) => <MenuItem key={index} value={country} className="select-option">{country}</MenuItem>
+        ) */
         return (
             <div>
                 <h3 className="title">Create account</h3>
@@ -218,8 +223,8 @@ class Createaccount extends Component {
                                 (<div className="upload-userpic"><label htmlFor="userpic">Select picture:</label>
                                     <input type="file" name="userImage" onChange={this.onChange} id="userpic" /></div>) :
                                 (<div className="upload-userpic">
-                                    <img src={this.state.imgPreview}></img>
-                                    <a href="#" onClick={this.clearImg} className="clear-img">X</a>
+                                    <img src={this.state.imgPreview} alt="preview"></img>
+                                    <span onClick={this.clearImg} className="clear-img">X</span>
                                 </div>)
                             }
 
@@ -289,7 +294,12 @@ class Createaccount extends Component {
                             <InputLabel htmlFor="country" className="form-label">
                                 Country:
                             </InputLabel>
-                            <Select
+
+                            <CountryDropdown
+                                className="country-select"
+                                value={this.state.country}
+                                onChange={(val) => this.selectCountry(val)} />
+                            {/* <Select
                                 value={this.state.country}
                                 onChange={this.onChange}
                                 input={<Input name="country" id="country" />}
@@ -301,7 +311,7 @@ class Createaccount extends Component {
                                     Select country
                         </MenuItem>
                                 {countryList}
-                            </Select>
+                            </Select> */}
                         </div>
 
                         <div className="terms">
@@ -309,7 +319,8 @@ class Createaccount extends Component {
                                 checked={this.state.checked}
                                 onChange={this.handleChecked}
                                 value="checked"
-                            /> <p>I agree to MYtinerary&apos;s <a href="#" onClick={this.handleOpenModal} >Terms & Conditions</a></p>
+                            />
+                            <p>I agree to MYtinerary&apos;s <span className="terms-link" onClick={this.handleOpenModal} >Terms & Conditions</span></p>
                         </div>
                         <Modal
                             open={this.state.open}
@@ -320,7 +331,7 @@ class Createaccount extends Component {
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
-                                <a href="#" onClick={this.handleCloseModal}>Close</a>
+                                <span onClick={this.handleCloseModal} className="terms-link">Close</span>
                             </div>
                         </Modal>
 

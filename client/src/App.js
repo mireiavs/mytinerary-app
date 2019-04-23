@@ -17,7 +17,8 @@ import Addactivity from "./views/Addactivity"
 import Edititinerary from "./views/Edititinerary"
 import store from "./store"
 import { loadUser } from "./actions/authActions"
-
+import Dashboard from "./views/Dashboard"
+import PrivateRoute from "./components/PrivateRoute"
 
 class App extends Component {
   componentDidMount() {
@@ -36,23 +37,24 @@ class App extends Component {
 
             <Route path="/login" component={Login} />
             <Route path="/createaccount" component={Createaccount} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
 
             <Route exact path="/cities/all" component={Cities} />
             <Route exact path="/cities/:id" component={City} />
 
-            <Route exact path="/cities/all/addcity" component={Addcity} />
+            <PrivateRoute exact path="/cities/all/addcity" component={Addcity} />
 
-            <Route path="/editcity" component={Editcity} />
-            <Route path="/cities/:cityId/editcity" component={Editcity} />
+            <PrivateRoute path="/editcity" component={Editcity} />
+            <PrivateRoute path="/cities/:cityId/editcity" component={Editcity} />
 
-            <Route path="/edititinerary" component={Edititinerary} />
-            <Route path="/cities/:cityId/:itineraryId/edititinerary" component={Edititinerary} />
+            <PrivateRoute path="/edititinerary" component={Edititinerary} />
+            <PrivateRoute path="/cities/:cityId/:itineraryId/edititinerary" component={Edititinerary} />
 
-            <Route path="/additinerary" component={Additinerary} />
-            <Route path="/cities/:cityId/additinerary" component={Additinerary} />
+            <PrivateRoute path="/additinerary" component={Additinerary} />
+            <PrivateRoute path="/cities/:cityId/additinerary" component={Additinerary} />
 
-            <Route path="/addactivity" component={Addactivity} />
-            <Route path="/cities/:cityId/:itineraryId/addactivity" component={Addactivity} />
+            <PrivateRoute path="/addactivity" component={Addactivity} />
+            <PrivateRoute path="/cities/:cityId/:itineraryId/addactivity" component={Addactivity} />
 
             <Route component={Notfound} />
 

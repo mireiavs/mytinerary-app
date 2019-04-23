@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 const auth = require("../../middleware/auth")
 require('dotenv').config()
-const passport = require("passport")
 
 // POST /api/auth - Authenticate user
 router.post("/", (req, res) => {
@@ -34,12 +33,13 @@ router.post("/", (req, res) => {
                             res.json({
                                 token,
                                 user: {
-                                    id: user.id,
+                                    _id: user.id,
                                     username: user.username,
                                     email: user.email,
                                     first_name: user.first_name,
                                     last_name: user.last_name,
                                     country: user.country,
+                                    favourites: user.favourites
                                 }
                             })
                         }
@@ -56,74 +56,7 @@ router.get("/user", auth, (req, res) => {
         .then(user => res.json(user))
 })
 
-/* // auth with google
-router.get('/google', passport.authenticate('google', {
-    scope: ['profile', "email"]
-}));
 
-// callback route for google to redirect to
-// hand control to passport to use code to grab profile info
-router.get('/google/callback', passport.authenticate('google'), (req, res) => {
-    res.send(req.user);
-
-    User.findOne({ email: req.user.email })
-        .then(user => {
-            if (user) {
-                jwt.sign(
-                    { id: user.id },
-                    process.env.JWT_SECRET,
-                    { expiresIn: 3600 },
-                    (err, token) => {
-                        if (err) throw err;
-                        res.json({
-                            token,
-                            user: {
-                                id: user.id,
-                                username: user.username,
-                                email: user.email,
-                                first_name: user.first_name,
-                                last_name: user.last_name,                                
-                            }
-                        })
-                    }
-                )
-            } else {
-                // Send user to db
-                const newUser = new User({
-                    username,
-                    email,
-                    first_name,
-                    last_name,
-                    
-                });
-                newUser.save()
-                    .then(user => {
-                        jwt.sign(
-                            { id: user.id },
-                            process.env.JWT_SECRET,
-                            { expiresIn: 3600 },
-                            (err, token) => {
-                                if (err) throw err;
-                                res.json({
-                                    token,
-                                    user: {
-                                        id: user.id,
-                                        username: user.username,
-                                        email: user.email,
-                                        first_name: user.first_name,
-                                        last_name: user.last_name,
-                                        country: user.country
-                                    }
-                                })
-                            }
-                        )
-                    })
-
-            })
-})
-
-
- */
 
 // SOCIAL LOGIN
 
@@ -142,7 +75,7 @@ router.post("/social", (req, res) => {
                         res.json({
                             token,
                             user: {
-                                id: user.id,
+                                _id: user.id,
                                 username: user.username,
                                 email: user.email,
                                 first_name: user.first_name,
@@ -172,7 +105,7 @@ router.post("/social", (req, res) => {
                                 res.json({
                                     token,
                                     user: {
-                                        id: user.id,
+                                        _id: user.id,
                                         username: user.username,
                                         email: user.email,
                                         first_name: user.first_name,

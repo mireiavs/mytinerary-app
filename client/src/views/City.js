@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { getItineraries } from "../actions/itineraryActions"
-import { getFavourites } from "../actions/favouriteActions"
-import { connect } from "react-redux"
+/* import { getFavourites } from "../actions/favouriteActions"
+ */import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import Itinerary from "../components/Itinerary"
 import Loader from "../components/Loader"
@@ -25,13 +25,13 @@ class City extends Component {
 
     }
 
-    componentDidUpdate(prevProps) {
+    /* componentDidUpdate(prevProps) {
         if (prevProps.user !== this.props.user) {
             if (this.props.user) {
                 this.props.getFavourites(this.props.user._id)
             }
         }
-    }
+    } */
 
     render() {
         const { itineraries } = this.props.itineraries
@@ -72,8 +72,8 @@ City.propTypes = {
     itineraries: PropTypes.object,
     favourites: PropTypes.object,
     user: PropTypes.object,
-    getFavourites: PropTypes.func,
-    auth: PropTypes.object
+/*     getFavourites: PropTypes.func,
+ */    auth: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => ({
     favourites: state.favourites
 })
 
-export default connect(mapStateToProps, { getItineraries, getFavourites })(City)
+export default connect(mapStateToProps, { getItineraries /*, getFavourites */ })(City)

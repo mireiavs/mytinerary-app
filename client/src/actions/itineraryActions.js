@@ -1,4 +1,13 @@
-import { GET_ITINERARIES, ITINERARIES_LOADING, ADD_ITINERARY, ADD_IT_SUCCESS, DELETE_ITINERARY, UPDATE_ITINERARY } from "./types"
+import {
+    GET_ITINERARIES,
+    GET_ALL_ITINERARIES,
+    ITINERARIES_LOADING,
+    ADD_ITINERARY,
+    ADD_IT_SUCCESS,
+    DELETE_ITINERARY,
+    UPDATE_ITINERARY,
+    SET_ITINERARY_RATING
+} from "./types"
 import { tokenConfig } from "./authActions"
 import axios from "axios"
 
@@ -11,7 +20,17 @@ export const getItineraries = (id) => dispatch => {
                 type: GET_ITINERARIES,
                 payload: res.data
             }))
+}
 
+export const getAllItineraries = () => dispatch => {
+    dispatch(setItinerariesLoading());
+    axios
+        .get(`/api/itineraries`)
+        .then(res =>
+            dispatch({
+                type: GET_ALL_ITINERARIES,
+                payload: res.data
+            }))
 
 }
 
@@ -57,6 +76,22 @@ export const updateItinerary = (itinerary, itineraryId) => dispatch => {
             dispatch({
                 type: UPDATE_ITINERARY,
                 payload: itinerary
+            })
+        )
+
+}
+
+export const setItineraryRating = (rating, itineraryId) => (dispatch, getState) => {
+    const newRating = {
+        itineraryId,
+        rating
+    }
+    axios
+        .put(`/api/itineraries/${itineraryId}/rating`, newRating, tokenConfig(getState))
+        .then(() =>
+            dispatch({
+                type: SET_ITINERARY_RATING,
+                payload: newRating
             })
         )
 

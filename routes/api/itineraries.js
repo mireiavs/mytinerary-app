@@ -4,7 +4,17 @@ const Itinerary = require("../../models/Itinerary")
 const auth = require("../../middleware/auth")
 
 
-// GET /api/itineraries/:cityId
+// GET /api/itineraries - all itineraries
+router.get("/", (req, res) => {
+  Itinerary.find({}, (err, data) => {
+    if (err)
+      res.send(err);
+    res.send(data);
+  })
+})
+
+
+// GET /api/itineraries/:cityId - itineraries by city
 router.get("/:cityId", (req, res) => {
   Itinerary.find({ cityName: req.params.cityId }, (err, data) => {
     if (err)
@@ -12,6 +22,8 @@ router.get("/:cityId", (req, res) => {
     res.send(data);
   })
 })
+
+
 
 // POST /api/itineraries/:cityId
 router.post("/:cityId", auth, (req, res) => {
@@ -42,6 +54,14 @@ router.put("/:itineraryId", auth, (req, res) => {
     .then(itinerary => res.json({ success: true }))
     .catch(() => res.status(404).json({ success: false }))
 })
+
+// Update rating only
+router.put("/:itineraryId/rating", auth, (req, res) => {
+  Itinerary.findOneAndUpdate({ _id: req.params.itineraryId }, { $set: { rating: req.body.rating } })
+    .then(() => res.json({ success: true }))
+    .catch(() => res.status(404).json({ success: false }))
+})
+
 
 // DELETE /api/itineraries/:itineraryId
 router.delete("/:itineraryId", auth, (req, res) => {

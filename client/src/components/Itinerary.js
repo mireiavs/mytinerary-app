@@ -12,11 +12,13 @@ import Comments from "./Comments"
 import { connect } from "react-redux"
 import { getActivities } from "../actions/activityActions"
 import { getComments, addComment, deleteComment } from "../actions/commentActions"
-import { addFavourite, deleteFavourite } from "../actions/favouriteActions"
+import { addFavourite, deleteFavourite } from "../actions/authActions"
+import { setItineraryRating } from "../actions/itineraryActions"
 import { Link } from "react-router-dom"
 import FavouriteIcon from '@material-ui/icons/Favorite';
 import FavouriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import red from '@material-ui/core/colors/red';
+import StarRatings from 'react-star-ratings';
 
 const styles = theme => ({
   card: {
@@ -52,6 +54,11 @@ class Itinerary extends Component {
     this.handleExpandClick = this.handleExpandClick.bind(this)
     this.onClickAdd = this.onClickAdd.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
+    this.changeRating = this.changeRating.bind(this)
+
+    this.state = {
+      notLoggedIn: false
+    }
   }
 
   /* Function to handle collapse of itinerary cards. isOpen variable is passed from parent component as it has a function to close all other cards when one is open */
@@ -65,23 +72,37 @@ class Itinerary extends Component {
   };
 
   onClickAdd() {
+    const date = new Date()
     const newFavourite = {
       itineraryId: this.props.itinerary._id,
-      userId: this.props.user._id
+      timestamp: date
     }
+
     this.props.addFavourite(newFavourite, this.props.user._id)
   }
 
   onClickDelete() {
-    const favourite = this.props.favourites.favourites.find(favourite => favourite.itineraryId === this.props.itinerary._id)
-    this.props.deleteFavourite(favourite._id, this.props.user._id)
+    this.props.deleteFavourite(this.props.itinerary._id, this.props.user._id)
+  }
+
+  changeRating(newRating) {
+    if (this.props.auth.isAuthenticated) {
+      this.props.setItineraryRating(newRating, this.props.itinerary._id)
+    } else {
+      this.setState({
+        notLoggedIn: true
+      })
+    }
   }
 
   render() {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
-    const favourites = this.props.favourites.favourites
-    const isFavourite = favourites.find(favourite => favourite.itineraryId === itinerary._id)
+    var isFavourite = false
+
+    if (this.props.auth.favourites) {
+      isFavourite = this.props.auth.favourites.find(favourite => favourite.itineraryId === itinerary._id)
+    }
 
     return (
       <div className="itinerary-card">
@@ -112,13 +133,23 @@ class Itinerary extends Component {
               </div>
 
               <div className="itinerary-detail-preview">
-                <span>Rating: {itinerary.rating} </span>
-                <span>{itinerary.duration} hours</span>
-                <span>{itinerary.price}</span>
+                {/* <span>Rating: {itinerary.rating} </span> */}
+                <span>Duration: {itinerary.duration} hours</span>
+                <span>Price: {itinerary.price}</span>
                 <p>{itinerary.hashtag}</p>
               </div>
-            </div>
 
+              <StarRatings
+                rating={itinerary.rating}
+                starRatedColor="rgb(109, 122, 130)"
+                starHoverColor="yellow"
+                changeRating={this.changeRating}
+                numberOfStars={5}
+                name='rating'
+                starDimension="30px"
+              />
+
+            </div>
 
           </CardContent>
           <Collapse in={this.props.isOpen} timeout="auto" mountOnEnter unmountOnExit>
@@ -171,7 +202,8 @@ Itinerary.propTypes = {
   favourites: PropTypes.object,
   addFavourite: PropTypes.func,
   deleteFavourite: PropTypes.func,
-  auth: PropTypes.object
+  auth: PropTypes.object,
+  setItineraryRating: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -179,8 +211,7 @@ const mapStateToProps = (state) => ({
   comments: state.comments,
   auth: state.auth,
   user: state.auth.user,
-  favourites: state.favourites
 })
 
 
-export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment, addFavourite, deleteFavourite })(withStyles(styles)(Itinerary))
+export default connect(mapStateToProps, { getActivities, getComments, addComment, deleteComment, addFavourite, deleteFavourite, setItineraryRating })(withStyles(styles)(Itinerary))

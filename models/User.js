@@ -32,7 +32,8 @@ var userSchema = new Schema({
     },
     userImage: {
         type: String
-    }
-});
+    },
+    favourites: [{ itineraryId: String, timestamp: Date }],
+})
 
 module.exports = User = mongoose.model("User", userSchema);
