@@ -7,6 +7,7 @@ const comments = require("./routes/api/comments")
 const users = require("./routes/api/users")
 const auth = require("./routes/api/auth")
 const app = express();
+const path = require("path")
 const port = process.env.PORT || 5000;
 require('dotenv').config()
 
@@ -31,6 +32,8 @@ db.once('open', function () {
   console.log("connected to db");
 });
 
+
+// Routes
 app.use('/api/cities', cities);
 app.use('/api/itineraries', itineraries);
 app.use('/api/activities', activities);
@@ -38,6 +41,16 @@ app.use('/api/comments', comments)
 app.use('/api/users', users)
 app.use('/api/auth', auth)
 
+// Serve static assets if in production
+if (proces.env.NODE_ENV === "production") {
+  // Static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+
+}
 
 app.listen(port);
 console.log('Magic happens on port ' + port);
