@@ -62,7 +62,6 @@ class Createaccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            countries: ["England", "France", "Germany", "Holland", "Ireland", "Spain", "United States"],
             username: "",
             password: "",
             email: "",
@@ -296,19 +295,6 @@ class Createaccount extends Component {
                                 className="country-select"
                                 value={this.state.country}
                                 onChange={(val) => this.selectCountry(val)} />
-                            {/* <Select
-                                value={this.state.country}
-                                onChange={this.onChange}
-                                input={<Input name="country" id="country" />}
-                                displayEmpty
-                                name="country"
-                                className={classes.select}
-                            >
-                                <MenuItem value="" className="select-option">
-                                    Select country
-                        </MenuItem>
-                                {countryList}
-                            </Select> */}
                         </div>
 
                         <div className="terms">

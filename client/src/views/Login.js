@@ -199,9 +199,7 @@ class Login extends Component {
                     <p>Don&apos;t have a MYtinerary account yet? You should create one! It&apos;s totally free and only takes a minute.</p>
                     <Link to="/createaccount" className="login-link">Create Account</Link>
                 </div>
-
             </div>
-
         )
     }
 }

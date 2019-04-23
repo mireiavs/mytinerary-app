@@ -7,7 +7,7 @@ class Landing extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className="logo-container">
                     <img src={logo} alt="MYtinerary logo" className="logo" />
                 </div>
                 <div className="landing">

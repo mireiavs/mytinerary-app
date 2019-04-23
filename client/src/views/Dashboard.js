@@ -9,7 +9,8 @@ class Dashboard extends Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-            msg: "Please login to see your dashboard."
+            msg: "Please login to see your dashboard.",
+            noFavs: false
         };
     }
 
@@ -38,14 +39,13 @@ class Dashboard extends Component {
             })
         }
 
-
         return (
             <div>
                 {this.props.user ?
                     <div className="dashboard">
-                        <h1>Dashboard</h1>
+                        <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
                         <h4>Favourite itineraries</h4>
-                        <div>{itineraryList}</div>
+                        {this.props.auth.favourites.length !== 0 ? <div className="itinerary-list">{itineraryList}</div> : <div>You haven&apos;t added any favourites yet!</div>}
                     </div>
                     : (<div className="result">{msg}</div>)
                 }
