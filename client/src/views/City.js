@@ -40,7 +40,7 @@ class City extends Component {
                     (<div>
                         {(itineraries.length !== 0) ?
                             (<div className="itinerary-list">{itineraryList}</div>) :
-                            (<p>Sorry, there no itineraries for this city yet.</p>)
+                            (<p className="error-msg">Sorry, there no itineraries for this city yet.</p>)
                         }</div>
                     )
                 }

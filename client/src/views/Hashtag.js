@@ -37,7 +37,7 @@ class Hashtag extends Component {
         return (
             <div className="city-info">
                 <h1 className="city-title">{this.props.match.params.id}</h1>
-                <h4>MYtineraries with the hashtag {currentHashtag}:</h4>
+                <h4>MYtineraries with #{currentHashtag}:</h4>
 
                 {isLoading ?
                     (<Loader />) :

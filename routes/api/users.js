@@ -39,6 +39,14 @@ router.post("/", upload.single("userImage"), (req, res) => {
         return res.status(400).json({ msg: "Please enter all fields." });
     }
 
+    var userImage
+
+    if (req.file) {
+        userImage = req.file.path
+    } else {
+        userImage = "/uploads/noimage.png"
+    }
+
     const newUser = new User({
         username,
         email,
@@ -46,7 +54,7 @@ router.post("/", upload.single("userImage"), (req, res) => {
         first_name,
         last_name,
         country,
-        userImage: req.file.path
+        userImage
     })
 
     //Check for existing user

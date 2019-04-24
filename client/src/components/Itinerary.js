@@ -139,10 +139,14 @@ class Itinerary extends Component {
               </div>
 
               <div className="itinerary-detail-preview">
-                <div>Likes: {itinerary.likes}</div>
-                <div>Price: {itinerary.price}</div>
-                <div>Duration: {itinerary.duration} hrs</div>
+                <div className="details">
+                  <div>Likes: {itinerary.likes}</div>
+                  <div>Price: {itinerary.price}</div>
+                  <div>Duration: {itinerary.duration} hrs</div>
+                </div>
+
                 <div className="hashtag-list">{hashtagList}</div>
+
               </div>
 
               <StarRatings

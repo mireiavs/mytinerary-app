@@ -21,7 +21,7 @@ class Activity extends Component {
       <div className="activity-caption"><p>{activity.caption}</p></div></div>)
 
     return (
-      <div>
+      <div classNAme="activity-container">
         <h4> Activities </h4>
         {isLoading ? (<Loader />) : (<div className="slider">
           <Slider {...settings}>

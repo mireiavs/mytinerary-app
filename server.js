@@ -12,8 +12,10 @@ const port = process.env.PORT || 5000;
 require('dotenv').config()
 
 
-app.use("/cities/uploads", express.static("uploads"))
+
 app.use("/uploads", express.static("uploads"))
+app.use("/cities/uploads", express.static("uploads"))
+app.use("/itineraries/uploads", express.static("uploads"))
 
 app.use(express.json())
 

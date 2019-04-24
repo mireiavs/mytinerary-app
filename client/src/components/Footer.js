@@ -15,7 +15,7 @@ const styles = () => ({
         bottom: 0,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-start"
+        justifyContent: "space-around"
     },
 });
 
@@ -37,9 +37,9 @@ class Footer extends Component {
                 <AppBar position="fixed" color="default" className={classes.appBar}>
 
                     <div className="footer-icon">
-                        <IconButton color="inherit" onClick={this.goBack} >
+                        {this.props.location.pathname !== "/" ? <IconButton color="inherit" onClick={this.goBack} >
                             <BackIcon fontSize="large" className="footer-link" />
-                        </IconButton>
+                        </IconButton> : null}
                     </div>
 
                     <div className="footer-icon home-icon">
@@ -62,7 +62,8 @@ class Footer extends Component {
 
 Footer.propTypes = {
     classes: PropTypes.object.isRequired,
-    history: PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(Footer));

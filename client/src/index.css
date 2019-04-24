@@ -1,8 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  /*   font-family: 'Karla', sans-serif;
- */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,8 +38,6 @@ body {
     width: 100%;
   }
 }
-
-
 
 .start-title {
   text-align: center;
@@ -143,11 +139,13 @@ body {
 
 /* CITIES PAGE */
 
-.cities {
+.cities,
+.error-msg {
   text-align: center
 }
 
-.cities h1 {
+.cities h1,
+.dashboard h2 {
   margin-bottom: 20px
 }
 
@@ -233,11 +231,13 @@ body {
 }
 
 label.form-label {
+  font-family: inherit;
   font-size: 1.2rem;
   padding-top: 20px;
   width: 100px;
   text-align: right;
-  color: black
+  color: black;
+  margin-right: 10px
 }
 
 li.select-option {
@@ -314,6 +314,7 @@ li.select-option {
 
 .city-title {
   text-align: center;
+  margin-bottom: 40px
 }
 
 .city-info a {
@@ -321,13 +322,14 @@ li.select-option {
 }
 
 .itinerary-card {
-  margin-bottom: 20px
+  margin-bottom: 20px;
+  max-width: 99%
 }
 
 .card-summary {
   display: flex;
   justify-content: space-around;
-  padding: 0
+  padding: 0;
 }
 
 .itinerary-title-details {
@@ -417,7 +419,7 @@ button.comment-delete {
 }
 
 .slider {
-  padding: 10px 10px 30px 10px
+  padding: 10px 10px 30px 10px;
 }
 
 .slider-image {
@@ -428,7 +430,7 @@ button.comment-delete {
 .activity-img {
   height: 100px;
   width: 100px;
-  position: relative
+  position: relative;
 }
 
 .activity-caption {
@@ -591,6 +593,8 @@ button.comment-delete {
 
 .hashtag-list {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around
 }
 
 .hashtag {
@@ -620,4 +624,40 @@ button.comment-delete {
 
 h4 {
   text-align: center
+}
+
+.no-favs {
+  text-align: center
+}
+
+.dashboard-img {
+  border-radius: 75px;
+  height: 100px;
+  width: 100px;
+  display: flex;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px
+}
+
+.dashboard-header h2 {
+  font-size: 1.5 rem
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.details div {
+  margin: 0 5px 0 5px
+}
+
+.activity-container {
+  max-width: 100%
 }

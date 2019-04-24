@@ -43,9 +43,12 @@ class Dashboard extends Component {
             <div>
                 {this.props.user ?
                     <div className="dashboard">
+                        {/* <div className="dashboard-header">
+                            <img src={this.props.user.userImage} className="dashboard-img"></img> */}
                         <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
+                        {/*   </div> */}
                         <h4>Favourite itineraries</h4>
-                        {this.props.auth.favourites.length !== 0 ? <div className="itinerary-list">{itineraryList}</div> : <div>You haven&apos;t added any favourites yet!</div>}
+                        <div className="itinerary-list">{itineraryList}</div>
                     </div>
                     : (<div className="result">{msg}</div>)
                 }

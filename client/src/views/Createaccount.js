@@ -169,6 +169,7 @@ class Createaccount extends Component {
             formData.append('last_name', last_name);
             formData.append('country', country);
             formData.append('userImage', userImage);
+            
             // Attempt to register
             this.props.register(formData)
         } else {
@@ -216,8 +217,8 @@ class Createaccount extends Component {
                         <div>
 
                             {!this.state.imgPreview ?
-                                (<div className="upload-userpic"><label htmlFor="userpic">Select picture:</label>
-                                    <input type="file" name="userImage" onChange={this.onChange} id="userpic" /></div>) :
+                                (<div className="upload-userpic"><label htmlFor="userpic">Click to select picture</label>
+                                    <input type="file" name="userImage" onChange={this.onChange} id="userpic" className={classes.input} style={{ display: 'none' }} /></div>) :
                                 (<div className="upload-userpic">
                                     <img src={this.state.imgPreview} alt="preview"></img>
                                     <span onClick={this.clearImg} className="clear-img">X</span>
@@ -310,14 +311,13 @@ class Createaccount extends Component {
                             onClose={this.handleCloseModal}
                         >
                             <div className={classes.paper} >
-                                <h3>MYtinerary terms and conditions</h3>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
+                                <h3>MYtinerary terms and ametconditions</h3>
+                                <p>Lorem ipsum, dolor sit  consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus cum mollitia molestiae eveniet harum error dolorum molestias voluptates. Provident veritatis beatae iste ratione, aspernatur quos quam perferendis nihil. Consequatur, nemo!</p>
                                 <span onClick={this.handleCloseModal} className="terms-link">Close</span>
                             </div>
                         </Modal>
-
                         <Button variant="contained" className={classes.button} size="medium" type="submit" form="register-form">
                             Create Account</Button>
                     </form></div>

@@ -327,9 +327,7 @@ class Edititinerary extends Component {
                     <Button variant="contained" className={classes.button} size="medium" onClick={this.onClickAfterAdd}>Edit another itinerary</Button>
                 </div>)}
 
-                {/*<Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.itineraryId)}>Delete itinerary</Button> */}
-
-                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.handleClickOpenDel}>Delete city</Button>
+                <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.handleClickOpenDel}>Delete itinerary</Button>
 
                 <Dialog
                     open={this.state.openDeleteConfirmation}
