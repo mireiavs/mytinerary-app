@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
                             res.json({
                                 token,
                                 user: {
-                                    _id: user.id,
+                                    id: user.id,
                                     username: user.username,
                                     email: user.email,
                                     first_name: user.first_name,
@@ -61,7 +61,7 @@ router.get("/user", auth, (req, res) => {
 // SOCIAL LOGIN
 
 router.post("/social", (req, res) => {
-    const { username, email, first_name, last_name, googleId } = req.body;
+    const { username, email, first_name, last_name, googleId, googleImage } = req.body;
 
     User.findOne({ email })
         .then(user => {
@@ -80,7 +80,8 @@ router.post("/social", (req, res) => {
                                 email: user.email,
                                 first_name: user.first_name,
                                 last_name: user.last_name,
-                                googleId: user.googleId
+                                googleId: user.googleId,
+                                googleImage: user.googleImage
                             }
                         })
                     }
@@ -92,7 +93,8 @@ router.post("/social", (req, res) => {
                     email,
                     first_name,
                     last_name,
-                    googleId
+                    googleId,
+                    googleImage
                 });
                 newUser.save()
                     .then(user => {
@@ -110,7 +112,8 @@ router.post("/social", (req, res) => {
                                         email: user.email,
                                         first_name: user.first_name,
                                         last_name: user.last_name,
-                                        googleId: user.googleId
+                                        googleId: user.googleId,
+                                        googleImage: user.googleImage
                                     }
                                 })
                             }

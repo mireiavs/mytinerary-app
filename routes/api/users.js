@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 require('dotenv').config()
 const auth = require("../../middleware/auth")
 const multer = require('multer');
+const { check, validationResult } = require('express-validator/check');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -30,13 +31,24 @@ const upload = multer({
     fileFilter: fileFilter
 })
 
+
+
 // POST /api/users - Register new user
-router.post("/", upload.single("userImage"), (req, res) => {
+router.post("/", upload.single("userImage"), [
+    check('email').isEmail().withMessage("Please enter a valid email address"),
+    check('username').isLength({ min: 5 }).withMessage("Username must be at least 5 characters long")
+], (req, res) => {
     const { username, email, password, first_name, last_name, country } = req.body;
 
     //Simple validation
     if (!username || !email || !password || !first_name || !last_name || !country) {
         return res.status(400).json({ msg: "Please enter all fields." });
+    }
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ msg: errors.array()[0].msg });
     }
 
     var userImage
@@ -113,7 +125,6 @@ router.put("/:userId", (req, res) => {
 })
 
 // Add favourite
-
 router.post("/:userId/favourites", (req, res) => {
     const newFavourite = {
         itineraryId: req.body.itineraryId,

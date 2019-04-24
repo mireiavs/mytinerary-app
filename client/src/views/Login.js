@@ -106,6 +106,7 @@ class Login extends Component {
             first_name: response.profileObj.givenName,
             last_name: response.profileObj.familyName,
             googleId: response.profileObj.googleId,
+            googleImage: response.profileObj.imageUrl
         }
         this.props.socialLogin(user)
     }

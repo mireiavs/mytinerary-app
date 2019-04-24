@@ -23,6 +23,7 @@ class Dashboard extends Component {
         this.props.getAllItineraries()
     }
 
+
     render() {
         const { itineraries } = this.props.itineraries
         const favourites = this.props.auth.favourites
@@ -48,7 +49,7 @@ class Dashboard extends Component {
                         <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
                         {/*   </div> */}
                         <h4>Favourite itineraries</h4>
-                        <div className="itinerary-list">{itineraryList}</div>
+                        <div className="it-inerary-list">{itineraryList}</div>
                     </div>
                     : (<div className="result">{msg}</div>)
                 }
@@ -56,7 +57,6 @@ class Dashboard extends Component {
         )
     }
 }
-
 
 Dashboard.propTypes = {
     itineraries: PropTypes.object,

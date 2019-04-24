@@ -175,7 +175,6 @@ class Header extends Component {
                             </Menu>
                         </div>
 
-
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('right', true)}>
                             <MenuIcon fontSize="large" />
                         </IconButton>

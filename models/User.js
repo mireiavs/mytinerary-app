@@ -33,6 +33,9 @@ var userSchema = new Schema({
     userImage: {
         type: String
     },
+    googleImage: {
+        type: String
+    },
     favourites: [{ itineraryId: String, timestamp: Date }],
 })
 

@@ -79,14 +79,18 @@ class Itinerary extends Component {
     }
     const newLikes = this.props.itinerary.likes + 1
 
-    this.props.addFavourite(newFavourite, this.props.user._id)
+    var userId = this.props.user._id || this.props.user.id
+
+    this.props.addFavourite(newFavourite, userId)
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
   }
 
   onClickDelete() {
     const newLikes = this.props.itinerary.likes - 1
 
-    this.props.deleteFavourite(this.props.itinerary._id, this.props.user._id)
+    var userId = this.props.user._id || this.props.user.id
+
+    this.props.deleteFavourite(this.props.itinerary._id, userId)
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
   }
 
