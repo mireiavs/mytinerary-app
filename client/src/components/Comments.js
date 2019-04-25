@@ -106,9 +106,11 @@ class Comments extends Component {
                     <CardContent>
                         <div className="comment-header">
                             <p className="comment-user">{comment.user}</p>
-                            <IconButton aria-label="Delete" className="comment-delete" onClick={this.onDeleteClick.bind(this, comment._id)}>
+
+                            {this.props.user ? <IconButton aria-label="Delete" className="comment-delete" onClick={this.onDeleteClick.bind(this, comment._id)}>
                                 <DeleteIcon fontSize="small" />
-                            </IconButton>
+                            </IconButton> : null}
+
                         </div>
                         <p>{comment.message}</p>
                     </CardContent>

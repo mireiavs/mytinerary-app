@@ -45,7 +45,6 @@ class Header extends Component {
         anchorEl: null,
     };
 
-    // Material UI functions for drawer menu
     toggleDrawer = (side, open) => () => {
         this.setState({
             [side]: open,
@@ -58,7 +57,6 @@ class Header extends Component {
         this.setState({ anchorEl: null });
     };
 
-    /* For now, links to add and edit cities and itineraries have been added to the menu. This will change once authentication is implemented */
     render() {
         const { classes } = this.props;
         const { anchorEl } = this.state;
@@ -87,17 +85,6 @@ class Header extends Component {
                         <ListItemText>Cities</ListItemText>
                     </ListItem>
 
-
-
-                    {/* <ListItem button component={logInLink}>
-                        <ListItemIcon><LogInIcon /></ListItemIcon>
-                        <ListItemText>Log In</ListItemText>
-                    </ListItem>
-
-                    <ListItem button component={createAccLink}>
-                        <ListItemIcon><CreateAccIcon /></ListItemIcon>
-                        <ListItemText>Create account</ListItemText>
-                    </ListItem> */}
                 </List>
             </div>
         );

@@ -627,7 +627,8 @@ h4 {
 }
 
 .no-favs {
-  text-align: center
+  text-align: center;
+  margin-top: 30px
 }
 
 .dashboard-img {

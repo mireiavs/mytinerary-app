@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import Itinerary from "../components/Itinerary"
 import { getAllItineraries } from "../actions/itineraryActions"
 import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
 
 class Dashboard extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class Dashboard extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             msg: "Please login to see your dashboard.",
-            noFavs: false
+
         };
     }
 
@@ -23,14 +24,13 @@ class Dashboard extends Component {
         this.props.getAllItineraries()
     }
 
-
     render() {
         const { itineraries } = this.props.itineraries
         const favourites = this.props.auth.favourites
         const msg = this.state.msg
         var itineraryList = ""
 
-        if (favourites) {
+        if (favourites.length !== 0) {
             itineraryList = favourites.map((favourite, index) => {
                 for (var i = 0; i < itineraries.length; i++) {
                     if (favourite.itineraryId === itineraries[i]._id) {
@@ -49,7 +49,9 @@ class Dashboard extends Component {
                         <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
                         {/*   </div> */}
                         <h4>Favourite itineraries</h4>
-                        <div className="it-inerary-list">{itineraryList}</div>
+
+                        {favourites.length !== 0 ? <div className="itinerary-list">{itineraryList}</div> : <div className="no-favs"><p>You haven&apos;t added any favourites yet.</p><Link to="/cities/all">Start browsing</Link></div>}
+
                     </div>
                     : (<div className="result">{msg}</div>)
                 }
