@@ -81,7 +81,8 @@ router.post("/social", (req, res) => {
                                 first_name: user.first_name,
                                 last_name: user.last_name,
                                 googleId: user.googleId,
-                                googleImage: user.googleImage
+                                googleImage: user.googleImage,
+                                favourites: user.favourites
                             }
                         })
                     }

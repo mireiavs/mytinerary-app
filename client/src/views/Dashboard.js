@@ -11,7 +11,6 @@ class Dashboard extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             msg: "Please login to see your dashboard.",
-
         };
     }
 
@@ -26,11 +25,11 @@ class Dashboard extends Component {
 
     render() {
         const { itineraries } = this.props.itineraries
-        const favourites = this.props.auth.favourites
-        const msg = this.state.msg
-        var itineraryList = ""
+        var favourites = []
+        var itineraryList = []
 
-        if (favourites.length !== 0) {
+        if (this.props.auth.isAuthenticated && this.props.auth.favourites) {
+            favourites = this.props.auth.favourites
             itineraryList = favourites.map((favourite, index) => {
                 for (var i = 0; i < itineraries.length; i++) {
                     if (favourite.itineraryId === itineraries[i]._id) {
@@ -40,14 +39,23 @@ class Dashboard extends Component {
             })
         }
 
+        const msg = this.state.msg
+        /* var userImage = null
+        if (this.props.user.userImage) {
+            userImage = this.props.user.userImage
+        } else if (this.props.user.googleImage) {
+            userImage = this.props.user.userImage
+        } */
+
         return (
+
             <div>
                 {this.props.user ?
                     <div className="dashboard">
-                        {/* <div className="dashboard-header">
-                            <img src={this.props.user.userImage} className="dashboard-img"></img> */}
-                        <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
-                        {/*   </div> */}
+                        <div className="dashboard-header">
+                            {/* <img src={this.props.user.userImage} className="dashboard-img"></img> */}
+                            <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
+                        </div>
                         <h4>Favourite itineraries</h4>
 
                         {favourites.length !== 0 ? <div className="itinerary-list">{itineraryList}</div> : <div className="no-favs"><p>You haven&apos;t added any favourites yet.</p><Link to="/cities/all">Start browsing</Link></div>}
