@@ -106,7 +106,7 @@ class Createaccount extends Component {
             this.setState({
                 regSuccess: true
             })
-            this.props.history.push("/dashboard");
+            this.props.history.push("/cities/all");
         }
     }
 
@@ -169,7 +169,7 @@ class Createaccount extends Component {
             formData.append('last_name', last_name);
             formData.append('country', country);
             formData.append('userImage', userImage);
-            
+
             // Attempt to register
             this.props.register(formData)
         } else {
