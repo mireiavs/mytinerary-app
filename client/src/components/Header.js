@@ -16,6 +16,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
+import FavouritesIcon from "@material-ui/icons/Favorite";
 import { logout } from "../actions/authActions"
 import { connect } from "react-redux"
 
@@ -43,6 +44,7 @@ class Header extends Component {
     state = {
         right: false,
         anchorEl: null,
+        userImage: null
     };
 
     toggleDrawer = (side, open) => () => {
@@ -61,62 +63,78 @@ class Header extends Component {
         const { classes } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
+        const user = this.props.user
+
+        var userImage = null
+
+        if (user) {
+            if (user.userImage) {
+                userImage = user.userImage
+            } else if (user.googleImage) {
+                userImage = user.googleImage
+            }
+        }
 
         const homeLink = props => <Link to="/" {...props} />
         const citiesLink = props => <Link to="/cities/all" {...props} />
         const logInLink = props => <Link to="/login" {...props} />
         const createAccLink = props => <Link to="/createaccount" {...props} />
         const dashboardLink = props => <Link to="/dashboard" {...props} />
-        const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
-        const editCityLink = props => <Link to="/editcity" {...props} />
-        const addItinLink = props => <Link to="/additinerary" {...props} />
-        const editItinink = props => <Link to="/edititinerary" {...props} />
-        const addActLink = props => <Link to="/addactivity" {...props} />
+        /*         const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
+                const editCityLink = props => <Link to="/editcity" {...props} />
+                const addItinLink = props => <Link to="/additinerary" {...props} />
+                const editItinink = props => <Link to="/edititinerary" {...props} />
+                const addActLink = props => <Link to="/addactivity" {...props} /> */
 
         const sideList = (
             <div className={classes.list}>
-                <List>
-                    <ListItem button component={homeLink}>
-                        <ListItemIcon><HomeIcon /></ListItemIcon>
-                        <ListItemText>Home</ListItemText>
-                    </ListItem>
-                    <ListItem button component={citiesLink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Cities</ListItemText>
-                    </ListItem>
 
-                </List>
+                <ListItem button component={homeLink}>
+                    <ListItemIcon><HomeIcon /></ListItemIcon>
+                    <ListItemText>Home</ListItemText>
+                </ListItem>
+                <ListItem button component={citiesLink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Cities</ListItemText>
+                </ListItem>
+
+
             </div>
         );
 
         const sideListAuth = (
             <div className={classes.list}>
-                <List>
-                    <ListItem button component={addCityLink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Add a city</ListItemText>
-                    </ListItem>
 
-                    <ListItem button component={editCityLink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Edit a city</ListItemText>
-                    </ListItem>
+                <ListItem button component={dashboardLink}>
+                    <ListItemIcon><FavouritesIcon /></ListItemIcon>
+                    <ListItemText>Favourites</ListItemText>
+                </ListItem>
 
-                    <ListItem button component={addItinLink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Add an itinerary</ListItemText>
-                    </ListItem>
+                {/* <ListItem button component={addCityLink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Add a city</ListItemText>
+                </ListItem>
 
-                    <ListItem button component={editItinink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Edit an itinerary</ListItemText>
-                    </ListItem>
+                <ListItem button component={editCityLink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Edit a city</ListItemText>
+                </ListItem>
 
-                    <ListItem button component={addActLink}>
-                        <ListItemIcon><CitiesIcon /></ListItemIcon>
-                        <ListItemText>Add an activity</ListItemText>
-                    </ListItem>
-                </List>
+                <ListItem button component={addItinLink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Add an itinerary</ListItemText>
+                </ListItem>
+
+                <ListItem button component={editItinink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Edit an itinerary</ListItemText>
+                </ListItem>
+
+                <ListItem button component={addActLink}>
+                    <ListItemIcon><CitiesIcon /></ListItemIcon>
+                    <ListItemText>Add an activity</ListItemText>
+                </ListItem> */}
+
             </div>
 
         )
@@ -132,7 +150,9 @@ class Header extends Component {
                                 onClick={this.handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle fontSize="large" />
+
+                                {this.props.isAuthenticated ? <div className="header-user-img"><img src={userImage}></img></div> : <AccountCircle fontSize="large" />}
+
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -151,7 +171,6 @@ class Header extends Component {
 
                                 {this.props.isAuthenticated ?
                                     <div>
-                                        <MenuItem component={dashboardLink} onClick={this.handleClose}>Dashboard</MenuItem>
                                         <MenuItem onClick={this.props.logout}>Log Out</MenuItem>
                                     </div> :
                                     <div>
@@ -178,8 +197,10 @@ class Header extends Component {
                                 onClick={this.toggleDrawer('right', false)}
                                 onKeyDown={this.toggleDrawer('right', false)}
                             >
-                                {sideList}
-                                {this.props.isAuthenticated ? <div>{sideListAuth}</div> : null}
+                                <List>
+                                    {sideList}
+                                    {this.props.isAuthenticated ? <div>{sideListAuth}</div> : null}
+                                </List>
                             </div>
                         </SwipeableDrawer>
                     </Toolbar>
@@ -192,11 +213,13 @@ class Header extends Component {
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object
 };
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { logout })(withStyles(styles)(Header))

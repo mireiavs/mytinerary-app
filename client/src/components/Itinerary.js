@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import Activity from "./Activity"
+import Comments from "./Comments"
+import { getActivities } from "../actions/activityActions"
+import { getComments, addComment, deleteComment } from "../actions/commentActions"
+import { addFavourite, deleteFavourite } from "../actions/authActions"
+import { setItineraryRating, setItineraryLikes } from "../actions/itineraryActions"
+import StarRatings from 'react-star-ratings';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,18 +16,14 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-import Activity from "./Activity"
-import Comments from "./Comments"
-import { connect } from "react-redux"
-import { getActivities } from "../actions/activityActions"
-import { getComments, addComment, deleteComment } from "../actions/commentActions"
-import { addFavourite, deleteFavourite } from "../actions/authActions"
-import { setItineraryRating, setItineraryLikes } from "../actions/itineraryActions"
-import { Link } from "react-router-dom"
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
 import FavouriteIcon from '@material-ui/icons/Favorite';
 import FavouriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import red from '@material-ui/core/colors/red';
-import StarRatings from 'react-star-ratings';
+
 
 const styles = theme => ({
   card: {
@@ -55,9 +60,13 @@ class Itinerary extends Component {
     this.onClickAdd = this.onClickAdd.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
     this.changeRating = this.changeRating.bind(this)
+    this.handleClickOpenDel = this.handleClickOpenDel.bind(this);
+    this.handleCloseDel = this.handleCloseDel.bind(this);
+
 
     this.state = {
-      notLoggedIn: false
+      notLoggedIn: false,
+      openDeleteConfirmation: false,
     }
   }
 
@@ -85,6 +94,15 @@ class Itinerary extends Component {
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
   }
 
+  handleClickOpenDel = () => {
+    this.setState({ openDeleteConfirmation: true });
+  };
+
+  handleCloseDel = () => {
+    this.setState({ openDeleteConfirmation: false });
+  };
+
+
   onClickDelete() {
     const newLikes = this.props.itinerary.likes - 1
 
@@ -92,6 +110,8 @@ class Itinerary extends Component {
 
     this.props.deleteFavourite(this.props.itinerary._id, userId)
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id)
+
+    this.setState({ openDeleteConfirmation: false })
   }
 
   changeRating(newRating) {
@@ -108,7 +128,7 @@ class Itinerary extends Component {
     const { classes } = this.props;
     const itinerary = this.props.itinerary
     var isFavourite = false
-    const hashtagList = this.props.itinerary.hashtag.map((hashtag, index) => <div className="hashtag" key={index}><Link to={`/itineraries/${hashtag}`}>#{hashtag}</Link></div >)
+    const hashtagList = this.props.itinerary.hashtag.map((hashtag, index) => <div className="hashtag" key={index}><Link to={`/itineraries/${hashtag}`}>#{hashtag}</Link></div>)
 
     if (this.props.auth.favourites) {
       isFavourite = this.props.auth.favourites.find(favourite => favourite.itineraryId === itinerary._id)
@@ -129,7 +149,7 @@ class Itinerary extends Component {
                 <div>
                   {this.props.auth.isAuthenticated ? (<div>{
                     isFavourite ? (
-                      <IconButton className={classes.button} aria-label="Favourite" onClick={this.onClickDelete}>
+                      <IconButton className={classes.button} aria-label="Favourite" onClick={this.handleClickOpenDel}>
                         <FavouriteIcon className={classes.icon} />
                       </IconButton>
                     ) : (
@@ -141,6 +161,25 @@ class Itinerary extends Component {
                   }
                 </div>
               </div>
+
+              <Dialog
+                open={this.state.openDeleteConfirmation}
+                onClose={this.handleCloseDel}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogContent>
+                  <p>Are you sure you want to delete {itinerary.title} from your favourites? </p>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.onClickDelete} color="primary">
+                    Yes, delete
+                        </Button>
+                  <Button onClick={this.handleCloseDel} color="primary" autoFocus>
+                    No, go back
+                        </Button>
+                </DialogActions>
+              </Dialog>
 
               <div className="itinerary-detail-preview">
                 <div className="details">

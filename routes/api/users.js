@@ -98,7 +98,8 @@ router.post("/", upload.single("userImage"), [
                                             first_name: user.first_name,
                                             last_name: user.last_name,
                                             country: user.country,
-                                            favourites: user.favourites
+                                            favourites: user.favourites,
+                                            userImage: userImage
                                         }
                                     })
                                 }
@@ -125,7 +126,7 @@ router.put("/:userId", (req, res) => {
 })
 
 // Add favourite
-router.post("/:userId/favourites", (req, res) => {
+router.put("/:userId/favourites", (req, res) => {
     const newFavourite = {
         itineraryId: req.body.itineraryId,
         timestamp: req.body.timestamp
@@ -135,6 +136,7 @@ router.post("/:userId/favourites", (req, res) => {
         .catch(() => res.status(404).json({ success: false }))
 })
 
+// Delete favourite
 router.delete("/:userId/favourites/:itineraryId", auth, (req, res) => {
     User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { favourites: { itineraryId: req.params.itineraryId } } })
         .then(() => res.json({ success: true }))

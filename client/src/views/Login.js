@@ -173,6 +173,7 @@ class Login extends Component {
                         />
                     </div>
 
+                    {/* Remember me checkbox - not functional yet */}
                     <div className="terms remember">
                         <Checkbox
                             checked={this.state.checked}

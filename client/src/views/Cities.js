@@ -33,7 +33,7 @@ class Cities extends Component {
 
     /* Filter the list of cities according to the text entered in the cityFilter component, also update noResults variable in case of no results */
     filterCities = (cityFilter) => {
-        let filteredCities = this.props.cities.cities.filter(city => city.name.toLowerCase().includes(cityFilter.toLowerCase()) || cityFilter === "")
+        let filteredCities = this.props.cities.cities.filter(city => city.name.toLowerCase().startsWith(cityFilter.toLowerCase()) || cityFilter === "")
 
         if (filteredCities.length) {
             this.setState({

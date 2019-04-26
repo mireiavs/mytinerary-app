@@ -142,7 +142,7 @@ export const socialLogin = (user) => dispatch => {
 
 export const addFavourite = (favourite, userId) => (dispatch, getState) => {
     axios
-        .post(`/api/users/${userId}/favourites`, favourite, tokenConfig(getState))
+        .put(`/api/users/${userId}/favourites`, favourite, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: ADD_FAVOURITE,

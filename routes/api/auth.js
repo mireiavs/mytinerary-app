@@ -39,7 +39,8 @@ router.post("/", (req, res) => {
                                     first_name: user.first_name,
                                     last_name: user.last_name,
                                     country: user.country,
-                                    favourites: user.favourites
+                                    favourites: user.favourites,
+                                    userImage: user.userImage
                                 }
                             })
                         }

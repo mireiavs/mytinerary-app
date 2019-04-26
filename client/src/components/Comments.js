@@ -87,7 +87,6 @@ class Comments extends Component {
                 error: true
             })
         }
-
     }
 
     // Function to delete the message when the corresponding icon is clicked
@@ -100,14 +99,22 @@ class Comments extends Component {
         const comments = this.props.comments.comments
         const isLoading = this.props.comments.loading
 
-        const commentList = comments.map(comment =>
-            <div key={comment._id}>
-                <Card className="comment-card">
+
+
+
+        const commentList = comments.map(comment => {
+            let className = "comment-card"
+
+            if (this.props.user && comment.user === this.props.user.username) {
+                className += "-sameuser";
+            }
+            return (<div key={comment._id}>
+                <Card className={className}>
                     <CardContent>
                         <div className="comment-header">
                             <p className="comment-user">{comment.user}</p>
 
-                            {this.props.user ? <IconButton aria-label="Delete" className="comment-delete" onClick={this.onDeleteClick.bind(this, comment._id)}>
+                            {this.props.user && comment.user === this.props.user.username ? <IconButton aria-label="Delete" className="comment-delete" onClick={this.onDeleteClick.bind(this, comment._id)}>
                                 <DeleteIcon fontSize="small" />
                             </IconButton> : null}
 
@@ -116,6 +123,8 @@ class Comments extends Component {
                     </CardContent>
                 </Card>
             </div>)
+        }
+        )
 
 
         return (
@@ -123,19 +132,24 @@ class Comments extends Component {
                 <h4>Comments</h4>
                 <form onSubmit={this.onSubmit} id="comment-form">
 
-                    <Input
-                        placeholder="Your Comment"
-                        classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                        }}
-                        value={this.state.message}
-                        name="message"
-                        onChange={this.onChange}
-                    />
-                    <Button variant="contained" className={classes.button} size="small" type="submit" form="comment-form">
-                        Send
-                    </Button> {this.state.error ? <div><p>Please <Link to="/login">log in</Link> to post comments</p></div> : null}
+                    {this.props.user ?
+                        <div>
+                            <Input
+                                placeholder="Your Comment"
+                                classes={{
+                                    root: classes.root,
+                                    underline: classes.cssUnderline,
+                                }}
+                                value={this.state.message}
+                                name="message"
+                                onChange={this.onChange}
+                            />
+                            <Button variant="contained" className={classes.button} size="small" type="submit" form="comment-form">
+                                Send
+                            </Button>
+                        </div> :
+                        <div><p>Please <Link to="/login">log in</Link> to post comments</p></div>
+                    }
                 </form>
                 <div>{isLoading ? (<Loader />) : (<div>{comments.length === 0 ? (<p>No comments yet.</p>) : (<div>{commentList}</div>)}</div>)
                 }</div>

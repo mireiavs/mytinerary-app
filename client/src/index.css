@@ -124,6 +124,23 @@ body {
 }
 
 
+.header-user-img {
+
+  border-radius: 75px;
+  height: 35px;
+  width: 35px;
+  position: relative
+}
+
+.header-user-img img {
+  height: 100%;
+  width: 100%;
+  border-radius: 75px;
+  position: absolute;
+  left: 0
+}
+
+
 /* BOTTOM NAV */
 .footer-link,
 .footer-link:hover {
@@ -355,6 +372,20 @@ li.select-option {
   border-radius: 50px
 }
 
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.details div {
+  margin: 0 5px 0 5px
+}
+
+.activity-container {
+  max-width: 100%
+}
+
 .back-link {
   display: flex;
   flex-direction: column;
@@ -394,8 +425,14 @@ li.select-option {
 }
 
 /* COMMENTS */
-.comment-card {
-  margin-bottom: 10px
+div.comment-card {
+  margin-bottom: 10px;
+  background-color: lightgray
+}
+
+div.comment-card-sameuser {
+  margin-bottom: 10px;
+  background-color: lightgreen
 }
 
 .comment-user {
@@ -555,6 +592,7 @@ button.comment-delete {
   }
 }
 
+/* LOGIN */
 .google-btn {
   display: flex;
   justify-content: center
@@ -569,6 +607,7 @@ button.comment-delete {
   margin-top: 30px
 }
 
+/* DASHBOARD */
 .title-fav {
   display: flex;
   justify-content: space-between;
@@ -647,18 +686,4 @@ h4 {
 
 .dashboard-header h2 {
   font-size: 1.5 rem
-}
-
-.details {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.details div {
-  margin: 0 5px 0 5px
-}
-
-.activity-container {
-  max-width: 100%
 }
