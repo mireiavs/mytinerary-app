@@ -14,7 +14,7 @@ body {
   margin-top: 20px;
   font-size: 1.2em;
   text-align: center;
-  padding: 0 20px 0 20px
+  padding: 0 20px 0 20px;
 }
 
 .header {
@@ -23,7 +23,7 @@ body {
 
 .logo {
   width: 85vw;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1600px) {
@@ -31,7 +31,7 @@ body {
     width: 40%;
     display: block;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
   }
 
   .logo-container {
@@ -41,7 +41,7 @@ body {
 
 .start-title {
   text-align: center;
-  margin: 3vh 0 3vh 0
+  margin: 3vh 0 3vh 0;
 }
 
 .arrow-icon {
@@ -49,9 +49,8 @@ body {
   margin: 20px;
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
-
 
 /* ALTERNATIVE LANDING PAGES */
 .logo2 {
@@ -63,14 +62,14 @@ body {
 .welcome-text2 {
   text-align: center;
   margin-top: 40px;
-  font-size: 1.1em
+  font-size: 1.1em;
 }
 
 .arrow-icon2 {
   height: 10vh;
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
 
 .landing-pic {
@@ -82,54 +81,52 @@ body {
   text-align: left;
   font-weight: bold;
   margin-bottom: 0;
-  margin-top: 3vh
+  margin-top: 3vh;
 }
 
 .col {
   margin-bottom: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  padding: 0
+  padding: 0;
 }
 
 .row {
   margin-left: 5px;
-  margin-right: 5px
+  margin-right: 5px;
 }
 
 .landing-slider {
-  padding: 10px
+  padding: 10px;
 }
 
 .img-container {
-  height: 100%
+  height: 100%;
 }
 
 .home-links {
   display: flex;
   justify-content: space-around;
   font-size: 1.1em;
-  margin-top: 30px
+  margin-top: 30px;
 }
 
 /* TOP NAVBAR */
 .toolbar-main {
   display: flex;
   justify-content: space-between;
-  height: 50px
+  height: 50px;
 }
 
 .toolbar-main .Header-menuButton-3 {
-  margin-right: 0px
+  margin-right: 0px;
 }
 
-
 .header-user-img {
-
   border-radius: 75px;
   height: 35px;
   width: 35px;
-  position: relative
+  position: relative;
 }
 
 .header-user-img img {
@@ -137,9 +134,8 @@ body {
   width: 100%;
   border-radius: 75px;
   position: absolute;
-  left: 0
+  left: 0;
 }
-
 
 /* BOTTOM NAV */
 .footer-link,
@@ -150,20 +146,19 @@ body {
 .footer-icon {
   width: 33vh;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
-
 
 /* CITIES PAGE */
 
 .cities,
 .error-msg {
-  text-align: center
+  text-align: center;
 }
 
 .cities h1,
 .dashboard h2 {
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .cities button {
@@ -175,7 +170,7 @@ body {
   margin: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .cities-filter input {
@@ -186,61 +181,83 @@ body {
 
 .cities-filter p {
   margin-bottom: 5px;
-  font-size: 1.2em
+  font-size: 1.2em;
 }
 
 .city-list {
-  text-align: center
+  text-align: center;
 }
 
 .city-list a {
   color: black;
-  text-decoration: none
+  text-decoration: none;
 }
 
 /* FORMS */
 .form {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .add-form h1 {
-  text-align: center
+  text-align: center;
 }
 
 .add-form-btn {
   display: block;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .add-activity {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.add-ac-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.upload-activity {
+  border: 1px solid black;
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.upload-activity img {
+  height: 100%;
+  width: 100%;
 }
 
 .success {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .select {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .select p,
 .form p {
   font-size: 18px;
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .edit-city {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .form-item {
@@ -254,11 +271,11 @@ label.form-label {
   width: 100px;
   text-align: right;
   color: black;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 li.select-option {
-  font-size: 1.1rem
+  font-size: 1.1rem;
 }
 
 .upload-userpic {
@@ -271,7 +288,7 @@ li.select-option {
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative
+  position: relative;
 }
 
 .upload-userpic input,
@@ -284,63 +301,60 @@ li.select-option {
   height: 100%;
   width: 100%;
   border-radius: 75px;
-  z-index: -1
+  z-index: -1;
 }
 
 .clear-img {
   position: absolute;
   right: 0;
   top: 0;
-  color: black
+  color: black;
 }
-
 
 .terms {
   display: flex;
   margin-top: 30px;
-  align-items: center
+  align-items: center;
 }
 
 .terms p {
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .terms-link {
-  color: #007bff
+  color: #007bff;
 }
 
 .error {
   display: flex;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .title {
   text-align: center;
-
 }
 
 .login-text {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
-
 
 /* CITY PAGE */
 
 .city-title {
   text-align: center;
-  margin-bottom: 40px
+  margin-bottom: 40px;
 }
 
 .city-info a {
-  text-align: center
+  text-align: center;
 }
 
 .itinerary-card {
   margin-bottom: 20px;
-  max-width: 99%
+  max-width: 99%;
 }
 
 .card-summary {
@@ -350,7 +364,7 @@ li.select-option {
 }
 
 .itinerary-title-details {
-  flex-grow: 3
+  flex-grow: 3;
 }
 
 .profile-pic-container {
@@ -363,13 +377,13 @@ li.select-option {
 .profile-pic-container p {
   margin-bottom: 0;
   font-size: 0.9rem;
-  text-align: center
+  text-align: center;
 }
 
 .profile-pic {
   height: 50px;
   width: 50px;
-  border-radius: 50px
+  border-radius: 50px;
 }
 
 .details {
@@ -379,18 +393,18 @@ li.select-option {
 }
 
 .details div {
-  margin: 0 5px 0 5px
+  margin: 0 5px 0 5px;
 }
 
 .activity-container {
-  max-width: 100%
+  max-width: 100%;
 }
 
 .back-link {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center
+  align-items: center;
 }
 
 .card-actions {
@@ -407,37 +421,37 @@ li.select-option {
 .card-actions p {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .itinerary-detail-preview {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .itinerary-detail-preview span {
-  flex-grow: 1
+  flex-grow: 1;
 }
 
 .itinerary-detail-preview p {
-  flex-grow: 3
+  flex-grow: 3;
 }
 
 /* COMMENTS */
 div.comment-card {
   margin-bottom: 10px;
-  background-color: lightgray
+  background-color: lightgray;
 }
 
 div.comment-card-sameuser {
   margin-bottom: 10px;
-  background-color: lightgreen
+  background-color: lightgreen;
 }
 
 .comment-user {
   margin-bottom: 0;
-  font-weight: bold
+  font-weight: bold;
 }
 
 .comment-header {
@@ -445,14 +459,14 @@ div.comment-card-sameuser {
 }
 
 .comment-user {
-  flex-grow: 3
+  flex-grow: 3;
 }
 
 button.comment-delete {
   flex-grow: 1;
   padding: 0;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 
 .slider {
@@ -461,7 +475,7 @@ button.comment-delete {
 
 .slider-image {
   height: 100px;
-  width: 100px
+  width: 100px;
 }
 
 .activity-img {
@@ -476,7 +490,7 @@ button.comment-delete {
   top: 35%;
   color: white;
   background-color: #8080807d;
-  text-align: center
+  text-align: center;
 }
 
 .activity-caption p {
@@ -487,7 +501,7 @@ button.comment-delete {
 .loader {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px
+  margin-bottom: 30px;
 }
 
 .lds-default {
@@ -501,7 +515,7 @@ button.comment-delete {
   position: absolute;
   width: 5px;
   height: 5px;
-  background: #394E56;
+  background: #394e56;
   border-radius: 50%;
   animation: lds-default 1.2s linear infinite;
 }
@@ -579,7 +593,6 @@ button.comment-delete {
 }
 
 @keyframes lds-default {
-
   0%,
   20%,
   80%,
@@ -595,79 +608,79 @@ button.comment-delete {
 /* LOGIN */
 .google-btn {
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .remember {
-  margin-top: 0
+  margin-top: 0;
 }
 
 .result {
   text-align: center;
-  margin-top: 30px
+  margin-top: 30px;
 }
 
 /* DASHBOARD */
 .title-fav {
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
 }
 
 .title-fav h4 {
-  width: 75%
+  width: 75%;
 }
 
 .itinerary-title-details h4 {
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 
 .dashboard h2 {
-  text-align: center
+  text-align: center;
 }
 
 .country-select {
-  width: 190px
+  width: 190px;
 }
 
 .hashtag-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .hashtag {
-  margin: 3px
+  margin: 3px;
 }
 
 .price-form {
   display: flex;
   width: 200px;
   margin-top: 20px;
-  align-items: center
+  align-items: center;
 }
 
 .price-label {
-  flex-grow: 2
+  flex-grow: 2;
 }
 
 .price-select {
-  flex-grow: 2
+  flex-grow: 2;
 }
 
 .itinerary-list {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 h4 {
-  text-align: center
+  text-align: center;
 }
 
 .no-favs {
   text-align: center;
-  margin-top: 30px
+  margin-top: 30px;
 }
 
 .dashboard-img {
@@ -681,9 +694,9 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 .dashboard-header h2 {
-  font-size: 1.5 rem
+  font-size: 1.5 rem;
 }
