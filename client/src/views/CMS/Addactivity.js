@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import {
   addActivity,
   addAcSuccess,
@@ -10,50 +8,14 @@ import {
 import { getCities } from "../../actions/citiesActions";
 import { getItineraries } from "../../actions/itineraryActions";
 import { connect } from "react-redux";
+
+// Material UI imports
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    marginTop: "20px"
-  },
-  input: {
-    display: "none",
-    color: "black"
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column"
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  }
-});
 
 class Addactivity extends Component {
   constructor(props) {
@@ -176,7 +138,6 @@ class Addactivity extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { cities } = this.props.cities;
     const { itineraries } = this.props.itineraries;
     const cityList = cities.map(city => (
@@ -192,12 +153,12 @@ class Addactivity extends Component {
     const addAcSuccess = this.props.activities.addacsuccess;
 
     return (
-      <div className="add-form">
+      <div>
         <h1>Add an activity </h1>
-        <div className="select">
-          <p>Select city:</p>
-          <form className={classes.root} autoComplete="off">
-            <FormControl className={classes.formControl}>
+        <div>
+          <form autoComplete="off" className="cms-form">
+            <p>Select city:</p>
+            <FormControl>
               <InputLabel htmlFor="name">City</InputLabel>
               <Select
                 value={this.state.name}
@@ -211,7 +172,7 @@ class Addactivity extends Component {
               </Select>
             </FormControl>
 
-            <FormControl className={classes.formControl}>
+            <FormControl>
               <InputLabel htmlFor="title">Itinerary</InputLabel>
               <Select
                 value={this.state.title}
@@ -232,56 +193,48 @@ class Addactivity extends Component {
             encType="multipart/form-data"
             onSubmit={this.onSubmit}
             id="activity-form"
+            className="cms-form"
           >
-            <div className="add-activity">
-              <TextField
-                name="caption"
-                id="caption"
-                label="Description"
-                className={classes.textField}
-                value={this.state.caption}
+            <TextField
+              name="caption"
+              id="caption"
+              label="Description"
+              value={this.state.caption}
+              onChange={this.onChange}
+              margin="normal"
+              color="primary"
+            />
+
+            <div>
+              <span>Upload image:</span>
+              <input
+                type="file"
+                name="activityImage"
                 onChange={this.onChange}
-                margin="normal"
-                color="primary"
               />
+            </div>
 
-              <div>
-                <span>Upload image:</span>
-                <input
-                  type="file"
-                  name="activityImage"
-                  onChange={this.onChange}
-                />
+            {this.state.imgPreview ? (
+              <div className="upload-activity">
+                <img src={this.state.imgPreview} alt="preview" />
+                <span onClick={this.clearImg}>X</span>
               </div>
+            ) : null}
 
-              {this.state.imgPreview ? (
-                <div className="upload-activity">
-                  <img src={this.state.imgPreview} alt="preview" />
-                  <span onClick={this.clearImg} className="clear-img">
-                    X
-                  </span>
-                </div>
-              ) : null}
-            </div>
-
-            <div className="add-ac-btn">
-              <Button
-                variant="contained"
-                className={classes.button}
-                size="medium"
-                type="submit"
-                form="activity-form"
-              >
-                Submit
-              </Button>
-            </div>
+            <Button
+              variant="contained"
+              size="medium"
+              type="submit"
+              form="activity-form"
+            >
+              Submit
+            </Button>
           </form>
         ) : (
-          <div className="success">
+          <div className="success-msg">
             <p>Activity added successfully!</p>
             <Button
               variant="contained"
-              className={classes.button}
               size="medium"
               onClick={this.onClickAfterAdd}
             >
@@ -296,7 +249,6 @@ class Addactivity extends Component {
 
 Addactivity.propTypes = {
   activities: PropTypes.object,
-  classes: PropTypes.object.isRequired,
   addActivity: PropTypes.func,
   addacsuccess: PropTypes.bool,
   addAcSuccess: PropTypes.func,
@@ -317,4 +269,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addActivity, addAcSuccess, getCities, getItineraries, getActivities }
-)(withStyles(styles)(Addactivity));
+)(Addactivity);

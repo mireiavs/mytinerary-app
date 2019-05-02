@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import {
   deleteCity,
   getCities,
@@ -9,6 +7,9 @@ import {
   addSuccess
 } from "../../actions/citiesActions";
 import { connect } from "react-redux";
+
+// Material UI imports
+import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -17,50 +18,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  buttondel: {
-    margin: theme.spacing.unit,
-    marginTop: 50,
-    backgroundColor: "#ff5252",
-    color: "white"
-  },
-  input: {
-    display: "none",
-    color: "black"
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  }
-});
 
 class Editcity extends Component {
   constructor(props) {
@@ -161,7 +118,6 @@ class Editcity extends Component {
     }
   }
   render() {
-    const { classes } = this.props;
     const { cities } = this.props.cities;
     const cityList = cities.map(city => (
       <MenuItem value={city.name} key={city._id}>
@@ -171,13 +127,13 @@ class Editcity extends Component {
     const addSuccess = this.props.cities.addsuccess;
 
     return (
-      <div className="edit-city">
+      <div>
         <h1>Edit city</h1>
 
         {!addSuccess ? (
-          <div className="form">
-            <form className={classes.root} autoComplete="off">
-              <FormControl className={classes.formControl}>
+          <div>
+            <form className="cms-form" autoComplete="off">
+              <FormControl>
                 <InputLabel htmlFor="name">Select city</InputLabel>
 
                 <Select
@@ -195,16 +151,15 @@ class Editcity extends Component {
 
             <form
               id="city-form"
-              className={classes.container}
               noValidate
               autoComplete="off"
               onSubmit={this.onSubmit}
+              className="cms-form"
             >
               <TextField
                 name="updatedName"
                 id="updatedName"
                 label="Name"
-                className={classes.textField}
                 value={this.state.updatedName}
                 onChange={this.onChange}
                 margin="normal"
@@ -214,30 +169,25 @@ class Editcity extends Component {
                 name="country"
                 id="country"
                 label="Country"
-                className={classes.textField}
                 value={this.state.country}
                 onChange={this.onChange}
                 margin="normal"
               />
-              <div className="add-form-btn">
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  size="medium"
-                  type="submit"
-                  form="city-form"
-                >
-                  Submit
-                </Button>
-              </div>
+              <Button
+                variant="contained"
+                size="medium"
+                type="submit"
+                form="city-form"
+              >
+                Submit
+              </Button>
             </form>
           </div>
         ) : (
-          <div className="success">
+          <div className="success-msg">
             <p>City updated successfully!</p>
             <Button
               variant="contained"
-              className={classes.button}
               size="medium"
               onClick={this.onClickAfterAdd}
             >
@@ -245,17 +195,15 @@ class Editcity extends Component {
             </Button>
           </div>
         )}
-
-        {/* <Button variant="contained" className={classes.buttondel} size="medium" onClick={this.onDeleteClick.bind(this, this.state.name)}>Delete city</Button> */}
-
-        <Button
-          variant="contained"
-          className={classes.buttondel}
-          size="medium"
-          onClick={this.handleClickOpenDel}
-        >
-          Delete city
-        </Button>
+        <div className="delete-btn">
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={this.handleClickOpenDel}
+          >
+            Delete city
+          </Button>
+        </div>
 
         <Dialog
           open={this.state.openDeleteConfirmation}
@@ -285,7 +233,6 @@ class Editcity extends Component {
 
 Editcity.propTypes = {
   deleteCity: PropTypes.func,
-  classes: PropTypes.object,
   cities: PropTypes.object,
   getCities: PropTypes.func,
   updateCity: PropTypes.func,
@@ -300,4 +247,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { deleteCity, getCities, updateCity, addSuccess }
-)(withStyles(styles)(Editcity));
+)(Editcity);

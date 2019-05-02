@@ -1,49 +1,20 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { login, socialLogin } from "../actions/authActions";
+import { clearErrors } from "../actions/errorActions";
+import { Link } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
+
+// Material UI imports
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import { login, socialLogin } from "../actions/authActions";
 import Snackbar from "@material-ui/core/Snackbar";
 import ErrorIcon from "@material-ui/icons/Error";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Checkbox from "@material-ui/core/Checkbox";
-import { clearErrors } from "../actions/errorActions";
-import { Link } from "react-router-dom";
-import { GoogleLogin } from "react-google-login";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  input: {
-    margin: theme.spacing.unit
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  select: {
-    marginTop: theme.spacing.unit * 2,
-    fontSize: "1.2rem",
-    width: 195
-  },
-  button: {
-    marginBottom: 30,
-    marginTop: 10,
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  close: {
-    padding: theme.spacing.unit / 2
-  }
-});
 
 class Login extends Component {
   state = {
@@ -115,12 +86,11 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { alert } = this.state;
 
     return (
-      <div>
-        <h3 className="title">Login</h3>
+      <div className="login">
+        <h3>Login</h3>
 
         <Snackbar
           open={alert}
@@ -143,7 +113,6 @@ class Login extends Component {
               key="close"
               aria-label="Close"
               color="inherit"
-              className={classes.close}
               onClick={this.handleClose}
             >
               <CloseIcon />
@@ -152,7 +121,7 @@ class Login extends Component {
         />
 
         <form
-          className={classes.container}
+          className="login-form"
           noValidate
           autoComplete="off"
           id="register-form"
@@ -167,7 +136,6 @@ class Login extends Component {
               name="username"
               value={this.state.username}
               onChange={this.onChange}
-              className={classes.input}
             />
           </div>
 
@@ -180,7 +148,6 @@ class Login extends Component {
               name="password"
               value={this.state.password}
               onChange={this.onChange}
-              className={classes.input}
               type="password"
             />
           </div>
@@ -197,7 +164,6 @@ class Login extends Component {
 
           <Button
             variant="contained"
-            className={classes.button}
             size="medium"
             type="submit"
             form="register-form"
@@ -230,7 +196,6 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  classes: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
@@ -251,4 +216,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { login, clearErrors, socialLogin }
-)(withStyles(styles)(Login));
+)(Login);

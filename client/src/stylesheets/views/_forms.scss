@@ -1,0 +1,61 @@
+.cms-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    display: block;
+    margin-top: 20px;
+  }
+  div {
+    min-width: 120px;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.success-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-activity {
+  border: 1px solid black;
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: black;
+  }
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.price-form {
+  display: flex;
+  width: 200px;
+  margin-top: 20px;
+  align-items: center;
+  label {
+    flex-grow: 1;
+  }
+}
+.delete-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  button {
+    margin-top: 50px;
+    background-color: #ff5252;
+    color: white;
+  }
+}

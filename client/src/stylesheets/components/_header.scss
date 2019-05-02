@@ -1,0 +1,28 @@
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  .Header-menuButton-3 {
+    margin-right: 0px;
+  }
+  .userimg {
+    border-radius: 75px;
+    height: 35px;
+    width: 35px;
+    position: relative;
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 75px;
+      position: absolute;
+      left: 0;
+    }
+  }
+}
+
+.side-list {
+  width: 250px;
+  span {
+    font-size: 18px;
+  }
+}

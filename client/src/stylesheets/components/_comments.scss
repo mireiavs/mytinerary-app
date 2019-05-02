@@ -1,0 +1,28 @@
+.add-comment {
+  margin: 20px 0 20px 0;
+}
+
+div.comment-card {
+  margin-bottom: 10px;
+  background-color: lightgray;
+  text-align: left;
+}
+
+div.sameuser {
+  background-color: lightgreen;
+}
+
+.comment-header {
+  display: flex;
+  .comment-user {
+    margin-bottom: 0;
+    font-weight: bold;
+    flex-grow: 3;
+  }
+  button {
+    flex-grow: 1;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

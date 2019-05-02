@@ -6,17 +6,6 @@ import PropTypes from "prop-types";
 import Loader from "../components/Loader";
 import Cityfilter from "../components/Cityfilter";
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
-
-const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-    display: "block",
-    textTransform: "none",
-    fontFamily: "inherit",
-    fontSize: 20
-  }
-});
 
 class Cities extends Component {
   constructor(props) {
@@ -52,7 +41,6 @@ class Cities extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { cities } = this.props.cities;
     var cityList = "";
 
@@ -63,7 +51,6 @@ class Cities extends Component {
             component={Link}
             size="large"
             variant="outlined"
-            className={classes.margin}
             to={`/cities/${city.name}`}
             key={city._id}
           >
@@ -79,7 +66,6 @@ class Cities extends Component {
           component={Link}
           size="large"
           variant="outlined"
-          className={classes.margin}
           to={`/cities/${city.name}`}
           key={city._id}
         >
@@ -113,7 +99,6 @@ Cities.propTypes = {
   getCities: PropTypes.func,
   cities: PropTypes.object,
   loading: PropTypes.bool,
-  classes: PropTypes.object.isRequired,
   auth: PropTypes.object
 };
 
@@ -126,4 +111,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCities }
-)(withStyles(styles)(Cities));
+)(Cities);

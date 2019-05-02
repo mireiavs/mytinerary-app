@@ -10,7 +10,7 @@ class Landing extends Component {
         <div className="logo-container">
           <img src={logo} alt="MYtinerary logo" className="logo" />
         </div>
-        <div className="landing">
+        <div>
           <p className="welcome-text">
             Find your perfect trip, designed by insiders who know and love their
             cities

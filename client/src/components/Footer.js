@@ -1,23 +1,15 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { Link, withRouter } from "react-router-dom";
+
+// Material UI imports
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
-import { Link, withRouter } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import BackIcon from "@material-ui/icons/ArrowBackIos";
 /* import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
  */
-const styles = () => ({
-  appBar: {
-    top: "auto",
-    bottom: 0,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around"
-  }
-});
 
 class Footer extends Component {
   constructor(props) {
@@ -30,11 +22,10 @@ class Footer extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <Fragment>
         <CssBaseline />
-        <AppBar position="fixed" color="default" className={classes.appBar}>
+        <AppBar position="fixed" color="default" className="footer-bar">
           <div className="footer-icon">
             {this.props.location.pathname !== "/" ? (
               <IconButton color="inherit" onClick={this.goBack}>
@@ -63,9 +54,8 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-  classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   location: PropTypes.object
 };
 
-export default withRouter(withStyles(styles)(Footer));
+export default withRouter(Footer);

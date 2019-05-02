@@ -1,0 +1,18 @@
+.footer-link,
+.footer-link:hover {
+  color: black;
+}
+
+.footer-icon {
+  width: 33vh;
+  display: flex;
+  justify-content: center;
+}
+
+header.footer-bar {
+  top: auto;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

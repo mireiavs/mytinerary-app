@@ -9,9 +9,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      msg: "Please login to see your dashboard."
-    };
+    this.state = {};
   }
 
   // function to collapse all other cards when a specific one is open
@@ -46,35 +44,20 @@ class Dashboard extends Component {
       });
     }
 
-    const msg = this.state.msg;
-    /* var userImage = null
-        if (this.props.user.userImage) {
-            userImage = this.props.user.userImage
-        } else if (this.props.user.googleImage) {
-            userImage = this.props.user.userImage
-        } */
-
     return (
-      <div>
-        {this.props.user ? (
-          <div className="dashboard">
-            <div className="dashboard-header">
-              {/* <img src={this.props.user.userImage} className="dashboard-img"></img> */}
-              <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
-            </div>
-            <h4>Favourite itineraries</h4>
+      <div className="dashboard">
+        <div>
+          <h2>{this.props.user.first_name}&apos;s Dashboard</h2>
+        </div>
+        <h4>Favourite itineraries</h4>
 
-            {favourites.length !== 0 ? (
-              <div className="itinerary-list">{itineraryList}</div>
-            ) : (
-              <div className="no-favs">
-                <p>You haven&apos;t added any favourites yet.</p>
-                <Link to="/cities/all">Start browsing</Link>
-              </div>
-            )}
-          </div>
+        {favourites.length !== 0 ? (
+          <div className="city-itinerary-list">{itineraryList}</div>
         ) : (
-          <div className="result">{msg}</div>
+          <div className="no-favs">
+            <p>You haven&apos;t added any favourites yet.</p>
+            <Link to="/cities/all">Start browsing</Link>
+          </div>
         )}
       </div>
     );

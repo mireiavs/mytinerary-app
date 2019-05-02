@@ -1,0 +1,20 @@
+.cities {
+  text-align: center;
+  h1 {
+    margin-bottom: 20px;
+  }
+  a {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    display: block;
+    text-transform: none;
+    font-family: inherit;
+  }
+  .city-list {
+    text-align: center;
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+}

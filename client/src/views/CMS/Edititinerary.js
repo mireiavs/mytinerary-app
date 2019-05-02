@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import { getCities } from "../../actions/citiesActions";
 import {
   deleteItinerary,
@@ -10,6 +8,9 @@ import {
   addItSuccess
 } from "../../actions/itineraryActions";
 import { connect } from "react-redux";
+
+// Material UI imports
+import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -18,51 +19,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  buttondel: {
-    margin: theme.spacing.unit,
-    marginTop: 50,
-    backgroundColor: "#ff5252",
-    color: "white"
-  },
-  input: {
-    display: "none",
-    color: "black"
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column"
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  }
-});
 
 class Edititinerary extends Component {
   constructor(props) {
@@ -219,7 +175,6 @@ class Edititinerary extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { cities } = this.props.cities;
     const { itineraries } = this.props.itineraries;
     const cityList = cities.map(city => (
@@ -235,54 +190,52 @@ class Edititinerary extends Component {
     const addItSuccess = this.props.itineraries.additsuccess;
 
     return (
-      <div className="edit-city">
+      <div>
         <h1>Edit itinerary</h1>
         {!addItSuccess ? (
           <div>
-            <div className="select">
+            <form autoComplete="off" className="cms-form">
               <p>Select city:</p>
-              <form className={classes.root} autoComplete="off">
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="name">City</InputLabel>
-                  <Select
-                    value={this.state.name}
-                    onChange={this.handleChangeSelectCity}
-                    inputProps={{
-                      name: "name",
-                      id: "name"
-                    }}
-                  >
-                    {cityList}
-                  </Select>
-                </FormControl>
+              <FormControl>
+                <InputLabel htmlFor="name">City</InputLabel>
+                <Select
+                  value={this.state.name}
+                  onChange={this.handleChangeSelectCity}
+                  inputProps={{
+                    name: "name",
+                    id: "name"
+                  }}
+                >
+                  {cityList}
+                </Select>
+              </FormControl>
 
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="title">Itinerary</InputLabel>
-                  <Select
-                    value={this.state.title}
-                    onChange={this.handleChangeSelectItinerary}
-                    inputProps={{
-                      name: "title",
-                      id: "title"
-                    }}
-                  >
-                    {itineraryList}
-                  </Select>
-                </FormControl>
-              </form>
-            </div>
+              <FormControl>
+                <InputLabel htmlFor="title">Itinerary</InputLabel>
+                <Select
+                  value={this.state.title}
+                  onChange={this.handleChangeSelectItinerary}
+                  inputProps={{
+                    name: "title",
+                    id: "title"
+                  }}
+                >
+                  {itineraryList}
+                </Select>
+              </FormControl>
+            </form>
+
             <form
               id="itinerary-form"
-              className={classes.container}
               noValidate
               autoComplete="off"
               onSubmit={this.onSubmit}
+              className="cms-form"
             >
               <TextField
                 name="updatedTitle"
                 id="updatedTitle"
                 label="Title"
-                className={classes.textField}
                 value={this.state.updatedTitle}
                 onChange={this.onChange}
                 margin="normal"
@@ -292,7 +245,6 @@ class Edititinerary extends Component {
                 name="user"
                 id="user"
                 label="User"
-                className={classes.textField}
                 value={this.state.user}
                 onChange={this.onChange}
                 margin="normal"
@@ -302,7 +254,6 @@ class Edititinerary extends Component {
                 name="rating"
                 id="rating"
                 label="Rating"
-                className={classes.textField}
                 value={this.state.rating}
                 onChange={this.onChange}
                 margin="normal"
@@ -312,19 +263,15 @@ class Edititinerary extends Component {
                 name="duration"
                 id="duration"
                 label="Duration"
-                className={classes.textField}
                 value={this.state.duration}
                 onChange={this.onChange}
                 margin="normal"
                 color="primary"
               />
               <div className="price-form">
-                <InputLabel htmlFor="price" className="price-label">
-                  Price
-                </InputLabel>
+                <InputLabel htmlFor="price">Price</InputLabel>
                 <Select
                   value={this.state.price}
-                  className="price-select"
                   onChange={this.onChange}
                   inputProps={{
                     name: "price",
@@ -340,32 +287,27 @@ class Edititinerary extends Component {
                 name="hashtag"
                 id="hashtag"
                 label="Hashtags (e.g. Art, History)"
-                className={classes.textField}
                 value={this.state.hashtag}
                 onChange={this.onChange}
                 margin="normal"
                 color="primary"
               />
 
-              <div className="add-form-btn">
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  size="medium"
-                  type="submit"
-                  form="itinerary-form"
-                >
-                  Submit
-                </Button>
-              </div>
+              <Button
+                variant="contained"
+                size="medium"
+                type="submit"
+                form="itinerary-form"
+              >
+                Submit
+              </Button>
             </form>
           </div>
         ) : (
-          <div className="success">
+          <div className="success-msg">
             <p>Itinerary updated successfully!</p>
             <Button
               variant="contained"
-              className={classes.button}
               size="medium"
               onClick={this.onClickAfterAdd}
             >
@@ -373,20 +315,20 @@ class Edititinerary extends Component {
             </Button>
           </div>
         )}
-
-        <Button
-          variant="contained"
-          className={classes.buttondel}
-          size="medium"
-          onClick={this.handleClickOpenDel}
-        >
-          Delete itinerary
-        </Button>
-
+        <div className="delete-btn">
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={this.handleClickOpenDel}
+          >
+            Delete itinerary
+          </Button>
+        </div>
         <Dialog
           open={this.state.openDeleteConfirmation}
           onClose={this.handleCloseDel}
           aria-labelledby="alert-dialog-title"
+          f
           aria-describedby="alert-dialog-description"
         >
           <DialogContent>
@@ -411,7 +353,6 @@ class Edititinerary extends Component {
 
 Edititinerary.propTypes = {
   deleteItinerary: PropTypes.func,
-  classes: PropTypes.object,
   cities: PropTypes.object,
   itineraries: PropTypes.object,
   getCities: PropTypes.func,
@@ -429,4 +370,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { deleteItinerary, getCities, getItineraries, updateItinerary, addItSuccess }
-)(withStyles(styles)(Edititinerary));
+)(Edititinerary);

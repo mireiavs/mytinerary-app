@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { logout } from "../actions/authActions";
+import { connect } from "react-redux";
+
+// Material UI imports
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,27 +20,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import FavouritesIcon from "@material-ui/icons/Favorite";
-import { logout } from "../actions/authActions";
-import { connect } from "react-redux";
-
-const styles = {
-  root: {
-    flexGrow: 1
-  },
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: "auto"
-  }
-};
 
 class Header extends Component {
   state = {
@@ -59,7 +41,6 @@ class Header extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const user = this.props.user;
@@ -76,7 +57,7 @@ class Header extends Component {
                 const addActLink = props => <Link to="/addactivity" {...props} /> */
 
     const sideList = (
-      <div className={classes.list}>
+      <div className="side-list">
         <ListItem button component={homeLink}>
           <ListItemIcon>
             <HomeIcon />
@@ -93,7 +74,7 @@ class Header extends Component {
     );
 
     const sideListAuth = (
-      <div className={classes.list}>
+      <div className="side-list">
         <ListItem button component={dashboardLink}>
           <ListItemIcon>
             <FavouritesIcon />
@@ -129,9 +110,9 @@ class Header extends Component {
     );
 
     return (
-      <div className={classes.root}>
+      <div>
         <AppBar position="fixed" color="default">
-          <Toolbar className="toolbar-main">
+          <Toolbar className="header-toolbar">
             <div>
               <IconButton
                 aria-owns={open ? "menu-appbar" : undefined}
@@ -140,7 +121,7 @@ class Header extends Component {
                 color="inherit"
               >
                 {this.props.isAuthenticated ? (
-                  <div className="header-user-img">
+                  <div className="userimg">
                     <img src={user.userImage} alt="Userpic" />
                   </div>
                 ) : (
@@ -182,7 +163,6 @@ class Header extends Component {
             </div>
 
             <IconButton
-              className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
               onClick={this.toggleDrawer("right", true)}
@@ -218,7 +198,6 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   user: PropTypes.object
@@ -232,4 +211,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logout }
-)(withStyles(styles)(Header));
+)(Header);

@@ -1,0 +1,40 @@
+.login {
+  h3 {
+    text-align: center;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  button {
+    margin: 10px auto 30px auto;
+  }
+  label {
+    font-family: inherit;
+    font-size: 1.2rem;
+    padding-top: 20px;
+    width: 100px;
+    text-align: right;
+    color: black;
+    margin-right: 10px;
+  }
+}
+
+.google-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.remember {
+  margin-top: 0;
+}
+
+.login-text {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

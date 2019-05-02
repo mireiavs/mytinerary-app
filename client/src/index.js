@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./index.css";
+import "./stylesheets/main.scss";
 
 import { Provider } from "react-redux";
 import store from "./store";

@@ -1,52 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
+import { Link } from "react-router-dom";
+
+// Material UI imports
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Input from "@material-ui/core/Input";
-import { Link } from "react-router-dom";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  card: {
-    maxWidth: 400
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    fontFamily: "inherit",
-    margin: 10
-  },
-  cssFocused: {},
-  cssUnderline: {
-    "&:after": {
-      borderBottomColor: "#7A7A7A"
-    }
-  }
-});
 
 class Comments extends Component {
   constructor(props) {
@@ -91,15 +54,13 @@ class Comments extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const comments = this.props.comments.comments;
     const isLoading = this.props.comments.loading;
 
     const commentList = comments.map(comment => {
       let className = "comment-card";
-
       if (this.props.user && comment.user === this.props.user.username) {
-        className += "-sameuser";
+        className += " sameuser";
       }
       return (
         <div key={comment._id}>
@@ -131,20 +92,15 @@ class Comments extends Component {
         <h4>Comments</h4>
         <form onSubmit={this.onSubmit} id="comment-form">
           {this.props.user ? (
-            <div>
+            <div className="add-comment">
               <Input
                 placeholder="Your Comment"
-                classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline
-                }}
                 value={this.state.message}
                 name="message"
                 onChange={this.onChange}
               />
               <Button
                 variant="contained"
-                className={classes.button}
                 size="small"
                 type="submit"
                 form="comment-form"
@@ -180,7 +136,6 @@ class Comments extends Component {
 
 Comments.propTypes = {
   comments: PropTypes.object,
-  classes: PropTypes.object,
   addComment: PropTypes.func,
   match: PropTypes.object,
   itinerary: PropTypes.object,
@@ -188,4 +143,4 @@ Comments.propTypes = {
   user: PropTypes.object
 };
 
-export default withStyles(styles)(Comments);
+export default Comments;

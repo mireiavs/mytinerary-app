@@ -1,33 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { addCity, addSuccess } from "../../actions/citiesActions";
 import { connect } from "react-redux";
 
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  },
-  button: {
-    margin: theme.spacing.unit
-  }
-});
+// Material UI imports
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 class Addcity extends Component {
   constructor(props) {
@@ -57,16 +35,15 @@ class Addcity extends Component {
     this.props.addSuccess();
   };
   render() {
-    const { classes } = this.props;
     const addSuccess = this.props.cities.addsuccess;
     return (
-      <div className="add-form">
+      <div>
         <h1>Add a city</h1>
 
         {!addSuccess ? (
           <form
             id="city-form"
-            className={classes.container}
+            className="cms-form"
             noValidate
             autoComplete="off"
             onSubmit={this.onSubmit}
@@ -75,10 +52,6 @@ class Addcity extends Component {
               name="name"
               id="name"
               label="Name"
-              classes={{
-                root: classes.root,
-                underline: classes.cssUnderline
-              }}
               value={this.state.name}
               onChange={this.onChange}
               margin="normal"
@@ -88,15 +61,13 @@ class Addcity extends Component {
               name="country"
               id="country"
               label="Country"
-              className={classes.textField}
               value={this.state.country}
               onChange={this.onChange}
               margin="normal"
             />
-            <div className="add-form-btn">
+            <div>
               <Button
                 variant="contained"
-                className={classes.button}
                 size="medium"
                 type="submit"
                 form="city-form"
@@ -106,11 +77,10 @@ class Addcity extends Component {
             </div>
           </form>
         ) : (
-          <div className="success">
+          <div className="success-msg">
             <p>City added successfully!</p>
             <Button
               variant="contained"
-              className={classes.button}
               size="medium"
               onClick={this.onClickAfterAdd}
             >
@@ -125,7 +95,6 @@ class Addcity extends Component {
 
 Addcity.propTypes = {
   cities: PropTypes.object,
-  classes: PropTypes.object.isRequired,
   addCity: PropTypes.func,
   addsuccess: PropTypes.bool,
   addSuccess: PropTypes.func
@@ -140,4 +109,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addCity, addSuccess }
-)(withStyles(styles)(Addcity));
+)(Addcity);

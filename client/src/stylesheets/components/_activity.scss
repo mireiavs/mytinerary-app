@@ -1,0 +1,17 @@
+.activity-img {
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+.activity-caption {
+  position: absolute;
+  width: 100px;
+  top: 35%;
+  color: white;
+  background-color: #8080807d;
+  text-align: center;
+  p {
+    margin-bottom: 0;
+  }
+}

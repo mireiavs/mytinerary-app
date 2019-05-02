@@ -15,10 +15,10 @@ class Activity extends Component {
 
     const activities = this.props.activities.activities;
     const isLoading = this.props.activities.loading;
-    const activityList = activities.map((activity, index) => (
-      <div className="slider-image" key={index}>
-        <img className="activity-img" src={activity.img} alt="activity" />
 
+    const activityList = activities.map((activity, index) => (
+      <div key={index}>
+        <img className="activity-img" src={activity.img} alt="activity" />
         <div className="activity-caption">
           <p>{activity.caption}</p>
         </div>

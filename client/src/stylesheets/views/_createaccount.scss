@@ -1,0 +1,83 @@
+.register-form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+button.register-btn {
+  margin: 30px;
+}
+
+.upload-userpic {
+  border: 1px solid black;
+  border-radius: 75px;
+  height: 150px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  input,
+  label {
+    max-width: 100px;
+  }
+  img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 75px;
+    z-index: -1;
+  }
+  span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: black;
+  }
+}
+
+.register-form__inputs {
+  label {
+    font-family: inherit;
+    font-size: 1.2rem;
+    padding-top: 20px;
+    width: 100px;
+    text-align: right;
+    color: black;
+    margin-right: 10px;
+  }
+}
+
+.country-select {
+  width: 190px;
+}
+
+.terms {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  p {
+    margin-bottom: 0;
+  }
+  .terms-link {
+    color: #007bff;
+  }
+}
+
+.terms-modal {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 24px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 24px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 24px 0px rgba(0, 0, 0, 0.75);
+  padding: 30px;
+  outline: none;
+  overflow: scroll;
+}

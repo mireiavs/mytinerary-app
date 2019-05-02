@@ -13,6 +13,7 @@ require("dotenv").config();
 
 app.use("/uploads", express.static("uploads"));
 app.use("/cities/uploads", express.static("uploads"));
+app.use("/cities/all/uploads", express.static("uploads"));
 app.use("/itineraries/uploads", express.static("uploads"));
 
 app.use(express.json());

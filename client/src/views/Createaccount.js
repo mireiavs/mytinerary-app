@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { register } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
+import { CountryDropdown } from "react-country-region-selector";
+
+// Material UI imports
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
@@ -13,48 +15,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
-import { CountryDropdown } from "react-country-region-selector";
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  input: {
-    margin: theme.spacing.unitn
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  select: {
-    marginTop: theme.spacing.unit * 2,
-    fontSize: "1.2rem",
-    width: 195
-  },
-  button: {
-    margin: 30,
-    marginLeft: "auto",
-    marginRight: "auto"
-  },
-  close: {
-    padding: theme.spacing.unit / 2
-  },
-  paper: {
-    position: "absolute",
-    top: "10%",
-    left: "10%",
-    right: "10%",
-    bottom: "10%",
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: "none",
-    overflow: "scroll"
-  }
-});
 
 class Createaccount extends Component {
   constructor(props) {
@@ -188,11 +148,10 @@ class Createaccount extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { alert } = this.state;
     return (
       <div>
-        <h3 className="title">Create account</h3>
+        <h3>Create account</h3>
 
         <div>
           <Snackbar
@@ -216,7 +175,6 @@ class Createaccount extends Component {
                 key="close"
                 aria-label="Close"
                 color="inherit"
-                className={classes.close}
                 onClick={this.handleCloseAlert}
               >
                 <CloseIcon />
@@ -226,7 +184,7 @@ class Createaccount extends Component {
 
           <form
             encType="multipart/form-data"
-            className={classes.container}
+            className="register-form"
             noValidate
             autoComplete="off"
             id="register-form"
@@ -241,101 +199,82 @@ class Createaccount extends Component {
                     name="userImage"
                     onChange={this.onChange}
                     id="userpic"
-                    className={classes.input}
                     style={{ display: "none" }}
                   />
                 </div>
               ) : (
                 <div className="upload-userpic">
                   <img src={this.state.imgPreview} alt="preview" />
-                  <span onClick={this.clearImg} className="clear-img">
-                    X
-                  </span>
+                  <span onClick={this.clearImg}>X</span>
                 </div>
               )}
             </div>
 
-            <div>
-              <InputLabel htmlFor="username" className="form-label">
-                Username:
-              </InputLabel>
-              <Input
-                id="username"
-                name="username"
-                value={this.state.username}
-                onChange={this.onChange}
-                className={classes.input}
-                inputProps={{
-                  "aria-label": "Description"
-                }}
-              />
+            <div className="register-form__inputs">
+              <div>
+                <InputLabel htmlFor="username">Username:</InputLabel>
+                <Input
+                  id="username"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  inputProps={{
+                    "aria-label": "Description"
+                  }}
+                />
+              </div>
+
+              <div>
+                <InputLabel htmlFor="password">Password:</InputLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  type="password"
+                />
+              </div>
+
+              <div>
+                <InputLabel htmlFor="email">Email:</InputLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                />
+              </div>
+
+              <div>
+                <InputLabel htmlFor="first_name">First name:</InputLabel>
+                <Input
+                  id="first_name"
+                  name="first_name"
+                  value={this.state.first_name}
+                  onChange={this.onChange}
+                />
+              </div>
+
+              <div>
+                <InputLabel htmlFor="last_name">Last name:</InputLabel>
+                <Input
+                  id="last_name"
+                  name="last_name"
+                  value={this.state.last_name}
+                  onChange={this.onChange}
+                />
+              </div>
+
+              <div>
+                <InputLabel htmlFor="country">Country:</InputLabel>
+
+                <CountryDropdown
+                  className="country-select"
+                  value={this.state.country}
+                  onChange={val => this.selectCountry(val)}
+                />
+              </div>
             </div>
-
-            <div>
-              <InputLabel htmlFor="password" className="form-label">
-                Password:
-              </InputLabel>
-              <Input
-                id="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                className={classes.input}
-                type="password"
-              />
-            </div>
-
-            <div>
-              <InputLabel htmlFor="email" className="form-label">
-                Email:
-              </InputLabel>
-              <Input
-                id="email"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                className={classes.input}
-              />
-            </div>
-
-            <div>
-              <InputLabel htmlFor="first_name" className="form-label">
-                First name:
-              </InputLabel>
-              <Input
-                id="first_name"
-                name="first_name"
-                value={this.state.first_name}
-                onChange={this.onChange}
-                className={classes.input}
-              />
-            </div>
-
-            <div>
-              <InputLabel htmlFor="last_name" className="form-label">
-                Last name:
-              </InputLabel>
-              <Input
-                id="last_name"
-                name="last_name"
-                value={this.state.last_name}
-                onChange={this.onChange}
-                className={classes.input}
-              />
-            </div>
-
-            <div>
-              <InputLabel htmlFor="country" className="form-label">
-                Country:
-              </InputLabel>
-
-              <CountryDropdown
-                className="country-select"
-                value={this.state.country}
-                onChange={val => this.selectCountry(val)}
-              />
-            </div>
-
             <div className="terms">
               <Checkbox
                 checked={this.state.checked}
@@ -350,8 +289,8 @@ class Createaccount extends Component {
               </p>
             </div>
             <Modal open={this.state.open} onClose={this.handleCloseModal}>
-              <div className={classes.paper}>
-                <h3>MYtinerary terms and ametconditions</h3>
+              <div className="terms-modal">
+                <h3>MYtinerary terms and conditions</h3>
                 <p>
                   Lorem ipsum, dolor sit consectetur adipisicing elit. Minus cum
                   mollitia molestiae eveniet harum error dolorum molestias
@@ -377,7 +316,7 @@ class Createaccount extends Component {
             </Modal>
             <Button
               variant="contained"
-              className={classes.button}
+              className="register-btn"
               size="medium"
               type="submit"
               form="register-form"
@@ -392,7 +331,6 @@ class Createaccount extends Component {
 }
 
 Createaccount.propTypes = {
-  classes: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
@@ -408,4 +346,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { register, clearErrors }
-)(withStyles(styles)(Createaccount));
+)(Createaccount);

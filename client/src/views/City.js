@@ -37,8 +37,8 @@ class City extends Component {
     const isLoading = this.props.itineraries.loading;
 
     return (
-      <div className="city-info">
-        <h1 className="city-title">{this.props.match.params.id}</h1>
+      <div className="city-itinerary-list">
+        <h1>{this.props.match.params.id}</h1>
         <h4>Available MYtineraries:</h4>
 
         {isLoading ? (
@@ -46,17 +46,15 @@ class City extends Component {
         ) : (
           <div>
             {itineraries.length !== 0 ? (
-              <div className="itinerary-list">{itineraryList}</div>
+              <div>{itineraryList}</div>
             ) : (
-              <p className="error-msg">
-                Sorry, there no itineraries for this city yet.
-              </p>
+              <p>Sorry, there no itineraries for this city yet.</p>
             )}
           </div>
         )}
-        <div className="back-link">
+        <div>
           {this.props.auth.isAuthenticated ? (
-            <div className="back-link">
+            <div className="city-links">
               <Link to={`/cities/${this.props.match.params.id}/additinerary`}>
                 Add another itinerary
               </Link>

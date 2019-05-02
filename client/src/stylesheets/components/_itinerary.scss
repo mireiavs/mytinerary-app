@@ -1,0 +1,76 @@
+.itinerary-card {
+  margin-bottom: 20px;
+  max-width: 335px;
+}
+
+.itinerary-card__visible-text {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  .itinerary-user-img {
+    flex-grow: 1;
+    width: 80px;
+    margin-right: 10px;
+    word-wrap: break-word;
+    div {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+  .itinerary-title-details {
+    flex-grow: 3;
+    .itinerary-title-fav {
+      display: flex;
+      align-items: center;
+      h4 {
+        flex-grow: 3;
+        font-size: 1.2rem;
+      }
+      div {
+        flex-grow: 1;
+        .fav-icon {
+          color: red;
+        }
+      }
+    }
+  }
+  .itinerary-detail-preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      div {
+        margin: 0 5px 0 5px;
+      }
+    }
+    span {
+      flex-grow: 1;
+    }
+    p {
+      flex-grow: 3;
+    }
+    .hashtag-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  }
+}
+
+.card-actions {
+  height: 50px;
+  background-color: lightgray;
+  button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+}

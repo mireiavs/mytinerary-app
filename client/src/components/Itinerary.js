@@ -16,7 +16,8 @@ import {
   setItineraryLikes
 } from "../actions/itineraryActions";
 import StarRatings from "react-star-ratings";
-import { withStyles } from "@material-ui/core/styles";
+
+// Material UI imports
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
@@ -29,34 +30,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import FavouriteIcon from "@material-ui/icons/Favorite";
 import FavouriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import red from "@material-ui/core/colors/red";
-
-const styles = theme => ({
-  card: {
-    maxWidth: 400
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  avatar: {
-    margin: 10
-  },
-  bigAvatar: {
-    margin: 10,
-    width: 60,
-    height: 60
-  },
-  button: {
-    margin: theme.spacing.unit
-  },
-  icon: {
-    color: red[800]
-  }
-});
 
 class Itinerary extends Component {
   constructor(props) {
@@ -128,11 +101,10 @@ class Itinerary extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const itinerary = this.props.itinerary;
     var isFavourite = false;
     const hashtagList = this.props.itinerary.hashtag.map((hashtag, index) => (
-      <div className="hashtag" key={index}>
+      <div key={index}>
         <Link to={`/itineraries/${hashtag}`}>#{hashtag}</Link>
       </div>
     ));
@@ -144,146 +116,133 @@ class Itinerary extends Component {
     }
 
     return (
-      <div className="itinerary-card">
-        <Card className={classes.card}>
-          <CardContent className="card-summary">
-            <div className="profile-pic-container">
-              <Avatar
-                alt="User logo"
-                src={itinerary.userImg}
-                className={classes.bigAvatar}
-              />
-              <p>{itinerary.user}</p>
+      <Card className="itinerary-card">
+        <CardContent className="itinerary-card__visible-text">
+          <div className="itinerary-user-img">
+            <Avatar alt="User logo" src={itinerary.userImg} />
+            <p>{itinerary.user}</p>
+          </div>
+          <div className="itinerary-title-details">
+            <div className="itinerary-title-fav">
+              <h4>{itinerary.title}</h4>
+              <div>
+                {this.props.auth.isAuthenticated ? (
+                  <div>
+                    {isFavourite ? (
+                      <IconButton
+                        aria-label="Favourite"
+                        onClick={this.handleClickOpenDel}
+                      >
+                        <FavouriteIcon className="fav-icon" />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        aria-label="Favourite"
+                        onClick={this.onClickAdd}
+                      >
+                        <FavouriteBorderIcon />
+                      </IconButton>
+                    )}
+                  </div>
+                ) : null}
+              </div>
             </div>
-            <div className="itinerary-title-details">
-              <div className="title-fav">
-                <h4>{itinerary.title}</h4>
-                <div>
-                  {this.props.auth.isAuthenticated ? (
-                    <div>
-                      {isFavourite ? (
-                        <IconButton
-                          className={classes.button}
-                          aria-label="Favourite"
-                          onClick={this.handleClickOpenDel}
-                        >
-                          <FavouriteIcon className={classes.icon} />
-                        </IconButton>
-                      ) : (
-                        <IconButton
-                          className={classes.button}
-                          aria-label="Favourite"
-                          onClick={this.onClickAdd}
-                        >
-                          <FavouriteBorderIcon />
-                        </IconButton>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
+            <Dialog
+              open={this.state.openDeleteConfirmation}
+              onClose={this.handleCloseDel}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                <p>
+                  Are you sure you want to delete {itinerary.title} from your
+                  favourites?{" "}
+                </p>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.onClickDelete} color="primary">
+                  Yes, delete
+                </Button>
+                <Button onClick={this.handleCloseDel} color="primary" autoFocus>
+                  No, go back
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <div className="itinerary-detail-preview">
+              <div className="details">
+                <div>Likes: {itinerary.likes}</div>
+                <div>Price: {itinerary.price}</div>
+                <div>Duration: {itinerary.duration} hrs</div>
               </div>
-              <Dialog
-                open={this.state.openDeleteConfirmation}
-                onClose={this.handleCloseDel}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogContent>
-                  <p>
-                    Are you sure you want to delete {itinerary.title} from your
-                    favourites?{" "}
-                  </p>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.onClickDelete} color="primary">
-                    Yes, delete
-                  </Button>
-                  <Button
-                    onClick={this.handleCloseDel}
-                    color="primary"
-                    autoFocus
-                  >
-                    No, go back
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              <div className="itinerary-detail-preview">
-                <div className="details">
-                  <div>Likes: {itinerary.likes}</div>
-                  <div>Price: {itinerary.price}</div>
-                  <div>Duration: {itinerary.duration} hrs</div>
-                </div>
-                <div className="hashtag-list">{hashtagList}</div>
-              </div>
-              <StarRatings
-                rating={itinerary.rating}
-                starRatedColor="rgb(109, 122, 130)"
-                starHoverColor="yellow"
-                changeRating={this.changeRating}
-                numberOfStars={5}
-                name="rating"
-                starDimension="30px"
-              />
+              <div className="hashtag-list">{hashtagList}</div>
+            </div>
+            <StarRatings
+              rating={itinerary.rating}
+              starRatedColor="rgb(109, 122, 130)"
+              starHoverColor="yellow"
+              changeRating={this.changeRating}
+              numberOfStars={5}
+              name="rating"
+              starDimension="30px"
+            />
+          </div>
+        </CardContent>
+        <Collapse
+          in={this.props.isOpen}
+          timeout="auto"
+          mountOnEnter
+          unmountOnExit
+        >
+          <CardContent>
+            <Activity activities={this.props.activities} />
+            <div>
+              {this.props.auth.isAuthenticated ? (
+                <Link
+                  to={`/cities/${this.props.itinerary.cityName}/${
+                    this.props.itinerary._id
+                  }/addactivity`}
+                >
+                  Add an activity
+                </Link>
+              ) : null}
+            </div>
+
+            <Comments
+              comments={this.props.comments}
+              addComment={this.props.addComment}
+              itinerary={this.props.itinerary}
+              deleteComment={this.props.deleteComment}
+              user={this.props.user}
+            />
+
+            <div>
+              {this.props.auth.isAuthenticated ? (
+                <Link
+                  to={`/cities/${this.props.itinerary.cityName}/${
+                    this.props.itinerary._id
+                  }/edititinerary`}
+                >
+                  Edit itinerary
+                </Link>
+              ) : null}
             </div>
           </CardContent>
-          <Collapse
-            in={this.props.isOpen}
-            timeout="auto"
-            mountOnEnter
-            unmountOnExit
+        </Collapse>
+        <CardActions className="card-actions" disableActionSpacing>
+          <IconButton
+            onClick={this.handleExpandClick}
+            aria-expanded={this.props.isOpen}
+            aria-label="Show more"
           >
-            <CardContent>
-              <Activity activities={this.props.activities} />
-              <div className="back-link">
-                {this.props.auth.isAuthenticated ? (
-                  <Link
-                    to={`/cities/${this.props.itinerary.cityName}/${
-                      this.props.itinerary._id
-                    }/addactivity`}
-                  >
-                    Add an activity
-                  </Link>
-                ) : null}
-              </div>
-
-              <Comments
-                comments={this.props.comments}
-                addComment={this.props.addComment}
-                itinerary={this.props.itinerary}
-                deleteComment={this.props.deleteComment}
-                user={this.props.user}
-              />
-
-              <div className="back-link">
-                {this.props.auth.isAuthenticated ? (
-                  <Link
-                    to={`/cities/${this.props.itinerary.cityName}/${
-                      this.props.itinerary._id
-                    }/edititinerary`}
-                  >
-                    Edit itinerary
-                  </Link>
-                ) : null}
-              </div>
-            </CardContent>
-          </Collapse>
-          <CardActions className="card-actions" disableActionSpacing>
-            <IconButton
-              onClick={this.handleExpandClick}
-              aria-expanded={this.props.isOpen}
-              aria-label="Show more"
-            >
-              {this.props.isOpen ? <p> Close </p> : <p> View all </p>}
-            </IconButton>
-          </CardActions>
-        </Card>
-      </div>
+            {this.props.isOpen ? <p> Close </p> : <p> View all </p>}
+          </IconButton>
+        </CardActions>
+      </Card>
     );
   }
 }
 
 Itinerary.propTypes = {
-  classes: PropTypes.object.isRequired,
   itinerary: PropTypes.object,
   loading: PropTypes.bool,
   getActivities: PropTypes.func,
@@ -323,4 +282,4 @@ export default connect(
     setItineraryRating,
     setItineraryLikes
   }
-)(withStyles(styles)(Itinerary));
+)(Itinerary);
