@@ -87,7 +87,7 @@ class Carousel extends Component {
                   <img className="landing-pic" src={Rome} alt="Rome" />
                 </div>
                 <div className="col">
-                  <img className="landing-pic" src={Vienna} alt="Vienna" />{" "}
+                  <img className="landing-pic" src={Vienna} alt="Vienna" />
                 </div>
               </div>
             </div>

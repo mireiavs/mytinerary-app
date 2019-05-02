@@ -81,3 +81,13 @@ button.register-btn {
   outline: none;
   overflow: scroll;
 }
+
+.snackbar div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.error-icon {
+  margin-right: 10px;
+}

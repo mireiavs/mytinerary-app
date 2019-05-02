@@ -158,7 +158,7 @@ class Login extends Component {
               checked={this.state.checked}
               onChange={this.handleChecked}
               value="checked"
-            />{" "}
+            />
             <p>Remember Me</p>
           </div>
 

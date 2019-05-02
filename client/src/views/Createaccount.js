@@ -41,7 +41,6 @@ class Createaccount extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.clearImg = this.clearImg.bind(this);
-    this.clearImg = this.clearImg.bind(this);
     this.selectCountry = this.selectCountry.bind(this);
   }
 
@@ -155,15 +154,16 @@ class Createaccount extends Component {
 
         <div>
           <Snackbar
+            className="snackbar"
             open={alert}
             onClose={this.handleCloseAlert}
             ContentProps={{
               "aria-describedby": "message-id"
             }}
             message={
-              <span id="message-id">
-                <ErrorIcon /> {this.state.msg}
-              </span>
+              <div id="message-id">
+                <ErrorIcon className="error-icon" /> {this.state.msg}
+              </div>
             }
             anchorOrigin={{
               vertical: "bottom",
@@ -282,7 +282,7 @@ class Createaccount extends Component {
                 value="checked"
               />
               <p>
-                I agree to MYtinerary&apos;s{" "}
+                I agree to MYtinerary&apos;s
                 <span className="terms-link" onClick={this.handleOpenModal}>
                   Terms & Conditions
                 </span>

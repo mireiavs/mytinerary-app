@@ -156,7 +156,7 @@ class Itinerary extends Component {
               <DialogContent>
                 <p>
                   Are you sure you want to delete {itinerary.title} from your
-                  favourites?{" "}
+                  favourites?
                 </p>
               </DialogContent>
               <DialogActions>

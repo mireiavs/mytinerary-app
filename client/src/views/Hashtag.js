@@ -43,8 +43,7 @@ class Hashtag extends Component {
     const isLoading = this.props.itineraries.loading;
 
     return (
-      <div className="city-info">
-        <h1 className="city-title">{this.props.match.params.id}</h1>
+      <div className="city-itinerary-list">
         <h4>MYtineraries with #{currentHashtag}:</h4>
 
         {isLoading ? (
@@ -58,20 +57,8 @@ class Hashtag extends Component {
             )}
           </div>
         )}
-        <div className="back-link">
-          {this.props.auth.isAuthenticated ? (
-            <div className="back-link">
-              <Link to={`/cities/${this.props.match.params.id}/additinerary`}>
-                Add another itinerary
-              </Link>
-              <Link to={`/cities/${this.props.match.params.id}/editcity`}>
-                Edit city
-              </Link>
-            </div>
-          ) : null}
 
-          <Link to="/cities/all">Go back to the Cities page</Link>
-        </div>
+        <Link to="/cities/all">Go back to the Cities page</Link>
       </div>
     );
   }
