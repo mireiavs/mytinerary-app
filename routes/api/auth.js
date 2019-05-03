@@ -55,7 +55,6 @@ router.get("/user", auth, (req, res) => {
 });
 
 // SOCIAL LOGIN
-
 router.post("/social", (req, res) => {
   const { username, email, first_name, last_name, userImage } = req.body;
 

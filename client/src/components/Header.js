@@ -81,31 +81,6 @@ class Header extends Component {
           </ListItemIcon>
           <ListItemText>Favourites</ListItemText>
         </ListItem>
-
-        {/* <ListItem button component={addCityLink}>
-                    <ListItemIcon><CitiesIcon /></ListItemIcon>
-                    <ListItemText>Add a city</ListItemText>
-                </ListItem>
-
-                <ListItem button component={editCityLink}>
-                    <ListItemIcon><CitiesIcon /></ListItemIcon>
-                    <ListItemText>Edit a city</ListItemText>
-                </ListItem>
-
-                <ListItem button component={addItinLink}>
-                    <ListItemIcon><CitiesIcon /></ListItemIcon>
-                    <ListItemText>Add an itinerary</ListItemText>
-                </ListItem>
-
-                <ListItem button component={editItinink}>
-                    <ListItemIcon><CitiesIcon /></ListItemIcon>
-                    <ListItemText>Edit an itinerary</ListItemText>
-                </ListItem>
-
-                <ListItem button component={addActLink}>
-                    <ListItemIcon><CitiesIcon /></ListItemIcon>
-                    <ListItemText>Add an activity</ListItemText>
-                </ListItem> */}
       </div>
     );
 

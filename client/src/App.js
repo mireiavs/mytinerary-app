@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import store from "./store";
+import { loadUser } from "./actions/authActions";
 import Landing from "./views/Landing";
 import Login from "./views/Login";
 import Createaccount from "./views/Createaccount";
@@ -15,8 +17,6 @@ import City from "./views/City";
 import Additinerary from "./views/CMS/Additinerary";
 import Addactivity from "./views/CMS/Addactivity";
 import Edititinerary from "./views/CMS/Edititinerary";
-import store from "./store";
-import { loadUser } from "./actions/authActions";
 import Dashboard from "./views/Dashboard";
 import Hashtag from "./views/Hashtag";
 import PrivateRoute from "./components/PrivateRoute";

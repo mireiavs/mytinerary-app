@@ -22,19 +22,6 @@ router.post("/:itineraryId", auth, (req, res) => {
   newComment.save().then(comment => res.send(comment));
 });
 
-// UPDATE /api/comments/:commentId - not tested yet, check if necessary
-/* router.put("/:commentId", (req, res) => {
-  const updatedComment ={ 
-    itineraryId: req.body.itineraryId,
-    user: req.body.user,
-    message: req.body.message,
-    timestamp: req.body.timestamp
-  };
-  Comment.findOneAndUpdate({ _id: req.params.commentId }, updatedComment)
-    .then(() => res.json({ success: true }))
-    .catch(() => res.status(404).json({ success: false }))
-}) */
-
 // DELETE /api/comments/:commentId
 router.delete("/:commentId", auth, (req, res) => {
   Comment.deleteOne({ _id: req.params.commentId })
