@@ -28,6 +28,7 @@ class Dashboard extends Component {
 
     if (this.props.auth.isAuthenticated && this.props.auth.favourites) {
       favourites = this.props.auth.favourites;
+      // eslint-disable-next-line
       itineraryList = favourites.map((favourite, index) => {
         for (var i = 0; i < itineraries.length; i++) {
           if (favourite.itineraryId === itineraries[i]._id) {
@@ -43,7 +44,6 @@ class Dashboard extends Component {
         }
       });
     }
-
     return (
       <div className="dashboard">
         <div>
