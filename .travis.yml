@@ -2,13 +2,18 @@ language: node_js
 node_js:
   - "stable"
 
-script:
-  - npm test
-
 cache:
   directories:
-  - node_modules
-  
+    - node_modules
+
 script:
   - npm test
-  - npm run build
+  - npm run heroku-postbuild
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "5e8c6650-f2d2-4e77-a4fd-67f782403e01"
+  app: warm-brushlands-44749
+  on:
+    repo: mytinerary-app
