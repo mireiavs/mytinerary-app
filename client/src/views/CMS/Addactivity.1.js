@@ -31,7 +31,30 @@ class Addactivity extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
+    this.handleChangeSelectCity = this.handleChangeSelectCity.bind(this);
+    this.handleChangeSelectItinerary = this.handleChangeSelectItinerary.bind(
+      this
+    );
   }
+
+  handleChangeSelectCity = event => {
+    const { cities } = this.props.cities;
+    const city = cities.find(city => city.name === event.target.value);
+    this.setState({ name: event.target.value, country: city.country });
+    this.props.getItineraries(city.name);
+  };
+
+  handleChangeSelectItinerary = event => {
+    const { itineraries } = this.props.itineraries;
+    const itinerary = itineraries.find(
+      itinerary => itinerary.title === event.target.value
+    );
+    this.setState({
+      itineraryId: itinerary._id,
+      title: itinerary.title
+    });
+  };
 
   onChange = e => {
     switch (e.target.name) {

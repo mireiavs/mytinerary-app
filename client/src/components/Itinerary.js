@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Activity from "./Activity";
 import Comments from "./Comments";
-import { getActivities } from "../actions/activityActions";
 import {
   getComments,
   addComment,
@@ -52,7 +51,6 @@ class Itinerary extends Component {
     this.props.toggle(this.props.itinerary._id);
     if (!this.props.isOpen) {
       const itineraryId = this.props.itinerary._id;
-      this.props.getActivities(itineraryId);
       this.props.getComments(itineraryId);
     }
   };
@@ -194,7 +192,7 @@ class Itinerary extends Component {
           unmountOnExit
         >
           <CardContent>
-            <Activity activities={this.props.activities} />
+            <Activity activities={itinerary.activities} />
             <div>
               {this.props.auth.isAuthenticated ? (
                 <Link
@@ -245,8 +243,6 @@ class Itinerary extends Component {
 Itinerary.propTypes = {
   itinerary: PropTypes.object,
   loading: PropTypes.bool,
-  getActivities: PropTypes.func,
-  activities: PropTypes.object,
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
   getComments: PropTypes.func,
@@ -264,8 +260,8 @@ Itinerary.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  activities: state.activities,
-  comments: state.comments,
+  /*   activities: state.activities,
+   */ comments: state.comments,
   auth: state.auth,
   user: state.auth.user
 });
@@ -273,7 +269,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getActivities,
     getComments,
     addComment,
     deleteComment,

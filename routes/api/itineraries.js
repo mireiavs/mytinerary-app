@@ -29,7 +29,8 @@ router.post("/:cityId", auth, (req, res) => {
     duration: req.body.duration,
     price: req.body.price,
     hashtag: req.body.hashtag,
-    cityName: req.body.cityName
+    cityName: req.body.cityName,
+    activities: req.body.activities
   });
   newItinerary.save().then(itinerary => res.send(itinerary));
 });

@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import Cityfilter from "../components/Cityfilter";
 import Button from "@material-ui/core/Button";
 
-class Cities extends Component {
+export class Cities extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,30 +47,32 @@ class Cities extends Component {
     if (this.state.filteredCities.length) {
       if (!this.state.noResults) {
         cityList = this.state.filteredCities.map(city => (
-          <Button
-            component={Link}
-            size="large"
-            variant="outlined"
-            to={`/cities/${city.name}`}
-            key={city._id}
-          >
-            {city.name}
-          </Button>
+          <div className="city-button" key={city._id}>
+            <Button
+              component={Link}
+              size="large"
+              variant="outlined"
+              to={`/cities/${city.name}`}
+            >
+              {city.name}
+            </Button>
+          </div>
         ));
       } else {
         cityList = "We don't have that city yet.";
       }
     } else {
       cityList = cities.map(city => (
-        <Button
-          component={Link}
-          size="large"
-          variant="outlined"
-          to={`/cities/${city.name}`}
-          key={city._id}
-        >
-          {city.name}
-        </Button>
+        <div className="city-button" key={city._id}>
+          <Button
+            component={Link}
+            size="large"
+            variant="outlined"
+            to={`/cities/${city.name}`}
+          >
+            {city.name}
+          </Button>
+        </div>
       ));
     }
 

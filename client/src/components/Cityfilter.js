@@ -40,6 +40,7 @@ class Cityfilter extends Component {
             placeholder="Search by city name"
             value={this.state.cityFilter}
             onChange={this.handleChange}
+            id="city-filter"
           />
         </FormControl>
       </div>

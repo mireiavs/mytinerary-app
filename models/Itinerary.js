@@ -28,6 +28,9 @@ var itinerarySchema = new Schema({
   },
   cityName: {
     type: String
+  },
+  activities: {
+    type: Array
   }
 });
 

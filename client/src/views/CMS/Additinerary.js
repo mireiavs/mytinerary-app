@@ -12,6 +12,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 class AddItinerary extends Component {
   constructor(props) {
@@ -25,7 +30,8 @@ class AddItinerary extends Component {
       duration: "",
       price: "",
       hashtag: [],
-      cityName: ""
+      cityName: "",
+      activities: [{ img: null, caption: "" }]
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -35,6 +41,7 @@ class AddItinerary extends Component {
 
   handleChangeSelect = event => {
     const { cities } = this.props.cities;
+    const { activities } = this.state;
     const city = cities.find(city => city.name === event.target.value);
     this.setState({ name: event.target.value, country: city.country });
   };
@@ -55,7 +62,8 @@ class AddItinerary extends Component {
       duration: this.state.duration,
       price: this.state.price,
       hashtag: hashtags,
-      cityName: this.state.name
+      cityName: this.state.name,
+      activities: this.state.activities
     };
     this.props.addItinerary(newItinerary, this.props.match.params.cityId);
   };
@@ -84,6 +92,7 @@ class AddItinerary extends Component {
   }
   render() {
     const addItSuccess = this.props.itineraries.additsuccess;
+    const { activities } = this.state;
     const { cities } = this.props.cities;
     const cityList = cities.map(city => (
       <MenuItem value={city.name} key={city._id}>
@@ -101,7 +110,7 @@ class AddItinerary extends Component {
 
     return (
       <div>
-        <h1>Add an itinerary</h1>
+        <h1>Build an itinerary</h1>
 
         {!addItSuccess ? (
           <div>
@@ -139,19 +148,26 @@ class AddItinerary extends Component {
                 onChange={this.onChange}
                 margin="normal"
                 color="primary"
+                className="big-form"
               />
+              <div className="duration-price">
+                <InputLabel htmlFor="duration">Duration:</InputLabel>
+                <Select
+                  value={this.state.duration}
+                  onChange={this.onChange}
+                  inputProps={{
+                    name: "duration",
+                    id: "duration"
+                  }}
+                  className="select"
+                >
+                  <MenuItem value="4 hours">4 hours</MenuItem>
+                  <MenuItem value="12 hours">12 hours</MenuItem>
+                  <MenuItem value="3 days">3 days</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
 
-              <TextField
-                name="duration"
-                id="duration"
-                label="Duration (hours)"
-                value={this.state.duration}
-                onChange={this.onChange}
-                margin="normal"
-              />
-
-              <div className="price-form">
-                <InputLabel htmlFor="price">Price</InputLabel>
+                <InputLabel htmlFor="price">Price:</InputLabel>
                 <Select
                   value={this.state.price}
                   onChange={this.onChange}
@@ -159,10 +175,12 @@ class AddItinerary extends Component {
                     name: "price",
                     id: "price"
                   }}
+                  className="select"
                 >
                   <MenuItem value="$">$</MenuItem>
                   <MenuItem value="$$">$$</MenuItem>
                   <MenuItem value="$$$">$$$</MenuItem>
+                  <MenuItem value="$$$$">$$$$</MenuItem>
                 </Select>
               </div>
 
@@ -173,7 +191,55 @@ class AddItinerary extends Component {
                 value={this.state.hashtag}
                 onChange={this.onChange}
                 margin="normal"
+                className="big-form"
               />
+
+              {activities.map((activity, index) => {
+                let captionId = `caption-${index}`,
+                  imgId = `img-${index}`;
+
+                return (
+                  <Card className="add-activity" key={index}>
+                    <CardContent>
+                      <label htmlFor={captionId}>{`Activity #${index +
+                        1}`}</label>
+                      <input
+                        type="text"
+                        name={captionId}
+                        data-id={index}
+                        id={captionId}
+                        value={activities[index].caption}
+                        className="caption"
+                      />
+                    </CardContent>
+
+                    <CardActions>
+                      <label htmlFor={imgId}>Select image</label>
+                      <input
+                        type="file"
+                        name={imgId}
+                        data-id={index}
+                        id={imgId}
+                        className="img"
+                        value={activities[index].img}
+                      />
+
+                      {/* <span>Upload image:</span>
+                      <input
+                        type="file"
+                        name={imgId}
+                        onChange={this.onChange}
+                      />
+                      <IconButton
+                        aria-label="Delete"
+                        className="comment-delete"
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton> */}
+                    </CardActions>
+                  </Card>
+                );
+              })}
 
               <Button
                 variant="contained"
@@ -181,7 +247,7 @@ class AddItinerary extends Component {
                 type="submit"
                 form="itinerary-form"
               >
-                Submit
+                Save
               </Button>
             </form>
           </div>

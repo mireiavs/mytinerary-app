@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
-import Loader from "./Loader";
 
 class Activity extends Component {
   render() {
@@ -13,8 +12,7 @@ class Activity extends Component {
       slidesToScroll: 3
     };
 
-    const activities = this.props.activities.activities;
-    const isLoading = this.props.activities.loading;
+    const activities = this.props.activities;
 
     const activityList = activities.map((activity, index) => (
       <div key={index}>
@@ -28,13 +26,10 @@ class Activity extends Component {
     return (
       <div className="activity-container">
         <h4> Activities </h4>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="slider">
-            <Slider {...settings}>{activityList}</Slider>
-          </div>
-        )}
+
+        <div className="slider">
+          <Slider {...settings}>{activityList}</Slider>
+        </div>
       </div>
     );
   }

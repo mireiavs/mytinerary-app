@@ -6,11 +6,23 @@
     display: block;
     margin-top: 20px;
   }
-  div {
-    min-width: 120px;
+  .big-form {
+    width: 100%;
   }
   p {
     margin-bottom: 10px;
+  }
+  .duration-price {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    label,
+    div.select {
+      margin-right: 10px;
+      flex-grow: 1;
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -40,15 +52,6 @@
   }
 }
 
-.price-form {
-  display: flex;
-  width: 200px;
-  margin-top: 20px;
-  align-items: center;
-  label {
-    flex-grow: 1;
-  }
-}
 .delete-btn {
   width: 100%;
   display: flex;
@@ -57,5 +60,12 @@
     margin-top: 50px;
     background-color: #ff5252;
     color: white;
+  }
+}
+
+.add-activity {
+  width: 95%;
+  div {
+    padding-bottom: 0;
   }
 }
