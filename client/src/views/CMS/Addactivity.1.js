@@ -71,8 +71,7 @@ class Addactivity extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { caption, activityImage } = this.state;
-    const itineraryId = this.state.itineraryId;
+    const { caption, activityImage, itineraryId } = this.state;
 
     let formData = new FormData();
 

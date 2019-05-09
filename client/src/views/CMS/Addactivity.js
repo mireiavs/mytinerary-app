@@ -10,13 +10,18 @@ import { getItineraries } from "../../actions/itineraryActions";
 import { connect } from "react-redux";
 
 // Material UI imports
-import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+/* import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+ */
 class Addactivity extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +36,30 @@ class Addactivity extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClickAfterAdd = this.onClickAfterAdd.bind(this);
+    this.handleChangeSelectCity = this.handleChangeSelectCity.bind(this);
+    this.handleChangeSelectItinerary = this.handleChangeSelectItinerary.bind(
+      this
+    );
   }
+
+  handleChangeSelectCity = event => {
+    const { cities } = this.props.cities;
+    const city = cities.find(city => city.name === event.target.value);
+    this.setState({ name: event.target.value, country: city.country });
+    this.props.getItineraries(city.name);
+  };
+
+  handleChangeSelectItinerary = event => {
+    const { itineraries } = this.props.itineraries;
+    const itinerary = itineraries.find(
+      itinerary => itinerary.title === event.target.value
+    );
+    this.setState({
+      itineraryId: itinerary._id,
+      title: itinerary.title
+    });
+  };
 
   onChange = e => {
     switch (e.target.name) {
@@ -48,8 +76,7 @@ class Addactivity extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { caption, activityImage } = this.state;
-    const itineraryId = this.state.itineraryId;
+    const { caption, activityImage, itineraryId } = this.state;
 
     let formData = new FormData();
 
@@ -127,100 +154,36 @@ class Addactivity extends Component {
         {itinerary.title}
       </MenuItem>
     ));
-    const addAcSuccess = this.props.activities.addacsuccess;
 
-    return (
-      <div>
-        <h1>Add an activity </h1>
-        <div>
-          <form autoComplete="off" className="cms-form">
-            <p>Select city:</p>
-            <FormControl>
-              <InputLabel htmlFor="name">City</InputLabel>
-              <Select
-                value={this.state.name}
-                onChange={this.handleChangeSelectCity}
-                inputProps={{
-                  name: "name",
-                  id: "name"
-                }}
-              >
-                {cityList}
-              </Select>
-            </FormControl>
+    return {
+      /* <Card className="add-activity" key={index}>
+        <CardContent>
+          <label htmlFor={captionId}>{`Activity #${index + 1}`}</label>
+          <input
+            type="text"
+            name={captionId}
+            data-id={index}
+            id={captionId}
+            value={activities[index].caption}
+            onChange={this.onChange}
+          />
+        </CardContent>
 
-            <FormControl>
-              <InputLabel htmlFor="title">Itinerary</InputLabel>
-              <Select
-                value={this.state.title}
-                onChange={this.handleChangeSelectItinerary}
-                inputProps={{
-                  name: "title",
-                  id: "title"
-                }}
-              >
-                {itineraryList}
-              </Select>
-            </FormControl>
-          </form>
-        </div>
-
-        {!addAcSuccess ? (
-          <form
-            encType="multipart/form-data"
-            onSubmit={this.onSubmit}
-            id="activity-form"
-            className="cms-form"
-          >
-            <TextField
-              name="caption"
-              id="caption"
-              label="Description"
-              value={this.state.caption}
-              onChange={this.onChange}
-              margin="normal"
-              color="primary"
-            />
-
-            <div>
-              <span>Upload image:</span>
-              <input
-                type="file"
-                name="activityImage"
-                onChange={this.onChange}
-              />
-            </div>
-
-            {this.state.imgPreview ? (
-              <div className="upload-activity">
-                <img src={this.state.imgPreview} alt="preview" />
-                <span onClick={this.clearImg}>X</span>
-              </div>
-            ) : null}
-
-            <Button
-              variant="contained"
-              size="medium"
-              type="submit"
-              form="activity-form"
-            >
-              Submit
-            </Button>
-          </form>
-        ) : (
-          <div className="success-msg">
-            <p>Activity added successfully!</p>
-            <Button
-              variant="contained"
-              size="medium"
-              onClick={this.onClickAfterAdd}
-            >
-              Add another activity
-            </Button>
-          </div>
-        )}
-      </div>
-    );
+        <CardActions>
+          <label htmlFor={imgId}>Select image</label>
+          <input
+            type="file"
+            name={imgId}
+            data-id={index}
+            id={imgId}
+            onChange={this.onChange}
+          />
+          <IconButton aria-label="Delete" className="comment-delete">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </CardActions>
+      </Card> */
+    };
   }
 }
 

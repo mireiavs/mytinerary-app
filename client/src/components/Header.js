@@ -20,6 +20,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import FavouritesIcon from "@material-ui/icons/Favorite";
+import AddIcon from "@material-ui/icons/Add";
 
 class Header extends Component {
   state = {
@@ -50,6 +51,8 @@ class Header extends Component {
     const logInLink = props => <Link to="/login" {...props} />;
     const createAccLink = props => <Link to="/createaccount" {...props} />;
     const dashboardLink = props => <Link to="/dashboard" {...props} />;
+    const addItinLink = props => <Link to="/additinerary" {...props} />;
+
     /*         const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
                 const editCityLink = props => <Link to="/editcity" {...props} />
                 const addItinLink = props => <Link to="/additinerary" {...props} />
@@ -80,6 +83,13 @@ class Header extends Component {
             <FavouritesIcon />
           </ListItemIcon>
           <ListItemText>Favourites</ListItemText>
+        </ListItem>
+
+        <ListItem button component={addItinLink}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText>Build an Itinerary</ListItemText>
         </ListItem>
       </div>
     );

@@ -18,7 +18,7 @@ var itinerarySchema = new Schema({
     type: Number
   },
   duration: {
-    type: Number
+    type: String
   },
   price: {
     type: String

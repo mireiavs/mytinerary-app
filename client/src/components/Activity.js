@@ -36,7 +36,7 @@ class Activity extends Component {
 }
 
 Activity.propTypes = {
-  activities: PropTypes.object
+  activities: PropTypes.array
 };
 
 export default Activity;

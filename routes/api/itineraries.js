@@ -20,7 +20,9 @@ router.get("/:cityId", (req, res) => {
 });
 
 // POST /api/itineraries/:cityId
-router.post("/:cityId", auth, (req, res) => {
+router.post("/:cityId", (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
   const newItinerary = new Itinerary({
     title: req.body.title,
     user: req.body.user,
@@ -29,8 +31,7 @@ router.post("/:cityId", auth, (req, res) => {
     duration: req.body.duration,
     price: req.body.price,
     hashtag: req.body.hashtag,
-    cityName: req.body.cityName,
-    activities: req.body.activities
+    cityName: req.body.cityName
   });
   newItinerary.save().then(itinerary => res.send(itinerary));
 });
