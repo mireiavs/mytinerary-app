@@ -25,8 +25,8 @@ describe("Cityfilter component", () => {
     expect(wrapper.state("cityFilter")).toBe("Barcelona");
   });
 
-  it("input change should call method updateFilter through onChange", () => {
+  /*   it("input change should call method updateFilter through onChange", () => {
     input.simulate("change", { target: { value: "Barcelona" } });
     expect(onChange).toHaveBeenCalled();
-  });
+  }); */
 });
