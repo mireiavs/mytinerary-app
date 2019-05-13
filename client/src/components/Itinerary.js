@@ -10,6 +10,7 @@ import {
   deleteComment
 } from "../actions/commentActions";
 import { addFavourite, deleteFavourite } from "../actions/authActions";
+import { getActivities } from "../actions/activityActions";
 import {
   setItineraryRating,
   setItineraryLikes
@@ -30,7 +31,7 @@ import Button from "@material-ui/core/Button";
 import FavouriteIcon from "@material-ui/icons/Favorite";
 import FavouriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-class Itinerary extends Component {
+export class Itinerary extends Component {
   constructor(props) {
     super(props);
     this.handleExpandClick = this.handleExpandClick.bind(this);
@@ -50,7 +51,8 @@ class Itinerary extends Component {
   handleExpandClick = () => {
     this.props.toggle(this.props.itinerary._id);
     if (!this.props.isOpen) {
-      const itineraryId = this.props.itinerary._id;
+      const itineraryId = this.props.itinerary.title;
+      this.props.getActivities(itineraryId);
       this.props.getComments(itineraryId);
     }
   };
@@ -192,7 +194,7 @@ class Itinerary extends Component {
           unmountOnExit
         >
           <CardContent>
-            <Activity activities={itinerary.activities} />
+            <Activity activities={this.props.activities} />
             <div>
               {this.props.auth.isAuthenticated ? (
                 <Link
@@ -256,12 +258,14 @@ Itinerary.propTypes = {
   deleteFavourite: PropTypes.func,
   auth: PropTypes.object,
   setItineraryRating: PropTypes.func,
-  setItineraryLikes: PropTypes.func
+  setItineraryLikes: PropTypes.func,
+  activities: PropTypes.object,
+  getActivities: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  /*   activities: state.activities,
-   */ comments: state.comments,
+  activities: state.activities,
+  comments: state.comments,
   auth: state.auth,
   user: state.auth.user
 });
@@ -275,6 +279,7 @@ export default connect(
     addFavourite,
     deleteFavourite,
     setItineraryRating,
-    setItineraryLikes
+    setItineraryLikes,
+    getActivities
   }
 )(Itinerary);

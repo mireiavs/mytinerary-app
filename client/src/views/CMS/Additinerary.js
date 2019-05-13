@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { addItinerary, addItSuccess } from "../../actions/itineraryActions";
-import { getCities } from "../../actions/citiesActions";
+import { addActivity } from "../../actions/activityActions";
 import { connect } from "react-redux";
 import Addactivity from "./Addactivity";
 
@@ -9,7 +9,6 @@ import Addactivity from "./Addactivity";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -26,110 +25,78 @@ class AddItinerary extends Component {
       price: "",
       hashtag: [],
       cityName: "",
-      activities: [{ img: "", caption: "" }]
+      activities: [{ activityImage: "", caption: "" }]
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleChangeSelect = this.handleChangeSelect.bind(this);
   }
-
-  handleChangeSelect = event => {
-    const { cities } = this.props.cities;
-    const city = cities.find(city => city.name === event.target.value);
-    this.setState({ name: event.target.value, country: city.country });
-  };
   onChange = e => {
-    let activities = [...this.state.activities];
+    /*     let activities = [...this.state.activities];
     if (e.target.name.includes("caption")) {
       activities[e.target.dataset.id]["caption"] = e.target.value;
       this.setState({ activities });
     } else if (e.target.name.includes("img")) {
       activities[e.target.dataset.id]["img"] = e.target.files[0];
       this.setState({ activities });
-    } else {
-      this.setState({ [e.target.name]: e.target.value });
-    }
+    } else { */
+    this.setState({ [e.target.name]: e.target.value });
+    /* } */
   };
 
   addActivityForm = e => {
     this.setState(prevState => ({
-      activities: [...prevState.activities, { img: "", caption: "" }]
+      activities: [...prevState.activities, { activityImage: "", caption: "" }]
     }));
   };
 
+  onActivityChange = (activityImage, caption, index) => {
+    let { activities } = this.state;
+
+    const newActivity = {
+      activityImage,
+      caption
+    };
+
+    activities[index] = newActivity;
+
+    this.setState(activities);
+  };
   onSubmit = e => {
     e.preventDefault();
-    const { title, duration, price, activities, name } = this.state;
-    const hashtags = this.state.hashtag.replace("#", "").split(", ");
-    const { username, userImg } = this.props.user;
+    const { title, duration, price, activities } = this.state;
+    const cityName = this.props.match.params.cityId;
+    const hashtag = this.state.hashtag.replace("#", "").split(", ");
+    const { username, userImage } = this.props.user;
 
-    let formData = new FormData();
+    const newItinerary = {
+      title,
+      duration,
+      price,
+      hashtag,
+      user: username,
+      userImg: userImage,
+      cityName
+    };
 
-    formData.append("title", title);
-    formData.append("duration", duration);
-    formData.append("activities", activities);
-    formData.append("price", price);
-    formData.append("hashtag", hashtags);
-    formData.append("cityName", name);
-    formData.append("user", username);
-    formData.append("userImg", userImg);
+    this.props.addItinerary(newItinerary, cityName);
 
-    this.props.addItinerary(formData, name);
+    activities.forEach(activity => {
+      let formData = new FormData();
+
+      formData.append("caption", activity.caption);
+      formData.append("itineraryId", title);
+      formData.append("activityImage", activity.activityImage);
+
+      this.props.addActivity(formData, activity.itineraryId);
+    });
   };
 
-  componentDidMount() {
-    this.props.getCities();
-  }
-
-  /* If page is accessed from a specific city, it will get the info from 
-    the city automatically, if not, it will get it from the dropdown menu.
-    Below we check if props have been updated (so the function is only called
-    when the props have been received) and if there is a city ID it sets 
-    the state with that info */
-  componentDidUpdate(prevProps) {
-    if (prevProps.cities.cities !== this.props.cities.cities) {
-      if (this.props.match.params.cityId) {
-        const cities = this.props.cities.cities;
-        const city = cities.find(
-          city => city.name === this.props.match.params.cityId
-        );
-        this.setState({ name: city.name, country: city.country });
-      }
-    }
-  }
   render() {
-    const { activities } = this.state;
-    const { cities } = this.props.cities;
-    const cityList = cities.map(city => (
-      <MenuItem value={city.name} key={city._id}>
-        {city.name}, {city.country}
-      </MenuItem>
-    ));
-
     return (
       <div>
         <h1>Build an itinerary</h1>
 
         <div>
-          <div className="cms-form">
-            <p>Select city:</p>
-            <form autoComplete="off">
-              <FormControl>
-                <InputLabel htmlFor="name">City</InputLabel>
-                <Select
-                  value={this.state.name}
-                  onChange={this.handleChangeSelect}
-                  inputProps={{
-                    name: "name",
-                    id: "name"
-                  }}
-                >
-                  {cityList}
-                </Select>
-              </FormControl>
-            </form>
-          </div>
-
           <form
             encType="multipart/form-data"
             id="itinerary-form"
@@ -181,7 +148,6 @@ class AddItinerary extends Component {
                 <MenuItem value="$$$$">$$$$</MenuItem>
               </Select>
             </div>
-
             <TextField
               name="hashtag"
               id="hashtag"
@@ -191,45 +157,18 @@ class AddItinerary extends Component {
               margin="normal"
               className="big-form"
             />
-            <Addactivity />
-            {/*  {activities.map((activity, index) => {
-              let captionId = `caption-${index}`,
-                imgId = `img-${index}`;
-
+            {this.state.activities.map((activity, index) => {
               return (
-                <Card className="add-activity" key={index}>
-                  <CardContent>
-                    <label htmlFor={captionId}>{`Activity #${index +
-                      1}`}</label>
-                    <input
-                      type="text"
-                      name={captionId}
-                      data-id={index}
-                      id={captionId}
-                      value={activities[index].caption}
-                      onChange={this.onChange}
-                    />
-                  </CardContent>
-
-                  <CardActions>
-                    <label htmlFor={imgId}>Select image</label>
-                    <input
-                      type="file"
-                      name={imgId}
-                      data-id={index}
-                      id={imgId}
-                      onChange={this.onChange}
-                    />
-                    <IconButton aria-label="Delete" className="comment-delete">
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </CardActions>
-                </Card>
+                <Addactivity
+                  key={index}
+                  actIndex={index}
+                  activity={activity}
+                  onChange={this.onActivityChange}
+                />
               );
-            })} */}
+            })}
 
             <div onClick={this.addActivityForm}>Add New Activity</div>
-
             <Button
               variant="contained"
               size="medium"
@@ -246,16 +185,14 @@ class AddItinerary extends Component {
 }
 
 AddItinerary.propTypes = {
-  itineraries: PropTypes.object,
   addItinerary: PropTypes.func,
   match: PropTypes.object,
   user: PropTypes.object,
-  getCities: PropTypes.func,
-  cities: PropTypes.object
+  addActivity: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  itineraries: state.itineraries,
+  activities: state.activities,
   addItSuccess: state.addSuccess,
   cities: state.cities,
   user: state.auth.user
@@ -263,5 +200,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addItinerary, addItSuccess, getCities }
+  { addItinerary, addItSuccess, addActivity }
 )(AddItinerary);

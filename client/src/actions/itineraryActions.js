@@ -41,32 +41,13 @@ export const setItinerariesLoading = () => {
 
 export const addItinerary = (itinerary, cityId) => (dispatch, getState) => {
   axios
-    .post(`${apiURL.itineraries}/${cityId}`, itinerary, tokenConfig2(getState))
+    .post(`${apiURL.itineraries}/${cityId}`, itinerary, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: ADD_ITINERARY,
         payload: res.data
       })
     );
-};
-
-const tokenConfig2 = getState => {
-  // Get token from local storage
-  const token = getState().auth.token;
-
-  // Headers
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data"
-    }
-  };
-
-  // If token, add to headers
-  if (token) {
-    config.headers["x-auth-token"] = token;
-  }
-
-  return config;
 };
 
 export const addItSuccess = () => {

@@ -12,10 +12,10 @@ class Activity extends Component {
       slidesToScroll: 3
     };
 
-    const activities = this.props.activities;
+    const activities = this.props.activities.activities;
 
     const activityList = activities.map((activity, index) => (
-      <div key={index}>
+      <div className="slider-image" key={index}>
         <img className="activity-img" src={activity.img} alt="activity" />
         <div className="activity-caption">
           <p>{activity.caption}</p>
@@ -26,7 +26,6 @@ class Activity extends Component {
     return (
       <div className="activity-container">
         <h4> Activities </h4>
-
         <div className="slider">
           <Slider {...settings}>{activityList}</Slider>
         </div>
@@ -36,7 +35,7 @@ class Activity extends Component {
 }
 
 Activity.propTypes = {
-  activities: PropTypes.array
+  activities: PropTypes.object
 };
 
 export default Activity;

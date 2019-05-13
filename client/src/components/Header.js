@@ -51,8 +51,8 @@ class Header extends Component {
     const logInLink = props => <Link to="/login" {...props} />;
     const createAccLink = props => <Link to="/createaccount" {...props} />;
     const dashboardLink = props => <Link to="/dashboard" {...props} />;
-    const addItinLink = props => <Link to="/additinerary" {...props} />;
-
+    /*     const addItinLink = props => <Link to="/additinerary" {...props} />;
+     */
     /*         const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
                 const editCityLink = props => <Link to="/editcity" {...props} />
                 const addItinLink = props => <Link to="/additinerary" {...props} />
@@ -85,12 +85,12 @@ class Header extends Component {
           <ListItemText>Favourites</ListItemText>
         </ListItem>
 
-        <ListItem button component={addItinLink}>
+        {/*         <ListItem button component={addItinLink}>
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
           <ListItemText>Build an Itinerary</ListItemText>
-        </ListItem>
+        </ListItem> */}
       </div>
     );
 

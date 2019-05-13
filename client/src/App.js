@@ -63,7 +63,7 @@ class App extends Component {
               component={Edititinerary}
             />
 
-            <PrivateRoute path="/additinerary" component={Additinerary} />
+            {/* <PrivateRoute path="/additinerary" component={Additinerary} /> */}
             <PrivateRoute
               path="/cities/:cityId/additinerary"
               component={Additinerary}

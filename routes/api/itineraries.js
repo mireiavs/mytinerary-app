@@ -21,8 +21,6 @@ router.get("/:cityId", (req, res) => {
 
 // POST /api/itineraries/:cityId
 router.post("/:cityId", (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
   const newItinerary = new Itinerary({
     title: req.body.title,
     user: req.body.user,

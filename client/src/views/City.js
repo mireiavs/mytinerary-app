@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import Itinerary from "../components/Itinerary";
 import Loader from "../components/Loader";
 
+// Material UI imports
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+
 class City extends Component {
   constructor(props) {
     super(props);
@@ -48,24 +52,24 @@ class City extends Component {
             {itineraries.length !== 0 ? (
               <div>{itineraryList}</div>
             ) : (
-              <p>Sorry, there no itineraries for this city yet.</p>
+              <p>Sorry, there are no itineraries for this city yet.</p>
             )}
           </div>
         )}
-        <div>
-          {this.props.auth.isAuthenticated ? (
-            <div className="city-links">
-              <Link to={`/cities/${this.props.match.params.id}/additinerary`}>
-                Add another itinerary
-              </Link>
-              <Link to={`/cities/${this.props.match.params.id}/editcity`}>
-                Edit city
-              </Link>
-            </div>
-          ) : null}
 
-          <Link to="/cities/all">Choose a different city</Link>
-        </div>
+        {this.props.auth.isAuthenticated ? (
+          <Button
+            component={Link}
+            variant="contained"
+            to={`/cities/${this.props.match.params.id}/additinerary`}
+          >
+            <AddIcon /> Add itinerary
+          </Button>
+        ) : null}
+
+        <Link to="/cities/all" className="other-city-link">
+          Choose a different city
+        </Link>
       </div>
     );
   }
