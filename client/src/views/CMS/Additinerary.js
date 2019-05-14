@@ -164,6 +164,7 @@ class AddItinerary extends Component {
                   actIndex={index}
                   activity={activity}
                   onChange={this.onActivityChange}
+                  className="drag"
                 />
               );
             })}

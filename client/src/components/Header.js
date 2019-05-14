@@ -20,8 +20,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import FavouritesIcon from "@material-ui/icons/Favorite";
-import AddIcon from "@material-ui/icons/Add";
-
+/* import AddIcon from "@material-ui/icons/Add";
+ */
 class Header extends Component {
   state = {
     right: false,
