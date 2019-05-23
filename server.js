@@ -26,7 +26,7 @@ const options = {
 
 mongoose.connect(process.env.MONGO_URL, options);
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {

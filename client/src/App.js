@@ -15,10 +15,11 @@ import Addcity from "./views/CMS/Addcity";
 import Editcity from "./views/CMS/Editcity";
 import City from "./views/City";
 import Additinerary from "./views/CMS/Additinerary";
-import Addactivity from "./views/CMS/Addactivity";
-import Edititinerary from "./views/CMS/Edititinerary";
+/* import Addactivity from "./views/CMS/Addactivity";
+import Edititinerary from "./views/CMS/Edititinerary"; */
 import Dashboard from "./views/Dashboard";
 import Hashtag from "./views/Hashtag";
+import Hashtaglist from "./views/Hashtaglist";
 import PrivateRoute from "./components/PrivateRoute";
 
 class App extends Component {
@@ -42,6 +43,7 @@ class App extends Component {
             <Route exact path="/cities/all" component={Cities} />
             <Route exact path="/cities/:id" component={City} />
 
+            <Route exact path="/hashtaglist" component={Hashtaglist} />
             <Route exact path="/itineraries/:hashtag" component={Hashtag} />
 
             {/* CMS links */}
@@ -57,23 +59,16 @@ class App extends Component {
               component={Editcity}
             />
 
-            <PrivateRoute path="/edititinerary" component={Edititinerary} />
-            <PrivateRoute
-              path="/cities/:cityId/:itineraryId/edititinerary"
-              component={Edititinerary}
-            />
-
-            {/* <PrivateRoute path="/additinerary" component={Additinerary} /> */}
             <PrivateRoute
               path="/cities/:cityId/additinerary"
               component={Additinerary}
             />
 
-            <PrivateRoute path="/addactivity" component={Addactivity} />
+            {/* <PrivateRoute path="/edititinerary" component={Edititinerary} />
             <PrivateRoute
-              path="/cities/:cityId/:itineraryId/addactivity"
-              component={Addactivity}
-            />
+              path="/cities/:cityId/:itineraryId/edititinerary"
+              component={Edititinerary}
+            /> */}
 
             <Route component={Notfound} />
           </Switch>

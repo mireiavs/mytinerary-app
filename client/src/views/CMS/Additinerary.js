@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import AddIcon from "@material-ui/icons/Add";
 
 class AddItinerary extends Component {
   constructor(props) {
@@ -31,19 +32,10 @@ class AddItinerary extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onChange = e => {
-    /*     let activities = [...this.state.activities];
-    if (e.target.name.includes("caption")) {
-      activities[e.target.dataset.id]["caption"] = e.target.value;
-      this.setState({ activities });
-    } else if (e.target.name.includes("img")) {
-      activities[e.target.dataset.id]["img"] = e.target.files[0];
-      this.setState({ activities });
-    } else { */
     this.setState({ [e.target.name]: e.target.value });
-    /* } */
   };
 
-  addActivityForm = e => {
+  addActivityForm = () => {
     this.setState(prevState => ({
       activities: [...prevState.activities, { activityImage: "", caption: "" }]
     }));
@@ -164,12 +156,13 @@ class AddItinerary extends Component {
                   actIndex={index}
                   activity={activity}
                   onChange={this.onActivityChange}
-                  className="drag"
                 />
               );
             })}
 
-            <div onClick={this.addActivityForm}>Add New Activity</div>
+            <div onClick={this.addActivityForm} className="add-another-act">
+              <AddIcon /> Add another activity
+            </div>
             <Button
               variant="contained"
               size="medium"

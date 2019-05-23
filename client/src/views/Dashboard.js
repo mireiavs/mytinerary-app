@@ -23,14 +23,14 @@ export class Dashboard extends Component {
 
   render() {
     const { itineraries } = this.props.itineraries;
-    var favourites = [];
-    var itineraryList = [];
+    let favourites = [];
+    let itineraryList = [];
 
     if (this.props.auth.isAuthenticated && this.props.auth.favourites) {
       favourites = this.props.auth.favourites;
       // eslint-disable-next-line
       itineraryList = favourites.map((favourite, index) => {
-        for (var i = 0; i < itineraries.length; i++) {
+        for (let i = 0; i < itineraries.length; i++) {
           if (favourite.itineraryId === itineraries[i]._id) {
             return (
               <Itinerary

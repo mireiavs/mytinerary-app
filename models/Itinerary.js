@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var itinerarySchema = new Schema({
+const itinerarySchema = new Schema({
   title: {
     type: String
   },

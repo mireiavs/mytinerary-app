@@ -42,7 +42,7 @@ export class Cities extends Component {
 
   render() {
     const { cities } = this.props.cities;
-    var cityList = "";
+    let cityList = "";
 
     if (this.state.filteredCities.length) {
       if (!this.state.noResults) {

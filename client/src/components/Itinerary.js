@@ -51,9 +51,8 @@ export class Itinerary extends Component {
   handleExpandClick = () => {
     this.props.toggle(this.props.itinerary._id);
     if (!this.props.isOpen) {
-      const itineraryId = this.props.itinerary.title;
-      this.props.getActivities(itineraryId);
-      this.props.getComments(itineraryId);
+      this.props.getActivities(this.props.itinerary.title);
+      this.props.getComments(this.props.itinerary._id);
     }
   };
 
@@ -65,7 +64,7 @@ export class Itinerary extends Component {
     };
     const newLikes = this.props.itinerary.likes + 1;
 
-    var userId = this.props.user._id || this.props.user.id;
+    const userId = this.props.user._id || this.props.user.id;
 
     this.props.addFavourite(newFavourite, userId);
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id);
@@ -82,7 +81,7 @@ export class Itinerary extends Component {
   onClickDelete() {
     const newLikes = this.props.itinerary.likes - 1;
 
-    var userId = this.props.user._id || this.props.user.id;
+    const userId = this.props.user._id || this.props.user.id;
 
     this.props.deleteFavourite(this.props.itinerary._id, userId);
     this.props.setItineraryLikes(newLikes, this.props.itinerary._id);
@@ -102,7 +101,7 @@ export class Itinerary extends Component {
 
   render() {
     const itinerary = this.props.itinerary;
-    var isFavourite = false;
+    let isFavourite = false;
     const hashtagList = this.props.itinerary.hashtag.map((hashtag, index) => (
       <div key={index}>
         <Link to={`/itineraries/${hashtag}`}>#{hashtag}</Link>

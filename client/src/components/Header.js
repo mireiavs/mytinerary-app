@@ -20,8 +20,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import CitiesIcon from "@material-ui/icons/LocationCity";
 import FavouritesIcon from "@material-ui/icons/Favorite";
-/* import AddIcon from "@material-ui/icons/Add";
- */
+import SearchIcon from "@material-ui/icons/Search";
+
 class Header extends Component {
   state = {
     right: false,
@@ -51,13 +51,13 @@ class Header extends Component {
     const logInLink = props => <Link to="/login" {...props} />;
     const createAccLink = props => <Link to="/createaccount" {...props} />;
     const dashboardLink = props => <Link to="/dashboard" {...props} />;
+    const hashtagListLink = props => <Link to="/hashtaglist" {...props} />;
     /*     const addItinLink = props => <Link to="/additinerary" {...props} />;
-     */
-    /*         const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
-                const editCityLink = props => <Link to="/editcity" {...props} />
-                const addItinLink = props => <Link to="/additinerary" {...props} />
-                const editItinink = props => <Link to="/edititinerary" {...props} />
-                const addActLink = props => <Link to="/addactivity" {...props} /> */
+    const addCityLink = props => <Link to="/cities/all/addcity" {...props} />
+    const editCityLink = props => <Link to="/editcity" {...props} />
+    const addItinLink = props => <Link to="/additinerary" {...props} />
+    const editItinink = props => <Link to="/edititinerary" {...props} />
+    const addActLink = props => <Link to="/addactivity" {...props} /> */
 
     const sideList = (
       <div className="side-list">
@@ -67,11 +67,19 @@ class Header extends Component {
           </ListItemIcon>
           <ListItemText>Home</ListItemText>
         </ListItem>
+
         <ListItem button component={citiesLink}>
           <ListItemIcon>
             <CitiesIcon />
           </ListItemIcon>
           <ListItemText>Cities</ListItemText>
+        </ListItem>
+
+        <ListItem button component={hashtagListLink}>
+          <ListItemIcon>
+            <SearchIcon />
+          </ListItemIcon>
+          <ListItemText>Browse by hashtag</ListItemText>
         </ListItem>
       </div>
     );
@@ -84,13 +92,6 @@ class Header extends Component {
           </ListItemIcon>
           <ListItemText>Favourites</ListItemText>
         </ListItem>
-
-        {/*         <ListItem button component={addItinLink}>
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
-          <ListItemText>Build an Itinerary</ListItemText>
-        </ListItem> */}
       </div>
     );
 

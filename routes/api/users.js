@@ -71,7 +71,7 @@ router.post(
       return res.status(422).json({ msg: errors.array()[0].msg });
     }
 
-    var userImage;
+    let userImage;
 
     if (req.file) {
       userImage = req.file.path;
